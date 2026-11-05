@@ -6,8 +6,11 @@
 <script>
 /* Nani Logistics web: gives the app the same window.claude API it has on Claude, backed by Supabase */
 (function(){
+window.LGX={scoped:null};
 const SB_URL='https://sfwsedtxdlummiqblufq.supabase.co', SB_KEY='sb_publishable_6Tae24RIQ2Ir_-zHedIG2A_Ez7cXlUF', STAFF_DOMAIN='staff.nani-logistics.local';
 const sb=window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true}});
+// ແອັດມິນຂົນສົ່ງ / ການເງິນ: ໃຊ້ໜ້າຈໍແບບແອັດມິນ ແຕ່ຂຽນໄດ້ສະເພາະສ່ວນງານ (ຕົງກັບ RLS ໃນຖານຂໍ້ມູນ)
+const SCOPED={txadmin:new Set(['meta','products','drivers','trips','stock','fleet','board','exps','log','mv','fac','km','ord','fuel','plan']),finadmin:new Set(['meta','branches','drivers','trips','fleet','board','ar','exps','payments','log','brd','sd','prm','fdoc','dfl','fuel','plan','ord'])};
 const NEVER=new Promise(()=>{}), esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const toEmail=u=>{ u=u.trim().toLowerCase(); return u.includes('@')?u:u+'@'+STAFF_DOMAIN; };
 
@@ -30,7 +33,9 @@ async function logout(){ try{ await sb.auth.signOut(); }catch(_){} try{ localSto
 const whenBody=fn=>document.body?fn():document.addEventListener('DOMContentLoaded',fn);
 const session=(async()=>{ try{ const {data:{session:s}}=await sb.auth.getSession(); if(!s){ whenBody(showLogin); return NEVER; }
     const {data:u,error}=await sb.from('lgx_users').select('id,name,username,is_admin').eq('id',s.user.id).maybeSingle(); if(error) throw error;
-    if(!u){ whenBody(()=>showNoAccess(s.user.email)); return NEVER; } return u;
+    if(!u){ whenBody(()=>showNoAccess(s.user.email)); return NEVER; }
+    if(!u.is_admin){ const {data:r}=await sb.from('lgx_docs').select('data').eq('path','app/roles').maybeSingle(); const role=String((r&&r.data&&r.data.roles&&r.data.roles[u.id])||'').split('|')[0]; if(SCOPED[role]) window.LGX.scoped=u.scoped=role; }
+    return u;
   }catch(e){ whenBody(showError); return NEVER; } })();
 sb.auth.onAuthStateChange(ev=>{ if(ev==='SIGNED_OUT') location.reload(); });
 
@@ -57,7 +62,7 @@ const db={ doc:docRef, collection:c=>({ doc:id=>docRef(c+'/'+id),
 
 /* ===== user ===== */
 const UUID=/^[0-9a-f-]{36}$/i, nameCache={};
-const userApi=u=>({ id:async()=>u.id, me:async()=>({id:u.id,name:u.name}), isOwner:async()=>u.is_admin, canEdit:async()=>u.is_admin, can:async()=>true,
+const userApi=u=>({ id:async()=>u.id, me:async()=>({id:u.id,name:u.name}), isOwner:async()=>u.is_admin, canEdit:async()=>u.is_admin||!!u.scoped, can:async()=>true,
   profiles:async ids=>{ const need=ids.filter(i=>UUID.test(i)&&!(i in nameCache)); if(need.length){ const {data}=await sb.from('lgx_users').select('id,name').in('id',need); (data||[]).forEach(r=>nameCache[r.id]=r.name); }
     return Object.fromEntries(ids.map(i=>[i,{id:i,name:UUID.test(i)?(nameCache[i]||''):'ເຈົ້າຂອງ (ລະບົບເກົ່າ)'}])); }, // ທຸກລາຍການກ່ອນຍ້າຍລະບົບ ບັນທຶກໂດຍເຈົ້າຂອງຄົນດຽວ
   search:async q=>{ let r=sb.from('lgx_users').select('id,name,username').order('name').limit(30); if(q) r=r.or(`name.ilike.%${q.replace(/[%,()]/g,'')}%,username.ilike.%${q.replace(/[%,()]/g,'')}%`); const {data}=await r; return (data||[]).map(x=>({id:x.id,name:x.name||x.username||''})); } });
@@ -66,7 +71,7 @@ const userApi=u=>({ id:async()=>u.id, me:async()=>({id:u.id,name:u.name}), isOwn
 const downloads={ save:async({filename,data})=>{ const url=URL.createObjectURL(data instanceof Blob?data:new Blob([data])), a=document.createElement('a'); a.href=url; a.download=filename; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),30000); } };
 
 window.claude={ use:async n=>{ if(n==='downloads') return downloads; if(n==='db'){ await session; return db; } if(n==='user'){ return userApi(await session); } return null; } }; // sample / assets / mcp ບໍ່ມີໃນເວີຊັນເວັບ
-window.LGX={sb,session,logout,toEmail,clearNames:()=>{ Object.keys(nameCache).forEach(k=>delete nameCache[k]); }};
+Object.assign(window.LGX,{sb,session,logout,toEmail,canPush:n=>SCOPED[window.LGX.scoped].has(n),clearNames:()=>{ Object.keys(nameCache).forEach(k=>delete nameCache[k]); }});
 })();
 </script>
 </head><body>
@@ -3888,15 +3893,15 @@ $('#odTbl').addEventListener('click',e=>{ const k=e.target.closest('[data-odok]'
 $('#odConfirmAll').onclick=()=>{ const d=odDate(), L=orders.filter(o=>o.date===d&&o.status==='new'); let n=0; L.forEach(o=>{ if(odConfirm(o)) n++; });
   renderFin(); note('trip','ຢືນຢັນອໍເດີເຂົ້າແຜນ '+n+'/'+L.length+' ລາຍການ ('+fmtKey(d)+')'); if(n<L.length) toast((L.length-n)+' ອໍເດີຍັງບໍ່ໄດ້ເລືອກລົດ'); };
 
-const ROLES=[['warehouse','ນາຍສາງ'],['factory','ໂຮງງານ'],['transport','ທີມຂົນສົ່ງ'],['marketing','ທີມການຕະຫຼາດ']];
+const ROLES=[['txadmin','ແອັດມິນຂົນສົ່ງ'],['finadmin','ແອັດມິນການເງິນ'],['warehouse','ນາຍສາງ'],['factory','ໂຮງງານ'],['transport','ທີມຂົນສົ່ງ'],['marketing','ທີມການຕະຫຼາດ']];
 const roleBase=v=>String(v||'').split('|')[0], roleTruck=v=>String(v||'').split('|')[1]||'';
 let myTruck='';
-const ROLE_PAGES={warehouse:['stock','factory','products'],factory:['factory'],transport:['mytruck'],marketing:['orders']};
+const ROLE_PAGES={txadmin:['plan','orders','trips','mytruck','perf','fleet','vexp','fuel','stock','tanks','factory','products','log'],finadmin:['tasks','overview','fin','hq','docs','files','pay','pnl','sales','loans','partner','branches','vexp','fuel','fleet','reports','close','log','perf'],warehouse:['stock','factory','products'],factory:['factory'],transport:['mytruck'],marketing:['orders']};
 const roleLabel=r=>r==='admin'?'ແອັດມິນ':((ROLES.find(x=>x[0]===roleBase(r))||['','ຍັງບໍ່ກຳນົດ'])[1]+(roleTruck(r)?' · ລົດ '+roleTruck(r):''));
 let roles={}, isAdminUser=true, myRole='admin', roleReady=!window.claude;
 const allowedPages=()=>myRole==='admin'?null:(ROLE_PAGES[myRole]||[]);
 function applyRole(){
-  myRole=isAdminUser?'admin':(roleBase(roles[me.id])||'none'); myTruck=isAdminUser?'':roleTruck(roles[me.id]);
+  myRole=window.LGX.scoped||(isAdminUser?'admin':(roleBase(roles[me.id])||'none')); myTruck=isAdminUser?'':roleTruck(roles[me.id]);
   const al=allowedPages();
   document.querySelectorAll('nav a[data-page]').forEach(a=>{ a.toggleAttribute('data-role-off',!!al&&!al.includes(a.dataset.page)); }); if(typeof navGroupsSync==='function') navGroupsSync();
   document.body.classList.toggle('not-admin',!isAdminUser);
@@ -4904,14 +4909,14 @@ var sync={db:null,ready:false,seeding:false,applying:false,writable:true,last:{}
   pushAll(){
     if(!this.db||!this.ready||this.applying||!this.writable) return;
     Object.entries(DOC_SECTIONS).forEach(([name,get])=>{
-      if(!isAdminUser&&!NONADMIN_WRITE.has(name)) return;
+      if(window.LGX.scoped?!window.LGX.canPush(name):(!isAdminUser&&!NONADMIN_WRITE.has(name))) return;
       if(!firstSeen.has('d:'+name)) return;
       const data=get(), s=canon(data); if(s===this.last[name]) return;
       this.last[name]=s; clearTimeout(this.timers[name]);
       this.timers[name]=setTimeout(()=>{delete this.timers[name]; this.run('app/'+name,()=>this.db.doc('app/'+name).set(JSON.parse(JSON.stringify(data))).catch(e=>{this.last[name]=null;throw e;}));},500);
     });
     Object.entries(COLL_SECTIONS).forEach(([name,{path,get}])=>{
-      if(!isAdminUser&&!NONADMIN_WRITE.has(name)) return;
+      if(window.LGX.scoped?!window.LGX.canPush(name):(!isAdminUser&&!NONADMIN_WRITE.has(name))) return;
       if(!firstSeen.has('c:'+name)) return;
       const known=this.items[name], seen=new Set();
       get().forEach(item=>{
@@ -5027,10 +5032,10 @@ session.then(u=>{
   panel.parentNode.insertBefore(imp,panel.nextSibling);
   $('#lgxImp').onchange=async e=>{ const f=e.target.files[0]; e.target.value=''; if(!f) return; const m=$('#lgxImpMsg');
     let docs; try{ docs=JSON.parse(await f.text()).docs; if(!docs||!docs['app/meta']) throw 0; }catch(_){ m.textContent='❌ ໄຟລ໌ບໍ່ຖືກຕ້ອງ'; return; }
-    const paths=Object.keys(docs).filter(p=>!p.startsWith('data/users/')); if(!confirm('ແທນທີ່ຂໍ້ມູນທັງໝົດດ້ວຍ '+paths.length+' ລາຍການ ຈາກໄຟລ໌ '+f.name+' ?')) return;
+    const paths=Object.keys(docs).filter(p=>!p.startsWith('data/users/')&&p!=='app/roles'); // ເກັບສິດພະນັກງານທີ່ຕັ້ງໃນເວັບນີ້ໄວ້ if(!confirm('ແທນທີ່ຂໍ້ມູນທັງໝົດດ້ວຍ '+paths.length+' ລາຍການ ຈາກໄຟລ໌ '+f.name+' ?')) return;
     sync.writable=false; Object.values(sync.timers).forEach(clearTimeout); // ຢຸດການບັນທຶກອັດຕະໂນມັດ ບໍ່ໃຫ້ທັບຂໍ້ມູນທີ່ນຳເຂົ້າ
     try{ for(let i=0,b=[],sz=0;i<paths.length;i++){ const p=paths[i], n=JSON.stringify(docs[p]).length; b.push({path:p,data:docs[p]}); sz+=n; if(sz>800000||b.length>=100||i===paths.length-1){ const {error}=await sb.from('lgx_docs').upsert(b,{onConflict:'path'}); if(error) throw error; b=[]; sz=0; m.textContent='⏳ '+(i+1)+' / '+paths.length; } }
-      const keep=new Set(paths), old=[]; for(let from=0;;from+=1000){ const {data,error}=await sb.from('lgx_docs').select('path').not('path','like','data/users/%').order('path').range(from,from+999); if(error) throw error; data.forEach(r=>{ if(!keep.has(r.path)) old.push(r.path); }); if(data.length<1000) break; }
+      const keep=new Set(paths), old=[]; for(let from=0;;from+=1000){ const {data,error}=await sb.from('lgx_docs').select('path').not('path','like','data/users/%').order('path').range(from,from+999); if(error) throw error; data.forEach(r=>{ if(!keep.has(r.path)&&r.path!=='app/roles') old.push(r.path); }); if(data.length<1000) break; }
       for(let i=0;i<old.length;i+=100){ const {error}=await sb.from('lgx_docs').delete().in('path',old.slice(i,i+100)); if(error) throw error; }
       try{ localStorage.removeItem(LS); }catch(_){} m.textContent='✅ ນຳເຂົ້າແລ້ວ '+paths.length+' ລາຍການ'; setTimeout(()=>location.reload(),800);
     }catch(err){ m.textContent='❌ ນຳເຂົ້າບໍ່ສຳເລັດ: '+(err.message||''); } };
