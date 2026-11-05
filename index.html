@@ -1,8 +1,8 @@
 <!doctype html>
-<html lang="lo"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-DcF1RfYzY4b0oWbWjyyMwn6RhC+PQnc8ciLLtQEHKIY=' 'sha256-7tVU2CYzBWaESNdU8mvh0kgrW1T3SywM5RAEKl1jPlk=' 'sha256-VdvnG9QwALda9YMfIKexqBw0c6ei5p0QjKmiCTcbvEI=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdnjs.cloudflare.com/ajax/libs/xlsx/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data: blob:; connect-src https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex"><title>Nani Logistics</title>
 <style>#fuScanBox{display:none!important}</style>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.js" integrity="sha384-rwykjmWNwVxboyFmvK9OXN0wj9hnMHA2aAHtits54DuACyCq0M2PrSNxhRb+hvXT" crossorigin="anonymous"></script>
 <script>
 /* Nani Logistics web: gives the app the same window.claude API it has on Claude, backed by Supabase */
 (function(){
@@ -28,16 +28,18 @@ function showLogin(){ const o=overlay(`<h2 style="margin:0 0 4px">🚛 Nani Logi
 }
 function showNoAccess(email){ const o=overlay(`<h2 style="margin:0 0 8px">⏳ ລໍຖ້າສິດ</h2><p style="color:#9aa7b4">ບັນຊີ ${esc(email)} ຍັງບໍ່ໄດ້ຮັບສິດເຂົ້າລະບົບ ກະລຸນາແຈ້ງແອັດມິນ</p><button id="lgxOut" style="${BTN}">ອອກຈາກລະບົບ</button>`); o.querySelector('#lgxOut').onclick=logout; }
 function showError(){ const o=overlay(`<h2 style="margin:0 0 8px">⚠️ ເຊື່ອມຕໍ່ບໍ່ໄດ້</h2><p style="color:#9aa7b4">ກວດອິນເຕີເນັດ ແລ້ວລອງໃໝ່</p><button id="lgxRe" style="${BTN}">ລອງໃໝ່</button>`); o.querySelector('#lgxRe').onclick=()=>location.reload(); }
-async function logout(){ try{ await sb.auth.signOut(); }catch(_){} try{ localStorage.clear(); }catch(_){} location.reload(); } // ລ້າງຂໍ້ມູນໃນເຄື່ອງ ບໍ່ໃຫ້ຄົນຖັດໄປເຫັນ
+const wipeCache=()=>new Promise(res=>{ try{ const r=indexedDB.deleteDatabase('lgx-cache'); r.onsuccess=r.onerror=r.onblocked=()=>res(); }catch(_){ res(); } });
+async function logout(){ try{ await sb.auth.signOut(); }catch(_){} try{ localStorage.clear(); }catch(_){} await wipeCache(); location.reload(); } // ລ້າງຂໍ້ມູນໃນເຄື່ອງ ບໍ່ໃຫ້ຄົນຖັດໄປເຫັນ
 
 const whenBody=fn=>document.body?fn():document.addEventListener('DOMContentLoaded',fn);
 const session=(async()=>{ try{ const {data:{session:s}}=await sb.auth.getSession(); if(!s){ whenBody(showLogin); return NEVER; }
     const {data:u,error}=await sb.from('lgx_users').select('id,name,username,is_admin').eq('id',s.user.id).maybeSingle(); if(error) throw error;
     if(!u){ whenBody(()=>showNoAccess(s.user.email)); return NEVER; }
     if(!u.is_admin){ const {data:r}=await sb.from('lgx_docs').select('data').eq('path','app/roles').maybeSingle(); const role=String((r&&r.data&&r.data.roles&&r.data.roles[u.id])||'').split('|')[0]; if(SCOPED[role]) window.LGX.scoped=u.scoped=role; }
+    try{ if(localStorage.getItem('lgx.cacheOwner')!==u.id){ await wipeCache(); localStorage.setItem('lgx.cacheOwner',u.id); } }catch(_){}
     return u;
   }catch(e){ whenBody(showError); return NEVER; } })();
-sb.auth.onAuthStateChange(ev=>{ if(ev==='SIGNED_OUT') location.reload(); });
+sb.auth.onAuthStateChange(ev=>{ if(ev==='SIGNED_OUT') wipeCache().then(()=>location.reload()); });
 
 /* ===== db ===== */
 const parent=p=>p.replace(/\/[^/]*$/,''), leaf=p=>p.split('/').pop(), clone=x=>JSON.parse(JSON.stringify(x));
@@ -46,10 +48,22 @@ const fail=e=>{ const x=new Error(e.message||'db error'); x.code=e.code==='42501
 const docL={}, collL={}, collData={}, timers={}; let chan=null, dropped=false;
 async function readDoc(p){ const {data,error}=await sb.from('lgx_docs').select('data').eq('path',p).maybeSingle(); if(error) throw fail(error); return data?data.data:undefined; }
 async function readColl(c){ const m=new Map(); for(let from=0;;from+=500){ const {data,error}=await sb.from('lgx_docs').select('path,data').eq('coll',c).order('path').range(from,from+499); if(error) throw fail(error); data.forEach(r=>m.set(r.path,r.data)); if(data.length<500) break; } return m; }
+// ຍອດຂາຍໃຫຍ່ ແລະ ຄຳນວນສະສົມຫຼາຍເດືອນ: ເກັບໃນເຄື່ອງ ແລ້ວດາວໂຫຼດສະເພາະວັນທີ່ປ່ຽນ (ຂໍ້ມູນຍັງຄົບທຸກວັນ)
+const idbOpen=()=>new Promise((res,rej)=>{ const r=indexedDB.open('lgx-cache',1); r.onupgradeneeded=()=>r.result.createObjectStore('docs',{keyPath:'path'}); r.onsuccess=()=>res(r.result); r.onerror=()=>rej(r.error); });
+const idbAll=d=>new Promise((res,rej)=>{ const r=d.transaction('docs').objectStore('docs').getAll(); r.onsuccess=()=>res(r.result); r.onerror=()=>rej(r.error); });
+const idbWrite=(d,puts,dels)=>new Promise(res=>{ const t=d.transaction('docs','readwrite'), s=t.objectStore('docs'); puts.forEach(x=>s.put(x)); dels.forEach(p=>s.delete(p)); t.oncomplete=t.onerror=t.onabort=()=>res(); });
+async function readCollCached(c){ let d, have=new Map();
+  try{ d=await idbOpen(); (await idbAll(d)).forEach(x=>have.set(x.path,x)); }catch(_){ return readColl(c); } // ເຄື່ອງທີ່ໃຊ້ IndexedDB ບໍ່ໄດ້ → ດາວໂຫຼດທັງໝົດຄືເກົ່າ
+  const list=[]; for(let from=0;;from+=1000){ const {data,error}=await sb.from('lgx_docs').select('path,updated_at').eq('coll',c).order('path').range(from,from+999); if(error) throw fail(error); list.push(...data); if(data.length<1000) break; }
+  const need=list.filter(r=>{ const x=have.get(r.path); return !x||x.at!==r.updated_at; }).map(r=>r.path), puts=[];
+  for(let i=0;i<need.length;i+=15){ const {data,error}=await sb.from('lgx_docs').select('path,data,updated_at').in('path',need.slice(i,i+15)); if(error) throw fail(error); data.forEach(r=>{ const x={path:r.path,data:r.data,at:r.updated_at}; have.set(r.path,x); puts.push(x); }); }
+  const keep=new Set(list.map(r=>r.path)); await idbWrite(d,puts,[...have.keys()].filter(p=>!keep.has(p))); d.close();
+  const m=new Map(); list.forEach(r=>{ const x=have.get(r.path); if(x) m.set(r.path,x.data); }); return m; }
+const loadColl=c=>c==='sale_days'?readCollCached(c):readColl(c);
 const fireColl=c=>{ clearTimeout(timers[c]); timers[c]=setTimeout(()=>{ const docs=[...collData[c].entries()].map(([p,d])=>dsnap(p,d)); (collL[c]||[]).forEach(l=>l.cb({docs})); },120); };
 async function onChange(pl){ const p=(pl.new&&pl.new.path)||(pl.old&&pl.old.path); if(!p) return; let d; try{ d=pl.eventType==='DELETE'?undefined:await readDoc(p); }catch(_){ return; }
   (docL[p]||[]).forEach(l=>l.cb(dsnap(p,d))); const c=parent(p); if(collL[c]&&collData[c]){ if(d===undefined) collData[c].delete(p); else collData[c].set(p,d); fireColl(c); } }
-async function resync(){ for(const p of Object.keys(docL)){ try{ const d=await readDoc(p); docL[p].forEach(l=>l.cb(dsnap(p,d))); }catch(_){} } for(const c of Object.keys(collL)){ try{ collData[c]=await readColl(c); fireColl(c); }catch(_){} } }
+async function resync(){ for(const p of Object.keys(docL)){ try{ const d=await readDoc(p); docL[p].forEach(l=>l.cb(dsnap(p,d))); }catch(_){} } for(const c of Object.keys(collL)){ try{ collData[c]=await loadColl(c); fireColl(c); }catch(_){} } }
 function ensureChan(){ if(chan) return; chan=sb.channel('lgx_docs').on('postgres_changes',{event:'*',schema:'public',table:'lgx_docs'},onChange).subscribe(st=>{ if(st==='SUBSCRIBED'){ if(dropped){ dropped=false; resync(); } } else if(st==='CHANNEL_ERROR'||st==='TIMED_OUT'||st==='CLOSED') dropped=true; }); }
 const docRef=p=>({
   get:async()=>dsnap(p,await readDoc(p)),
@@ -58,7 +72,7 @@ const docRef=p=>({
   onSnapshot:(cb,err)=>{ ensureChan(); const l={cb}; (docL[p]=docL[p]||[]).push(l); readDoc(p).then(d=>cb(dsnap(p,d))).catch(e=>err&&err(e)); return ()=>{ docL[p]=docL[p].filter(x=>x!==l); }; }
 });
 const db={ doc:docRef, collection:c=>({ doc:id=>docRef(c+'/'+id),
-  onSnapshot:(cb,err)=>{ ensureChan(); const l={cb}; (collL[c]=collL[c]||[]).push(l); readColl(c).then(m=>{ collData[c]=m; cb({docs:[...m.entries()].map(([p,d])=>dsnap(p,d))}); }).catch(e=>err&&err(e)); return ()=>{ collL[c]=collL[c].filter(x=>x!==l); }; } }) };
+  onSnapshot:(cb,err)=>{ ensureChan(); const l={cb}; (collL[c]=collL[c]||[]).push(l); loadColl(c).then(m=>{ collData[c]=m; cb({docs:[...m.entries()].map(([p,d])=>dsnap(p,d))}); }).catch(e=>err&&err(e)); return ()=>{ collL[c]=collL[c].filter(x=>x!==l); }; } }) };
 
 /* ===== user ===== */
 const UUID=/^[0-9a-f-]{36}$/i, nameCache={};
@@ -1596,7 +1610,7 @@ let saveTimer=null;
 function save(){ if(saveTimer) return; saveTimer=setTimeout(saveNow,250); }
 function saveNow(){ clearTimeout(saveTimer); saveTimer=null;
   const f=finState(), b=boardState();
-  try{localStorage.setItem(LS,JSON.stringify({fin:f,board:b}));}catch(e){}
+  try{localStorage.setItem(LS,JSON.stringify({fin:{...f,sd:undefined},board:b}));}catch(e){}
   if(typeof sync!=='undefined'&&sync) sync.pushAll();
 }
 window.addEventListener('pagehide',()=>{ if(saveTimer) saveNow(); });
@@ -4338,7 +4352,7 @@ function renderCap(){
   if($('#capTbl').contains(document.activeElement)) return;
   const txt=(i,key,v,w)=>`<input type="text" value="${esc(v||'')}" data-vt="${i}:${key}" aria-label="${key} ${esc(fleet[i].truck)}" style="width:${w}px">`;
   const num=(attr,v,w)=>`<input type="number" min="0" value="${v}" ${attr} style="width:${w||70}px;text-align:right">`;
-  $('#capTbl').innerHTML='<tr><th>ທະບຽນ / ປະເພດ</th><th>ໂຊເຟີປະຈຳ</th><th>ຜູ້ຊ່ວຍປະຈຳ</th><th>ຊ່ອງທາງສົ່ງ</th>'+prodPairs().map(([p,u])=>`<th class="r">${p}${u?'<br><small>('+u+')</small>':''}</th>`).join('')+'<th class="r">ຮອບ/ວັນ</th><th class="r">ຖັງ 18L / ວັນ</th></tr>'+
+  $('#capTbl').innerHTML='<tr><th>ທະບຽນ / ປະເພດ</th><th>ໂຊເຟີປະຈຳ</th><th>ຜູ້ຊ່ວຍປະຈຳ</th><th>ຊ່ອງທາງສົ່ງ</th>'+prodPairs().map(([p,u])=>`<th class="r">${esc(p)}${u?'<br><small>('+esc(u)+')</small>':''}</th>`).join('')+'<th class="r">ຮອບ/ວັນ</th><th class="r">ຖັງ 18L / ວັນ</th></tr>'+
     fleet.map((f,i)=>`<tr><td><b>${esc(f.truck)}</b><br><small>${esc(f.type)}</small></td><td>${txt(i,'driver',f.driver,90)}</td><td>${txt(i,'assistant',f.assistant,150)}</td><td><select data-ch="${i}" aria-label="ຊ່ອງທາງສົ່ງ ${esc(f.truck)}">${CHANNELS.map(([v,l])=>`<option value="${v}" ${f.channel===v?'selected':''}>${l}</option>`).join('')}</select></td>`+
       products.map((_,j)=>f.cap[j]||0).map((c,j)=>`<td class="r">${num(`data-cap="${i}:${j}" aria-label="ຄວາມຈຸ ${esc(prodPairs()[j][0])} ${esc(f.truck)}"`,c)}</td>`).join('')+
       `<td class="r">${num(`data-rounds="${i}" aria-label="ຮອບຕໍ່ວັນ ${esc(f.truck)}"`,f.rounds,56)}</td><td class="r"><b>${fmt(f.cap[0]*f.rounds)}</b></td></tr>`).join('')+
