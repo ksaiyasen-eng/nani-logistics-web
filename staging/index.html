@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-DcF1RfYzY4b0oWbWjyyMwn6RhC+PQnc8ciLLtQEHKIY=' 'sha256-+3dq0GHC0x4+wLpYUwfowT2znJolVAYojJLlH2U+lrQ=' 'sha256-T4hHvUAs4x1vsSzvfFX/AbcLUG0geiJFB5LqboiUS/I=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdnjs.cloudflare.com/ajax/libs/xlsx/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data: blob:; connect-src https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-DcF1RfYzY4b0oWbWjyyMwn6RhC+PQnc8ciLLtQEHKIY=' 'sha256-tVLLCwjPrxOcUXg8trGvkqqp1kPI7tjlaI68mRZj1pQ=' 'sha256-T4hHvUAs4x1vsSzvfFX/AbcLUG0geiJFB5LqboiUS/I=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdnjs.cloudflare.com/ajax/libs/xlsx/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data: blob:; connect-src https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex"><title>Nani Logistics</title>
 <style>#fuScanBox{display:none!important}</style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.js" integrity="sha384-rwykjmWNwVxboyFmvK9OXN0wj9hnMHA2aAHtits54DuACyCq0M2PrSNxhRb+hvXT" crossorigin="anonymous"></script>
@@ -5102,6 +5102,17 @@ body.lgx-m #page-mytruck > .form{order:3}
 .chip[aria-pressed=true]{background:color-mix(in srgb,var(--accent) 22%,transparent);border-color:var(--accent);color:var(--text);font-weight:600}
 .chip>span.lgx-zero,.lgx-zero{display:none}
 .lgx-fab{background:var(--surface)!important;color:var(--brand)!important;border:1.5px solid var(--brand)!important}
+body.lgx-m table.lgx-cards,body.lgx-m table.lgx-cards tbody,body.lgx-m table.lgx-cards tr,body.lgx-m table.lgx-cards td{display:block;width:100%;box-sizing:border-box}
+body.lgx-m table.lgx-cards tr.lgx-head{display:none}
+body.lgx-m table.lgx-cards tr{border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:0 0 10px;background:var(--surface)}
+body.lgx-m table.lgx-cards td{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:4px 0!important;border:0!important;text-align:right!important;position:static!important;min-width:0!important;white-space:normal!important}
+body.lgx-m table.lgx-cards td::before{content:attr(data-label);color:var(--muted);font-size:12.5px;text-align:left;flex:0 1 auto;max-width:45%}
+body.lgx-m table.lgx-cards td[data-label=""]::before{display:none}
+body.lgx-m table.lgx-cards td:first-child{display:block;text-align:left!important;font-size:15px;font-weight:700;padding-bottom:6px!important;border-bottom:1px solid var(--line)!important;margin-bottom:4px}
+body.lgx-m table.lgx-cards td:first-child::before{display:none}
+body.lgx-m table.lgx-cards td.lgx-blank{display:none}
+body.lgx-m table.lgx-cards td>:is(select,input){max-width:60%}
+body.lgx-m .tbl-wrap:has(> table.lgx-cards){overflow:visible}
 @media print{.lgx-out,.lgx-fab,.lgx-menu,.lgx-sum,.lgx-more,.lgx-kpimore{display:none!important}}`;
 document.body.appendChild(css); // ຫຼັງ <style> ຂອງແອັບ ເພື່ອໃຫ້ກົດລະບຽບມືຖືຊະນະ
 document.addEventListener('click',e=>{ const s=e.target.closest('header.top .sub'); if(s&&matchMedia('(max-width:700px)').matches) s.classList.toggle('lgx-open'); });
@@ -5146,8 +5157,13 @@ function enhanceOrder(){ const v=document.getElementById('odVil'); if(!v) return
 function enhanceKpis(){ document.querySelectorAll('[data-pg] > .kpis').forEach(k=>{ const n=k.querySelectorAll(':scope > .kpi').length; let b=k.nextElementSibling&&k.nextElementSibling.classList.contains('lgx-kpimore')?k.nextElementSibling:null;
   if(n<=4){ if(b) b.hidden=true; return; } if(!b){ b=mk('button','btn sm lgx-kpimore'); b.type='button'; b.onclick=()=>{ k.classList.toggle('lgx-kall'); enhanceKpis(); }; k.after(b); }
   b.hidden=false; const all=k.classList.contains('lgx-kall'); b.textContent=all?'▴ ຍໍ້ຕົວເລກ':'📊 ເບິ່ງຕົວເລກທັງໝົດ ('+n+') ▾'; b.setAttribute('aria-expanded',all); }); }
+// ຂັ້ນ 3: ຕາຕະລາງທີ່ໃຊ້ເລື້ອຍເປັນການ໌ດໃນມືຖື (ໃສ່ຊື່ຖັນໃຫ້ແຕ່ລະຊ່ອງ)
+const CARD_TABLES=['odTbl','planOver','arTbl'];
+function cardTables(){ CARD_TABLES.forEach(id=>{ const t=document.getElementById(id); if(!t) return; t.classList.add('lgx-cards'); const rows=[...t.rows]; const head=rows.find(r=>r.querySelector('th')&&!r.querySelector('td')); if(!head) return; head.classList.add('lgx-head');
+  const names=[]; [...head.cells].forEach(c=>{ for(let i=0;i<(c.colSpan||1);i++) names.push(c.textContent.trim()); });
+  rows.forEach(r=>{ if(r===head) return; let col=0; [...r.cells].forEach(c=>{ c.setAttribute('data-label',c.colSpan>1&&r.cells.length===1?'':names[col]||''); const txt=c.textContent.trim(); c.classList.toggle('lgx-blank',!c.querySelector('input,select,button,a')&&(txt===''||txt==='–'||txt==='-')); col+=c.colSpan||1; }); }); }); }
 function hideZeros(){ document.querySelectorAll('.chip > span').forEach(s=>s.classList.toggle('lgx-zero',s.textContent.trim()==='0')); }
-let enhT=null; const enh=()=>{ if(!enhT) enhT=setTimeout(()=>{ enhT=null; enhancePlan(); enhanceOrder(); enhanceKpis(); hideZeros(); document.body.classList.toggle('lgx-mkt',typeof myRole!=='undefined'&&myRole==='marketing'); },60); };
+let enhT=null; const enh=()=>{ if(!enhT) enhT=setTimeout(()=>{ enhT=null; enhancePlan(); enhanceOrder(); enhanceKpis(); hideZeros(); cardTables(); document.body.classList.toggle('lgx-mkt',typeof myRole!=='undefined'&&myRole==='marketing'); },60); };
 new MutationObserver(enh).observe(document.body,{childList:true,subtree:true});
 document.addEventListener('input',e=>{ if(e.target.closest('#odTabForm')) setTimeout(enhanceOrder,80); });
 document.addEventListener('change',e=>{ if(e.target.closest('#odTabForm')) setTimeout(enhanceOrder,80); if(e.target.id==='plDate') enh(); });
