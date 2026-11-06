@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-DcF1RfYzY4b0oWbWjyyMwn6RhC+PQnc8ciLLtQEHKIY=' 'sha256-tVLLCwjPrxOcUXg8trGvkqqp1kPI7tjlaI68mRZj1pQ=' 'sha256-T4hHvUAs4x1vsSzvfFX/AbcLUG0geiJFB5LqboiUS/I=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdnjs.cloudflare.com/ajax/libs/xlsx/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data: blob:; connect-src https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-DcF1RfYzY4b0oWbWjyyMwn6RhC+PQnc8ciLLtQEHKIY=' 'sha256-wgCIJwOK6a70peUq+nmux9g3b5bWdnigoSYxMkdM5qI=' 'sha256-T4hHvUAs4x1vsSzvfFX/AbcLUG0geiJFB5LqboiUS/I=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdnjs.cloudflare.com/ajax/libs/xlsx/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data: blob:; connect-src https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex"><title>Nani Logistics</title>
 <style>#fuScanBox{display:none!important}</style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.js" integrity="sha384-rwykjmWNwVxboyFmvK9OXN0wj9hnMHA2aAHtits54DuACyCq0M2PrSNxhRb+hvXT" crossorigin="anonymous"></script>
@@ -5113,7 +5113,13 @@ body.lgx-m table.lgx-cards td:first-child::before{display:none}
 body.lgx-m table.lgx-cards td.lgx-blank{display:none}
 body.lgx-m table.lgx-cards td>:is(select,input){max-width:60%}
 body.lgx-m .tbl-wrap:has(> table.lgx-cards){overflow:visible}
-@media print{.lgx-out,.lgx-fab,.lgx-menu,.lgx-sum,.lgx-more,.lgx-kpimore{display:none!important}}`;
+#lgxFiltBtn,.lgx-colmore{display:none}
+body.lgx-m #lgxFiltBtn{display:inline-flex;margin:0 0 10px;max-width:100%}
+body.lgx-m #filters:not(.lgx-filt-open){display:none}
+body.lgx-m #filters.lgx-filt-open{flex-wrap:wrap;overflow:visible;margin-inline:0;padding-inline:0}
+body.lgx-m #board .col:not(.lgx-all) .cards > :nth-child(n+6){display:none}
+body.lgx-m .lgx-colmore:not([hidden]){display:block;width:100%;margin-top:8px}
+@media print{.lgx-out,.lgx-fab,.lgx-menu,.lgx-sum,.lgx-more,.lgx-kpimore,#lgxFiltBtn,.lgx-colmore{display:none!important}}`;
 document.body.appendChild(css); // ຫຼັງ <style> ຂອງແອັບ ເພື່ອໃຫ້ກົດລະບຽບມືຖືຊະນະ
 document.addEventListener('click',e=>{ const s=e.target.closest('header.top .sub'); if(s&&matchMedia('(max-width:700px)').matches) s.classList.toggle('lgx-open'); });
 
@@ -5162,8 +5168,16 @@ const CARD_TABLES=['odTbl','planOver','arTbl'];
 function cardTables(){ CARD_TABLES.forEach(id=>{ const t=document.getElementById(id); if(!t) return; t.classList.add('lgx-cards'); const rows=[...t.rows]; const head=rows.find(r=>r.querySelector('th')&&!r.querySelector('td')); if(!head) return; head.classList.add('lgx-head');
   const names=[]; [...head.cells].forEach(c=>{ for(let i=0;i<(c.colSpan||1);i++) names.push(c.textContent.trim()); });
   rows.forEach(r=>{ if(r===head) return; let col=0; [...r.cells].forEach(c=>{ c.setAttribute('data-label',c.colSpan>1&&r.cells.length===1?'':names[col]||''); const txt=c.textContent.trim(); c.classList.toggle('lgx-blank',!c.querySelector('input,select,button,a')&&(txt===''||txt==='–'||txt==='-')); col+=c.colSpan||1; }); }); }); }
+// ຂັ້ນ 4: ໜ້າງານວັນນີ້ — ແຕ່ລະຖັນສະແດງ 5 ງານທີ່ຄົບກຳນົດກ່ອນ · ຕົວກັ່ນຕອງພັບໄວ້ໃນປຸ່ມດຽວ
+const openCols=new Set(); let filtOpen=false;
+function enhanceTasks(){ const board=document.getElementById('board'), filt=document.getElementById('filters'); if(!board||!filt) return;
+  [...board.querySelectorAll(':scope > .col')].forEach((col,i)=>{ const cards=col.querySelector('.cards'); if(!cards) return; const n=cards.children.length; col.classList.toggle('lgx-all',openCols.has(i)); let b=col.querySelector(':scope > .lgx-colmore');
+    if(n<=5){ if(b) b.hidden=true; return; } if(!b){ b=mk('button','btn sm lgx-colmore'); b.type='button'; b.onclick=()=>{ openCols.has(i)?openCols.delete(i):openCols.add(i); enhanceTasks(); }; col.append(b); }
+    b.hidden=false; b.textContent=openCols.has(i)?'▴ ສະແດງ 5 ງານ':'ເບິ່ງທັງໝົດ ('+n+') ▾'; b.setAttribute('aria-expanded',openCols.has(i)); });
+  let fb=document.getElementById('lgxFiltBtn'); if(!fb){ fb=mk('button','btn sm'); fb.type='button'; fb.id='lgxFiltBtn'; fb.onclick=()=>{ filtOpen=!filtOpen; enhanceTasks(); }; filt.before(fb); filt.addEventListener('click',e=>{ if(e.target.closest('.chip')){ filtOpen=false; setTimeout(enhanceTasks,50); } }); }
+  const cur=filt.querySelector('.chip[aria-pressed=true]'); fb.textContent='🔍 ປະເພດ: '+(cur?cur.textContent.replace(/\s+/g,' ').trim():'ທັງໝົດ')+(filtOpen?' ▴':' ▾'); fb.setAttribute('aria-expanded',filtOpen); filt.classList.toggle('lgx-filt-open',filtOpen); }
 function hideZeros(){ document.querySelectorAll('.chip > span').forEach(s=>s.classList.toggle('lgx-zero',s.textContent.trim()==='0')); }
-let enhT=null; const enh=()=>{ if(!enhT) enhT=setTimeout(()=>{ enhT=null; enhancePlan(); enhanceOrder(); enhanceKpis(); hideZeros(); cardTables(); document.body.classList.toggle('lgx-mkt',typeof myRole!=='undefined'&&myRole==='marketing'); },60); };
+let enhT=null; const enh=()=>{ if(!enhT) enhT=setTimeout(()=>{ enhT=null; enhancePlan(); enhanceOrder(); enhanceKpis(); hideZeros(); cardTables(); enhanceTasks(); document.body.classList.toggle('lgx-mkt',typeof myRole!=='undefined'&&myRole==='marketing'); },60); };
 new MutationObserver(enh).observe(document.body,{childList:true,subtree:true});
 document.addEventListener('input',e=>{ if(e.target.closest('#odTabForm')) setTimeout(enhanceOrder,80); });
 document.addEventListener('change',e=>{ if(e.target.closest('#odTabForm')) setTimeout(enhanceOrder,80); if(e.target.id==='plDate') enh(); });
