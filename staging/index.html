@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-DcF1RfYzY4b0oWbWjyyMwn6RhC+PQnc8ciLLtQEHKIY=' 'sha256-/N5sbk4Ess3sUoqDZAMO3OcVU1Z44CeNwOqq3ifswUA=' 'sha256-T4hHvUAs4x1vsSzvfFX/AbcLUG0geiJFB5LqboiUS/I=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdnjs.cloudflare.com/ajax/libs/xlsx/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data: blob:; connect-src https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-DcF1RfYzY4b0oWbWjyyMwn6RhC+PQnc8ciLLtQEHKIY=' 'sha256-jG8Q0jAn6sGpzSeoag+uCccpksoikuWWzBuNViJkKzs=' 'sha256-T4hHvUAs4x1vsSzvfFX/AbcLUG0geiJFB5LqboiUS/I=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdnjs.cloudflare.com/ajax/libs/xlsx/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data: blob:; connect-src https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex"><title>Nani Logistics</title>
 <style>#fuScanBox{display:none!important}</style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.js" integrity="sha384-rwykjmWNwVxboyFmvK9OXN0wj9hnMHA2aAHtits54DuACyCq0M2PrSNxhRb+hvXT" crossorigin="anonymous"></script>
@@ -5081,7 +5081,21 @@ body.lgx-m #odTabForm .form.lgx-hide{display:none!important}
 body.lgx-m #odNote{flex:1 1 100%!important}
 body.lgx-m #odSave{flex:1 1 100%;min-height:48px;font-size:16px}
 body.lgx-m #odItems [data-odi$=".pid"]{flex:1 1 100%!important}
-@media print{.lgx-out,.lgx-fab,.lgx-menu,.lgx-sum,.lgx-more{display:none!important}}`;
+.lgx-kpimore{display:none}
+body.lgx-m .lgx-kpimore:not([hidden]){display:block;width:100%;margin:-4px 0 12px}
+body.lgx-m [data-pg] > .kpis:not(.lgx-kall) > .kpi:nth-child(n+5){display:none}
+/* ຂັ້ນ 1: ໜ້າທີ່ມີງານປະຈຳວັນ → ງານຂຶ້ນກ່ອນ ຕົວເລກໄວ້ລຸ່ມ */
+body.lgx-m :is(#page-stock,#page-factory,#page-orders,#page-fuel,#page-plan,#page-mytruck):not([hidden]){display:flex;flex-direction:column}
+body.lgx-m :is(#page-stock,#page-factory,#page-orders,#page-fuel,#page-plan,#page-mytruck) > *{order:6}
+body.lgx-m :is(#page-stock,#page-factory,#page-orders,#page-fuel,#page-plan,#page-mytruck) > header.top{order:0}
+body.lgx-m :is(#stAlerts,#autoAl_factory,#odAlerts,#autoAl_fuel,#planAlerts,#mtAlerts){order:1}
+body.lgx-m :is(#stSecs,#autoSec_factory,#odSecBar,#autoSec_fuel,#plSecBar){order:2}
+body.lgx-m :is(#mtJob,#page-stock>[data-sec=tl],#page-factory>[data-sec=a0],#page-orders>[data-sec=list],#page-fuel>.panels,#plTrucks){order:3}
+body.lgx-m.lgx-mkt #page-orders>[data-sec=add]{order:3}
+body.lgx-m.lgx-mkt #page-orders>[data-sec=list]{order:4}
+body.lgx-m :is(#page-stock,#page-factory,#page-orders,#page-fuel,#page-plan,#page-mytruck) > :is(.kpis,.lgx-kpimore){order:5}
+body.lgx-m #page-mytruck > .form{order:3}
+@media print{.lgx-out,.lgx-fab,.lgx-menu,.lgx-sum,.lgx-more,.lgx-kpimore{display:none!important}}`;
 document.body.appendChild(css); // ຫຼັງ <style> ຂອງແອັບ ເພື່ອໃຫ້ກົດລະບຽບມືຖືຊະນະ
 document.addEventListener('click',e=>{ const s=e.target.closest('header.top .sub'); if(s&&matchMedia('(max-width:700px)').matches) s.classList.toggle('lgx-open'); });
 
@@ -5121,7 +5135,11 @@ function enhancePlan(){ const box=document.getElementById('plTrucks'); if(!box) 
 function enhanceOrder(){ const v=document.getElementById('odVil'); if(!v) return; const row=v.closest('.form'); let b=document.getElementById('lgxOdMore');
   if(!b){ b=mk('button','btn sm','＋ ບ້ານ · ເມືອງ · ເບີໂທ'); b.type='button'; b.id='lgxOdMore'; b.onclick=()=>{ row.dataset.open='1'; enhanceOrder(); v.focus(); }; row.before(b); }
   const filled=[...row.querySelectorAll('input')].some(i=>i.value.trim()), show=filled||row.dataset.open==='1'; row.classList.toggle('lgx-hide',!show); b.hidden=show; }
-let enhT=null; const enh=()=>{ if(!enhT) enhT=setTimeout(()=>{ enhT=null; enhancePlan(); enhanceOrder(); },60); };
+// ຂັ້ນ 1: ຕົວເລກຫົວໜ້າເຫຼືອ 4 ກ່ອງ ທີ່ເຫຼືອພັບໄວ້ (ມືຖືເທົ່ານັ້ນ)
+function enhanceKpis(){ document.querySelectorAll('[data-pg] > .kpis').forEach(k=>{ const n=k.querySelectorAll(':scope > .kpi').length; let b=k.nextElementSibling&&k.nextElementSibling.classList.contains('lgx-kpimore')?k.nextElementSibling:null;
+  if(n<=4){ if(b) b.hidden=true; return; } if(!b){ b=mk('button','btn sm lgx-kpimore'); b.type='button'; b.onclick=()=>{ k.classList.toggle('lgx-kall'); enhanceKpis(); }; k.after(b); }
+  b.hidden=false; const all=k.classList.contains('lgx-kall'); b.textContent=all?'▴ ຍໍ້ຕົວເລກ':'📊 ເບິ່ງຕົວເລກທັງໝົດ ('+n+') ▾'; b.setAttribute('aria-expanded',all); }); }
+let enhT=null; const enh=()=>{ if(!enhT) enhT=setTimeout(()=>{ enhT=null; enhancePlan(); enhanceOrder(); enhanceKpis(); document.body.classList.toggle('lgx-mkt',typeof myRole!=='undefined'&&myRole==='marketing'); },60); };
 new MutationObserver(enh).observe(document.body,{childList:true,subtree:true});
 document.addEventListener('input',e=>{ if(e.target.closest('#odTabForm')) setTimeout(enhanceOrder,80); });
 document.addEventListener('change',e=>{ if(e.target.closest('#odTabForm')) setTimeout(enhanceOrder,80); if(e.target.id==='plDate') enh(); });
