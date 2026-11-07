@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-DcF1RfYzY4b0oWbWjyyMwn6RhC+PQnc8ciLLtQEHKIY=' 'sha256-wgCIJwOK6a70peUq+nmux9g3b5bWdnigoSYxMkdM5qI=' 'sha256-T4hHvUAs4x1vsSzvfFX/AbcLUG0geiJFB5LqboiUS/I=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdnjs.cloudflare.com/ajax/libs/xlsx/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data: blob:; connect-src https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-DcF1RfYzY4b0oWbWjyyMwn6RhC+PQnc8ciLLtQEHKIY=' 'sha256-COHd5fY3KLjSuVL6cEzCHnRgPETYbHmlnLDrcKZyEUg=' 'sha256-QGGfwXWT0sfj8GN78ADUVtB/3TPLr0I85ZZySat5C5M=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdnjs.cloudflare.com/ajax/libs/xlsx/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data: blob:; connect-src https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex"><title>Nani Logistics</title>
 <style>#fuScanBox{display:none!important}</style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.js" integrity="sha384-rwykjmWNwVxboyFmvK9OXN0wj9hnMHA2aAHtits54DuACyCq0M2PrSNxhRb+hvXT" crossorigin="anonymous"></script>
@@ -635,7 +635,7 @@ body.factory-only nav a:not([data-page="factory"]),body.factory-only #sampleBann
   <div id="odAlerts" style="margin:-4px 0 12px"></div>
   <div class="secbar" id="odSecBar" role="group" aria-label="ເລືອກສ່ວນທີ່ສະແດງ"></div>
   <div class="panel" data-sec="list" style="margin-bottom:14px"><h3>ອໍເດີ <small class="sub" id="odSub"></small> <small class="sub">· ເລືອກລົດ = ເຂົ້າແຜນຂົນສົ່ງປະຈຳວັນທັນທີ · ປ່ຽນລົດ = ຍ້າຍໃນແຜນ</small></h3>
-    <div class="form" style="margin:0 0 8px;align-items:center"><span id="odFilt" style="display:flex;gap:6px;flex-wrap:wrap;flex:1 1 auto"></span><button class="btn primary" type="button" id="odConfirmAll">✓ ຢືນຢັນທຸກອໍເດີຕາມລົດທີ່ແນະນຳ → ເຂົ້າແຜນ</button></div>
+    <div class="form" style="margin:0 0 8px;align-items:center"><span id="odFilt" style="display:flex;gap:6px;flex-wrap:wrap;flex:1 1 auto"></span><button class="btn primary" type="button" id="odConfirmAll">✓ ຢືນຢັນທຸກອໍເດີຕາມລົດທີ່ແນະນຳ → ເຂົ້າແຜນ</button><button class="btn" type="button" id="odMoveAll">➡ ຍ້າຍທີ່ຍັງບໍ່ສຳເລັດໄປມື້ຖັດໄປ</button></div>
     <div class="tbl-wrap"><table class="tbl" id="odTbl"></table></div></div>
   <div class="panel" data-sec="add" style="margin-bottom:14px"><h3>➕ ເພີ່ມອໍເດີ <span class="actions" style="font-weight:400"><button class="chip" type="button" data-odtab="form" aria-pressed="true">✍ ກອກຟອມ</button><button class="chip" type="button" data-odtab="paste" aria-pressed="false">📥 ວາງຈາກ Telegram</button></span></h3>
     <div id="odTabForm">
@@ -3820,9 +3820,10 @@ function renderOrders(){ const d=odDate(), H=odHist(), pOpt=products.filter(p=>p
       <td>${o.pm?PM[o.pm][0]+' '+PM[o.pm][1]+(o.pm==='debt'&&o.collect?'<br><small>'+fmt(o.collect)+'</small>':''):'💵 '+(o.collect?fmt(o.collect):'–')}</td>
       <td>${A&&o.status!=='done'?`<select data-odtruck="${o.id}"><option value="">— ເລືອກລົດ —</option>${tOpt.replace(`value="${esc(sug)}"`,`value="${esc(sug)}" selected`)}</select>${!o.truck&&sug?`<br><small class="sub">ແນະນຳ: ເຄີຍສົ່ງ ${fmtKey(h.date)}</small>`:''}`:esc(sug||'–')}</td>
       <td>${o.status==='done'?odDoneTag(o):o.status==='ok'?(odInPlan(o)?`<span class="tag done">✓ ຢູ່ໃນແຜນ ${esc(o.truck)}</span>`:'<span class="tag high">ຖືກລຶບອອກຈາກແຜນ — ເລືອກລົດໃໝ່</span>'):'<span class="tag wait">ລໍຖ້າເລືອກລົດ</span>'}</td>
-      <td style="white-space:nowrap">${o.status==='new'&&A&&sug?`<button class="btn sm primary" type="button" data-odok="${o.id}">✓ ຢືນຢັນ ${esc(sug)}</button> `:''}${o.status==='ok'?odBillBox(o)+'<br>':''}${o.status==='ok'||o.status==='done'?`<button class="btn sm" type="button" data-odplan="${esc(o.date)}">📋 ເບິ່ງແຜນ</button> `:''}${o.status==='done'&&A?`<button class="btn sm" type="button" data-odundone="${o.id}">↩ ຍົກເລີກສຳເລັດ</button>`:''}${(o.status==='new'&&(A||o.by===me.id))||(o.status==='ok'&&A)?`<button class="btn sm" type="button" data-odcancel="${o.id}">ຍົກເລີກ</button>`:''}</td></tr>`; }).join('')
+      <td style="white-space:nowrap">${o.status==='new'&&A&&sug?`<button class="btn sm primary" type="button" data-odok="${o.id}">✓ ຢືນຢັນ ${esc(sug)}</button> `:''}${o.status==='ok'?odBillBox(o)+'<br>':''}${o.status==='ok'||o.status==='done'?`<button class="btn sm" type="button" data-odplan="${esc(o.date)}">📋 ເບິ່ງແຜນ</button> `:''}${o.status==='done'&&A?`<button class="btn sm" type="button" data-odundone="${o.id}">↩ ຍົກເລີກສຳເລັດ</button>`:''}${(o.status==='new'&&(A||o.by===me.id))||(o.status==='ok'&&A)?`<button class="btn sm" type="button" data-odmove="${o.id}">➡ ຍ້າຍໄປ ${esc(dmOf(addDays(o.date,1)))}</button> <button class="btn sm" type="button" data-odcancel="${o.id}">ຍົກເລີກ</button>`:''}</td></tr>`; }).join('')
     :'<tr><td colspan="6" class="sub">ບໍ່ມີອໍເດີສຳລັບວັນສົ່ງນີ້</td></tr>');
   $('#odConfirmAll').hidden=!A||!N.some(o=>o.truck||odHit(H,o));
+  $('#odMoveAll').hidden=!A||!LA.some(o=>o.status==='new'||o.status==='ok');
   // ໂຫຼດຕໍ່ຄັນ ທຽບຄວາມຈຸ
   const T={}; L.forEach(o=>{ const h=odHit(H,o), t=o.truck||(o.status==='new'&&h&&fleetOf(h.truck)?h.truck:''); if(!t) return; const x=T[t]=T[t]||{n:0,q:{}}; x.n++; o.items.forEach(i=>{ if(i.pid) x.q[i.pid]=(x.q[i.pid]||0)+i.q+i.free; }); });
   $('#odLoad').innerHTML='<tr><th>ລົດ</th><th class="r">ຮ້ານ</th><th>ສິນຄ້າ / ຄວາມຈຸຕໍ່ຖ້ຽວ</th></tr>'+(Object.keys(T).length?Object.entries(T).map(([t,x])=>{ const f=fleetOf(t);
@@ -3844,12 +3845,14 @@ function slBills(){ const sig=saleDays.length+':'+saleDays.reduce((a,x)=>a+(x.bx
   slBillIdx={byBill:{},byCid:{},days:new Set()}; saleDays.forEach(x=>{ if(!x.bx) return; slBillIdx.days.add(x.date); x.bx.forEach(([b,c,t,q])=>{ const r={bill:b,cid:c,t,q,date:x.date}; slBillIdx.byBill[b]=r; if(c) (slBillIdx.byCid[c]=slBillIdx.byCid[c]||[]).push(r); }); }); slBillSig=sig; return slBillIdx; }
 // ຈັບຄູ່ອັດຕະໂນມັດ: ອໍເດີທີ່ມີລະຫັດລູກຄ້າ ↔ ບິນຂາຍຂອງລະຫັດດຽວກັນ ພາຍໃນ −1…+3 ວັນຈາກວັນສົ່ງ → ສົ່ງສຳເລັດ
 function odAutoMatch(){ if(!isAdminUser) return 0; const I=slBills(), used=new Set(orders.filter(o=>o.bill).map(o=>o.bill)); let n=0;
-  orders.filter(o=>(o.status==='new'||o.status==='ok')&&o.cid&&I.byCid[o.cid]).forEach(o=>{ const lo=addDays(o.date,-1), hi=addDays(o.date,3);
-    const c=I.byCid[o.cid].filter(r=>r.date>=lo&&r.date<=hi&&!used.has(r.bill)).sort((a,b)=>Math.abs(keyToDate(a.date)-keyToDate(o.date))-Math.abs(keyToDate(b.date)-keyToDate(o.date)))[0]; if(!c) return;
+  // ສະເພາະບິນວັນດຽວກັບວັນສົ່ງ: ລູກຄ້າສັ່ງຊ້ຳທຸກມື້ ບິນມື້ອື່ນເປັນຂອງອໍເດີອື່ນ · ສົ່ງບໍ່ທັນ → ຍ້າຍອໍເດີໄປມື້ຖັດໄປ ແລ້ວຈະຈັບຄູ່ເອງ
+  orders.filter(o=>(o.status==='new'||o.status==='ok')&&o.cid&&I.byCid[o.cid]).forEach(o=>{
+    const c=I.byCid[o.cid].find(r=>r.date===o.date&&!used.has(r.bill)); if(!c) return;
     used.add(c.bill); Object.assign(o,{status:'done',bill:c.bill,doneAt:stamp(),doneBy:'auto',truck:o.truck||slTruck(c.t)||''}); n++; });
   if(n) logAct('trip','ຈັບຄູ່ອໍເດີກັບບິນຂາຍອັດຕະໂນມັດ '+n+' ລາຍການ'); return n; }
 // ກວດເລກບິນກັບໄຟລ໌ຍອດຂາຍ
 function odBillCheck(o){ if(!o.bill) return ''; const I=slBills(), r=I.byBill[o.bill], bd=o.bill.slice(4,8)+'-'+o.bill.slice(8,10)+'-'+o.bill.slice(10,12);
+  if(r&&r.date!==o.date&&!(o.cid&&r.cid&&r.cid!==o.cid)) return `<br><span class="tag high">⚠ ບິນວັນ ${fmtKey(r.date)} ບໍ່ແມ່ນວັນສົ່ງນີ້</span>`;
   if(r) return o.cid&&r.cid&&r.cid!==o.cid?`<br><span class="tag high">⚠ ບິນນີ້ເປັນຂອງລະຫັດ ${esc(r.cid)}</span>`:'<br><small style="color:var(--ok)">✓ ພົບໃນໄຟລ໌ຍອດຂາຍ '+fmtKey(r.date)+'</small>';
   return I.days.has(bd)?'<br><span class="tag high">⚠ ບໍ່ພົບໃນໄຟລ໌ຍອດຂາຍ</span>':'<br><small class="sub">ລໍຖ້ານຳເຂົ້າໄຟລ໌ຍອດຂາຍເພື່ອກວດ</small>'; }
 // ຢືນຢັນສົ່ງສຳເລັດ ດ້ວຍເລກບິນທີ່ຍິງຂາຍ (ORD-YYYYMMDD-XXXXXX)
@@ -3873,6 +3876,9 @@ function odConfirm(o){ if(!isAdminUser||o.status!=='new') return false; const t=
 // ລຶບຮ້ານຂອງອໍເດີນີ້ອອກຈາກແຜນ (ເວລາປ່ຽນລົດ / ຍົກເລີກ)
 function odUnplace(o){ const P=planOf(o.date); if(!P) return; P.trucks.forEach(T=>T.rounds.forEach(r=>{ r.stops=r.stops.filter(x=>x.oid!==o.id); })); }
 const odInPlan=o=>{ const P=planOf(o.date); return !!P&&P.trucks.some(T=>T.truck===o.truck&&T.rounds.some(r=>r.stops.some(x=>x.oid===o.id||(!x.oid&&x.c===o.c)))); };
+const odCanMove=o=>(o.status==='new'&&(isAdminUser||o.by===me.id))||(o.status==='ok'&&isAdminUser);
+function odMoveNext(o){ if(!odCanMove(o)) return false; const was=o.status, from=o.date; if(was==='ok'){ odUnplace(o); o.status='new'; }
+  o.date=addDays(from,1); if(was==='ok') odConfirm(o); return true; }
 function odGoPlan(d){ plDate=d; showPage('plan'); }
 $('#odDate').addEventListener('change',renderOrders);
 ['#odCid','#odCust'].forEach(sel=>$(sel).addEventListener('change',()=>{ const p=odCustOf($('#odCid').value.trim(),$('#odCust').value.trim()); if(!p) return;
@@ -3903,7 +3909,11 @@ $('#odTbl').addEventListener('click',e=>{ const k=e.target.closest('[data-odok]'
   if(k){ const o=orders.find(x=>x.id===+k.dataset.odok); if(!o) return; if(!odConfirm(o)){ toast('ເລືອກລົດກ່ອນ'); return; } renderFin(); note('trip','ຢືນຢັນອໍເດີ '+o.c+' → ລົດ '+o.truck+' ('+fmtKey(o.date)+')'); }
   const pl=e.target.closest('[data-odplan]'); if(pl){ odGoPlan(pl.dataset.odplan); return; }
   if(odDoneClick(e)) return; const ud=e.target.closest('[data-odundone]'); if(ud){ odUndone(ud.dataset.odundone); return; }
+  const mv=e.target.closest('[data-odmove]'); if(mv){ const o=orders.find(x=>x.id===+mv.dataset.odmove), from=o&&o.date; if(!o||!odMoveNext(o)) return; renderFin(); note('trip','ຍ້າຍອໍເດີ '+o.c+' ຈາກ '+fmtKey(from)+' → '+fmtKey(o.date)+(o.status==='ok'?' (ລົດ '+o.truck+')':'')); toast('➡ ຍ້າຍ '+o.c+' ໄປ '+fmtKey(o.date)); return; }
   if(c){ const o=orders.find(x=>x.id===+c.dataset.odcancel); if(!o||!(o.status==='new'&&(isAdminUser||o.by===me.id))&&!(o.status==='ok'&&isAdminUser)) return; if(o.status==='ok') odUnplace(o); o.status='cancel'; renderFin(); note('trip','ຍົກເລີກອໍເດີ '+o.c); } });
+$('#odMoveAll').onclick=()=>{ const d=odDate(), L=orders.filter(o=>o.date===d&&(o.status==='new'||o.status==='ok')), nx=addDays(d,1); if(!L.length) return;
+  if(!confirm('ຍ້າຍ '+L.length+' ອໍເດີທີ່ຍັງບໍ່ສຳເລັດ ຈາກ '+fmtKey(d)+' ໄປ '+fmtKey(nx)+'?\nອໍເດີທີ່ເຂົ້າແຜນແລ້ວ ຈະຍ້າຍໄປແຜນມື້ໃໝ່ກັບລົດຄັນເກົ່າ')) return;
+  let n=0; L.forEach(o=>{ if(odMoveNext(o)) n++; }); renderFin(); note('trip','ຍ້າຍອໍເດີທີ່ຍັງບໍ່ສຳເລັດ '+n+' ລາຍການ '+fmtKey(d)+' → '+fmtKey(nx)); toast('➡ ຍ້າຍ '+n+' ອໍເດີໄປ '+fmtKey(nx)); };
 $('#odConfirmAll').onclick=()=>{ const d=odDate(), L=orders.filter(o=>o.date===d&&o.status==='new'); let n=0; L.forEach(o=>{ if(odConfirm(o)) n++; });
   renderFin(); note('trip','ຢືນຢັນອໍເດີເຂົ້າແຜນ '+n+'/'+L.length+' ລາຍການ ('+fmtKey(d)+')'); if(n<L.length) toast((L.length-n)+' ອໍເດີຍັງບໍ່ໄດ້ເລືອກລົດ'); };
 
@@ -5113,6 +5123,19 @@ body.lgx-m table.lgx-cards td:first-child::before{display:none}
 body.lgx-m table.lgx-cards td.lgx-blank{display:none}
 body.lgx-m table.lgx-cards td>:is(select,input){max-width:60%}
 body.lgx-m .tbl-wrap:has(> table.lgx-cards){overflow:visible}
+body.lgx-m table.lgx-cards td>:is(input,select){flex:0 1 60%;min-width:0}
+body.lgx-m table.lgx-cards td:first-child>input{width:100%;max-width:none}
+body.lgx-m table.lgx-cards td:first-child>input+small.sub{display:none}
+body.lgx-m [id^=autoAl_] li small.sub{display:none}
+body.lgx-m .lgx-fold>[aria-expanded]{cursor:pointer}
+body.lgx-m .lgx-fold>[aria-expanded]::after{content:' ▾';color:var(--muted);font-weight:400}
+body.lgx-m .lgx-fold.lgx-open>[aria-expanded]::after{content:' ▴'}
+body.lgx-m .vcard.lgx-fold:not(.lgx-open)>:not(h4){display:none}
+body.lgx-m .vcard.lgx-fold>h4{margin:0}
+body.lgx-m tr.lgx-fold:not(.lgx-open)>td:not(:first-child){display:none}
+body.lgx-m tr.lgx-fold:not(.lgx-open)>td:first-child{border-bottom:0!important;margin:0;padding-bottom:4px!important}
+body.lgx-m #prodTbl tr.lgx-fold:not(.lgx-open)>td:nth-child(2){display:flex}
+body.lgx-m small{font-size:max(12px,.83em)}
 #lgxFiltBtn,.lgx-colmore{display:none}
 body.lgx-m #lgxFiltBtn{display:inline-flex;margin:0 0 10px;max-width:100%}
 body.lgx-m #filters:not(.lgx-filt-open){display:none}
@@ -5164,8 +5187,9 @@ function enhanceKpis(){ document.querySelectorAll('[data-pg] > .kpis').forEach(k
   if(n<=4){ if(b) b.hidden=true; return; } if(!b){ b=mk('button','btn sm lgx-kpimore'); b.type='button'; b.onclick=()=>{ k.classList.toggle('lgx-kall'); enhanceKpis(); }; k.after(b); }
   b.hidden=false; const all=k.classList.contains('lgx-kall'); b.textContent=all?'▴ ຍໍ້ຕົວເລກ':'📊 ເບິ່ງຕົວເລກທັງໝົດ ('+n+') ▾'; b.setAttribute('aria-expanded',all); }); }
 // ຂັ້ນ 3: ຕາຕະລາງທີ່ໃຊ້ເລື້ອຍເປັນການ໌ດໃນມືຖື (ໃສ່ຊື່ຖັນໃຫ້ແຕ່ລະຊ່ອງ)
-const CARD_TABLES=['odTbl','planOver','arTbl'];
-function cardTables(){ CARD_TABLES.forEach(id=>{ const t=document.getElementById(id); if(!t) return; t.classList.add('lgx-cards'); const rows=[...t.rows]; const head=rows.find(r=>r.querySelector('th')&&!r.querySelector('td')); if(!head) return; head.classList.add('lgx-head');
+// ຕາຕະລາງແກ້ໄຂທີ່ກວ້າງ (ຄວາມຈຸລົດ ກຳນົດຈ່າຍ ສິນຄ້າ) ກໍເປັນການ໌ດ: ໃນມືຖືເຫັນພຽງ 2-3 ຖັນ ແລະ ຊ່ອງກອກບີບຈົນອ່ານບໍ່ອອກ
+const CARD_TABLES='#odTbl,#planOver,#arTbl,#capTbl,#prodTbl,#page-fleet table:has([data-vd])';
+function cardTables(){ document.querySelectorAll(CARD_TABLES).forEach(t=>{ t.classList.add('lgx-cards'); const rows=[...t.rows]; const head=rows.find(r=>r.querySelector('th')&&!r.querySelector('td')); if(!head) return; head.classList.add('lgx-head');
   const names=[]; [...head.cells].forEach(c=>{ for(let i=0;i<(c.colSpan||1);i++) names.push(c.textContent.trim()); });
   rows.forEach(r=>{ if(r===head) return; let col=0; [...r.cells].forEach(c=>{ c.setAttribute('data-label',c.colSpan>1&&r.cells.length===1?'':names[col]||''); const txt=c.textContent.trim(); c.classList.toggle('lgx-blank',!c.querySelector('input,select,button,a')&&(txt===''||txt==='–'||txt==='-')); col+=c.colSpan||1; }); }); }); }
 // ຂັ້ນ 4: ໜ້າງານວັນນີ້ — ແຕ່ລະຖັນສະແດງ 5 ງານທີ່ຄົບກຳນົດກ່ອນ · ຕົວກັ່ນຕອງພັບໄວ້ໃນປຸ່ມດຽວ
@@ -5176,8 +5200,18 @@ function enhanceTasks(){ const board=document.getElementById('board'), filt=docu
     b.hidden=false; b.textContent=openCols.has(i)?'▴ ສະແດງ 5 ງານ':'ເບິ່ງທັງໝົດ ('+n+') ▾'; b.setAttribute('aria-expanded',openCols.has(i)); });
   let fb=document.getElementById('lgxFiltBtn'); if(!fb){ fb=mk('button','btn sm'); fb.type='button'; fb.id='lgxFiltBtn'; fb.onclick=()=>{ filtOpen=!filtOpen; enhanceTasks(); }; filt.before(fb); filt.addEventListener('click',e=>{ if(e.target.closest('.chip')){ filtOpen=false; setTimeout(enhanceTasks,50); } }); }
   const cur=filt.querySelector('.chip[aria-pressed=true]'); fb.textContent='🔍 ປະເພດ: '+(cur?cur.textContent.replace(/\s+/g,' ').trim():'ທັງໝົດ')+(filtOpen?' ▴':' ▾'); fb.setAttribute('aria-expanded',filtOpen); filt.classList.toggle('lgx-filt-open',filtOpen); }
+// ມືຖື: ການ໌ດແກ້ໄຂທີ່ຍາວ (ກຳນົດຈ່າຍ ຄວາມຈຸລົດ ສິນຄ້າ) ຍໍ້ໄວ້ ກົດຫົວການ໌ດເພື່ອເປີດ
+const openFold=new Set();
+function foldEl(el,head,key){ el.classList.add('lgx-fold'); head.dataset.lgxKey=key; const open=openFold.has(key); el.classList.toggle('lgx-open',open); head.setAttribute('aria-expanded',open);
+  if(head.dataset.lgxFold) return; head.dataset.lgxFold=1; head.tabIndex=0; head.setAttribute('role','button');
+  const t=()=>{ const k=head.dataset.lgxKey; openFold.has(k)?openFold.delete(k):openFold.add(k); foldMobile(); };
+  head.addEventListener('click',e=>{ if(!e.target.closest('input,select,button,a')) t(); });
+  head.addEventListener('keydown',e=>{ if((e.key==='Enter'||e.key===' ')&&e.target===head){ e.preventDefault(); t(); } }); }
+function foldMobile(){ if(!MQ.matches) return;
+  document.querySelectorAll('#vdGrid > .vcard').forEach(c=>{ const h=c.querySelector(':scope > h4'); if(h) foldEl(c,h,'vd:'+h.textContent.trim()); });
+  document.querySelectorAll('#capTbl tr:not(.lgx-head), #prodTbl tr:not(.lgx-head)').forEach(r=>{ const c=r.cells[0]; if(!c||r.cells.length<3) return; foldEl(r,c,r.closest('table').id+':'+c.textContent.trim()); }); }
 function hideZeros(){ document.querySelectorAll('.chip > span').forEach(s=>s.classList.toggle('lgx-zero',s.textContent.trim()==='0')); }
-let enhT=null; const enh=()=>{ if(!enhT) enhT=setTimeout(()=>{ enhT=null; enhancePlan(); enhanceOrder(); enhanceKpis(); hideZeros(); cardTables(); enhanceTasks(); document.body.classList.toggle('lgx-mkt',typeof myRole!=='undefined'&&myRole==='marketing'); },60); };
+let enhT=null; const enh=()=>{ if(!enhT) enhT=setTimeout(()=>{ enhT=null; enhancePlan(); enhanceOrder(); enhanceKpis(); hideZeros(); cardTables(); foldMobile(); enhanceTasks(); document.body.classList.toggle('lgx-mkt',typeof myRole!=='undefined'&&myRole==='marketing'); },60); };
 new MutationObserver(enh).observe(document.body,{childList:true,subtree:true});
 document.addEventListener('input',e=>{ if(e.target.closest('#odTabForm')) setTimeout(enhanceOrder,80); });
 document.addEventListener('change',e=>{ if(e.target.closest('#odTabForm')) setTimeout(enhanceOrder,80); if(e.target.id==='plDate') enh(); });
