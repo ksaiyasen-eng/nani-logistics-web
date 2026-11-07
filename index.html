@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-DcF1RfYzY4b0oWbWjyyMwn6RhC+PQnc8ciLLtQEHKIY=' 'sha256-COHd5fY3KLjSuVL6cEzCHnRgPETYbHmlnLDrcKZyEUg=' 'sha256-QGGfwXWT0sfj8GN78ADUVtB/3TPLr0I85ZZySat5C5M=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdnjs.cloudflare.com/ajax/libs/xlsx/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data: blob:; connect-src https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-DcF1RfYzY4b0oWbWjyyMwn6RhC+PQnc8ciLLtQEHKIY=' 'sha256-xHICI4fYz6DQKazJPAjjyZM/Hn5qHoayYZRrrIvQ1Dc=' 'sha256-9aoy/tfIuuNWMxWPp+LmWPZD0dMSa2uyYvCipolI9lc=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdnjs.cloudflare.com/ajax/libs/xlsx/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data: blob:; connect-src 'self' https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="lgx-build" content="bb467c890556">
 <meta name="robots" content="noindex"><title>Nani Logistics</title>
 <style>#fuScanBox{display:none!important}</style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.js" integrity="sha384-rwykjmWNwVxboyFmvK9OXN0wj9hnMHA2aAHtits54DuACyCq0M2PrSNxhRb+hvXT" crossorigin="anonymous"></script>
@@ -3812,7 +3812,8 @@ function renderOrders(){ const d=odDate(), H=odHist(), pOpt=products.filter(p=>p
   $('#odKpis').innerHTML=[['ອໍເດີວັນສົ່ງ '+fmtKey(d),LA.length,'ທັງໝົດ','all',''],['ລໍຖ້າເລືອກລົດ',N.length,N.length?'ກົດເພື່ອເບິ່ງສະເພາະ':'ຄົບແລ້ວ ✓','new',N.length?'neg':'pos'],['ເຂົ້າແຜນ · ລໍຖ້າສົ່ງ',LA.filter(o=>o.status==='ok').length,'ໃສ່ເລກບິນເມື່ອສົ່ງແລ້ວ','ok',''],['✅ ສົ່ງສຳເລັດ',LA.filter(o=>o.status==='done').length+' / '+LA.length,'ຢືນຢັນດ້ວຍເລກບິນ','done',LA.length&&LA.every(o=>o.status==='done')?'pos':''],['ເງິນສົດທີ່ຕ້ອງເກັບ',fmt(LA.reduce((a,o)=>a+pmCash(o),0)),'ກີບ','',''],['ລໍຖ້າ ວັນອື່ນ',OD.reduce((a,[,n])=>a+n,0),OD.length?OD.slice(0,2).map(([k,n])=>dmOf(k)+' ('+n+')').join(' · '):'–','','']]
     .map(([l,v,h,f,c])=>`<${f?`button type="button" data-odf="${f}" style="text-align:left;cursor:pointer;font:inherit;color:inherit${odFilter===f?';outline:2px solid var(--accent)':''}"`:'div'} class="kpi ${c}"><div class="label">${l}</div><div class="val">${v}</div><div class="hint">${esc(h)}</div></${f?'button':'div'}>`).join('');
   $('#odFilt').innerHTML=[['all','ທັງໝົດ',LA.length],['new','⏳ ລໍຖ້າເລືອກລົດ',N.length],['ok','🚛 ລໍຖ້າສົ່ງ',LA.filter(o=>o.status==='ok').length],['done','✅ ສຳເລັດ',LA.filter(o=>o.status==='done').length]].map(([k,l,n])=>`<button class="chip" type="button" data-odf="${k}" aria-pressed="${odFilter===k}">${l} <span>${n}</span></button>`).join('');
-  { const al=[...(()=>{ const n=N.filter(o=>!o.truck&&!odHit(H,o)).length; return n?[`<li><a href="#" data-odf="new">${n} ອໍເດີ ບໍ່ມີລົດແນະນຳ (ລູກຄ້າໃໝ່) — ຕ້ອງເລືອກລົດເອງ</a></li>`]:[]; })(),...OD.map(([k,n])=>`<li><a href="#" data-oddate="${k}">ມີ ${n} ອໍເດີລໍຖ້າ ວັນສົ່ງ ${fmtKey(k)}</a></li>`)];
+  { const al=[...(()=>{ const n=N.filter(o=>!o.truck&&!odHit(H,o)).length; return n?[`<li><a href="#" data-odf="new">${n} ອໍເດີ ບໍ່ມີລົດແນະນຳ (ລູກຄ້າໃໝ່) — ຕ້ອງເລືອກລົດເອງ</a></li>`]:[]; })(),...OD.map(([k,n])=>`<li><a href="#" data-oddate="${k}">ມີ ${n} ອໍເດີລໍຖ້າ ວັນສົ່ງ ${fmtKey(k)}</a></li>`),
+    ...orders.filter(o=>o.date>=addDays(todayKey,-7)).map(o=>[o,odShort(o)]).filter(([o,x],i,A)=>x&&!x.next&&A.findIndex(([p])=>p.cid===o.cid&&p.date===o.date)===i).map(([o,x])=>`<li><a href="#" data-oddate="${o.date}">⚠ ${esc(o.c)} ສົ່ງບໍ່ຄົບ ${fmtKey(o.date)}: ຂາດ ${fmt(x.miss)} ຈາກ ${fmt(x.want)}</a></li>`)];
     window.__odAlerts=al; }
   $('#odSub').textContent=fmtKey(d);
   $('#odTbl').innerHTML='<tr><th>ຮ້ານ / ລູກຄ້າ</th><th>ສິນຄ້າ</th><th>ຊຳລະ</th><th>ລົດ</th><th>ສະຖານະ</th><th></th></tr>'+(L.length?L.map(o=>{ const h=odHit(H,o), sug=o.truck||(h&&fleetOf(h.truck)?h.truck:'');
@@ -3843,13 +3844,22 @@ $('#page-orders').addEventListener('click',e=>{ const f=e.target.closest('[data-
 var slBillIdx=null, slBillSig=''; // var: ໃຊ້ໄດ້ກ່ອນບັນທັດນີ້ຖືກອ່ານ (renderFin ຕອນເລີ່ມ)
 function slBills(){ const sig=saleDays.length+':'+saleDays.reduce((a,x)=>a+(x.bx?x.bx.length:0)+(x.src&&x.src.mtime||0),0); if(slBillIdx&&sig===slBillSig) return slBillIdx;
   slBillIdx={byBill:{},byCid:{},days:new Set()}; saleDays.forEach(x=>{ if(!x.bx) return; slBillIdx.days.add(x.date); x.bx.forEach(([b,c,t,q])=>{ const r={bill:b,cid:c,t,q,date:x.date}; slBillIdx.byBill[b]=r; if(c) (slBillIdx.byCid[c]=slBillIdx.byCid[c]||[]).push(r); }); }); slBillSig=sig; return slBillIdx; }
-// ຈັບຄູ່ອັດຕະໂນມັດ: ອໍເດີທີ່ມີລະຫັດລູກຄ້າ ↔ ບິນຂາຍຂອງລະຫັດດຽວກັນ ພາຍໃນ −1…+3 ວັນຈາກວັນສົ່ງ → ສົ່ງສຳເລັດ
+// ຈັບຄູ່ອັດຕະໂນມັດ: ອໍເດີທີ່ມີລະຫັດລູກຄ້າ ↔ ບິນຂາຍຂອງລະຫັດດຽວກັນ ວັນດຽວກັບວັນສົ່ງ → ສົ່ງສຳເລັດ
 function odAutoMatch(){ if(!isAdminUser) return 0; const I=slBills(), used=new Set(orders.filter(o=>o.bill).map(o=>o.bill)); let n=0;
   // ສະເພາະບິນວັນດຽວກັບວັນສົ່ງ: ລູກຄ້າສັ່ງຊ້ຳທຸກມື້ ບິນມື້ອື່ນເປັນຂອງອໍເດີອື່ນ · ສົ່ງບໍ່ທັນ → ຍ້າຍອໍເດີໄປມື້ຖັດໄປ ແລ້ວຈະຈັບຄູ່ເອງ
   orders.filter(o=>(o.status==='new'||o.status==='ok')&&o.cid&&I.byCid[o.cid]).forEach(o=>{
     const c=I.byCid[o.cid].find(r=>r.date===o.date&&!used.has(r.bill)); if(!c) return;
     used.add(c.bill); Object.assign(o,{status:'done',bill:c.bill,doneAt:stamp(),doneBy:'auto',truck:o.truck||slTruck(c.t)||''}); n++; });
   if(n) logAct('trip','ຈັບຄູ່ອໍເດີກັບບິນຂາຍອັດຕະໂນມັດ '+n+' ລາຍການ'); return n; }
+// ສົ່ງບໍ່ຄົບ: ຈຳນວນທີ່ສັ່ງ (ລວມແຖມ) ທຽບກັບຈຳນວນໃນບິນຂາຍຂອງລະຫັດລູກຄ້າດຽວກັນ ວັນດຽວກັນ
+// shortcut: ໄຟລ໌ຂາຍເກັບຈຳນວນລວມຕໍ່ບິນ ບໍ່ແຍກສິນຄ້າ → ທຽບລວມທຸກສິນຄ້າ; ຖ້າຢາກຮູ້ວ່າຂາດສິນຄ້າໃດ ຕ້ອງເກັບຈຳນວນຕໍ່ສິນຄ້າໃນ sales_sync
+function odShort(o){ if(o.status!=='done'||!o.cid) return null; const I=slBills(); if(!I.days.has(o.date)) return null;
+  const want=orders.filter(x=>x.cid===o.cid&&x.date===o.date&&x.status==='done').reduce((a,x)=>a+x.items.reduce((b,i)=>b+(+i.q||0)+(+i.free||0),0),0),
+    got=(I.byCid[o.cid]||[]).filter(r=>r.date===o.date).reduce((a,r)=>a+(+r.q||0),0);
+  if(!want||got>=want) return null;
+  const next=orders.find(x=>x.cid===o.cid&&x.status!=='cancel'&&x.date>o.date&&x.date<=addDays(o.date,3));
+  return {want,got,miss:want-got,next}; }
+const odShortTag=o=>{ const x=odShort(o); return x?`<br><span class="tag high">⚠ ສົ່ງບໍ່ຄົບ: ສັ່ງ ${fmt(x.want)} ໄດ້ ${fmt(x.got)} ຂາດ ${fmt(x.miss)}</span>${x.next?`<br><small class="sub">ມີອໍເດີສົ່ງເພີ່ມ ${fmtKey(x.next.date)} ແລ້ວ</small>`:`<br><small class="sub">ເພີ່ມອໍເດີສ່ວນທີ່ຂາດ ຫຼື ແຈ້ງລູກຄ້າ</small>`}`:''; };
 // ກວດເລກບິນກັບໄຟລ໌ຍອດຂາຍ
 function odBillCheck(o){ if(!o.bill) return ''; const I=slBills(), r=I.byBill[o.bill], bd=o.bill.slice(4,8)+'-'+o.bill.slice(8,10)+'-'+o.bill.slice(10,12);
   if(r&&r.date!==o.date&&!(o.cid&&r.cid&&r.cid!==o.cid)) return `<br><span class="tag high">⚠ ບິນວັນ ${fmtKey(r.date)} ບໍ່ແມ່ນວັນສົ່ງນີ້</span>`;
@@ -3865,7 +3875,7 @@ function odDone(id,raw){ const o=orders.find(x=>x.id===+id), b=odBillNorm(raw); 
   Object.assign(o,{status:'done',bill:b,doneAt:stamp(),doneBy:me.id||''}); renderFin(); note('trip','ສົ່ງສຳເລັດ '+o.c+' · ບິນ '+b+(o.truck?' · ລົດ '+o.truck:'')); return ''; }
 function odUndone(id){ const o=orders.find(x=>x.id===+id); if(!o||o.status!=='done'||!isAdminUser) return; const b=o.bill; o.status='ok'; delete o.bill; delete o.doneAt; delete o.doneBy; renderFin(); note('trip','ຍົກເລີກສົ່ງສຳເລັດ '+o.c+' (ບິນ '+b+')'); }
 const odBillBox=o=>`<span style="display:inline-flex;gap:4px;align-items:center;flex-wrap:wrap"><input data-odbill="${o.id}" placeholder="ORD-${o.date.replace(/-/g,'')}-XXXXXX" autocomplete="off" autocapitalize="characters" style="width:200px;font-family:ui-monospace,monospace;text-transform:uppercase"><button class="btn sm primary" type="button" data-oddone="${o.id}">✓ ສົ່ງສຳເລັດ</button></span>`;
-const odDoneTag=o=>`<span class="tag done" style="font-size:13px">✅ ສົ່ງສຳເລັດ</span><br><small style="font-family:ui-monospace,monospace">${esc(o.bill)}</small><br><small class="sub">${fmtStamp(o.doneAt)} · ${o.doneBy==='auto'?'🤖 ຈັບຄູ່ອັດຕະໂນມັດ':esc(who(o.doneBy))}</small>${odBillCheck(o)}`;
+const odDoneTag=o=>`<span class="tag done" style="font-size:13px">✅ ສົ່ງສຳເລັດ</span><br><small style="font-family:ui-monospace,monospace">${esc(o.bill)}</small><br><small class="sub">${fmtStamp(o.doneAt)} · ${o.doneBy==='auto'?'🤖 ຈັບຄູ່ອັດຕະໂນມັດ':esc(who(o.doneBy))}</small>${odBillCheck(o)}${odShortTag(o)}`;
 function odDoneClick(e,after){ const b=e.target.closest('[data-oddone]'); if(!b) return false; const box=b.parentElement.querySelector('[data-odbill]'), err=odDone(b.dataset.oddone,box&&box.value);
   if(err){ toast(err); if(box){ box.style.borderColor='var(--danger)'; box.focus(); } } else { toast('✅ ສົ່ງສຳເລັດ'); if(after) after(); } return true; }
 function odAdd(o){ orders.push(Object.assign({id:newId(),at:stamp(),date:odDate(),c:'',items:[],pm:'',collect:0,note:'',src:'form',by:me.id||'',status:'new',truck:'',okAt:'',okBy:''},o)); }
@@ -5127,6 +5137,10 @@ body.lgx-m table.lgx-cards td>:is(input,select){flex:0 1 60%;min-width:0}
 body.lgx-m table.lgx-cards td:first-child>input{width:100%;max-width:none}
 body.lgx-m table.lgx-cards td:first-child>input+small.sub{display:none}
 body.lgx-m [id^=autoAl_] li small.sub{display:none}
+body.lgx-m .banner li>a{display:inline}
+.lgx-newver{position:fixed;left:12px;right:12px;top:12px;z-index:9999;display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:12px 14px;border-radius:12px;background:var(--surface);border:2px solid var(--accent);box-shadow:0 6px 24px rgba(0,0,0,.4);font-weight:600}
+body.lgx-m #odTbl td:has(.tag.done){display:block;text-align:left!important}
+body.lgx-m #odTbl td:has(.tag.done)::before{display:block;max-width:none;margin-bottom:4px}
 body.lgx-m .lgx-fold>[aria-expanded]{cursor:pointer}
 body.lgx-m .lgx-fold>[aria-expanded]::after{content:' ▾';color:var(--muted);font-weight:400}
 body.lgx-m .lgx-fold.lgx-open>[aria-expanded]::after{content:' ▴'}
@@ -5216,6 +5230,11 @@ new MutationObserver(enh).observe(document.body,{childList:true,subtree:true});
 document.addEventListener('input',e=>{ if(e.target.closest('#odTabForm')) setTimeout(enhanceOrder,80); });
 document.addEventListener('change',e=>{ if(e.target.closest('#odTabForm')) setTimeout(enhanceOrder,80); if(e.target.id==='plDate') enh(); });
 
+// ເວີຊັນໃໝ່: ແທັບທີ່ເປີດຄ້າງໄວ້ ໃຊ້ໂຄດເກົ່າຕໍ່ ແລະ ອາດຂຽນທັບຂໍ້ມູນດ້ວຍກົດເກົ່າ → ກວດທຸກ 5 ນາທີ ແລະ ເມື່ອກັບມາເບິ່ງແທັບ
+const BUILD=(document.querySelector('meta[name=lgx-build]')||{}).content||'';
+async function checkBuild(){ if(!BUILD||document.getElementById('lgxNewVer')) return; try{ const t=await (await fetch(location.pathname,{cache:'no-store'})).text(), m=t.match(/name="lgx-build" content="([0-9a-f]+)"/);
+  if(m&&m[1]!==BUILD){ const b=mk('div','lgx-newver'); b.id='lgxNewVer'; b.setAttribute('role','alert'); b.append(mk('span',null,'🔄 ມີເວີຊັນໃໝ່ ກະລຸນາໂຫຼດໜ້າໃໝ່ ເພື່ອບໍ່ໃຫ້ຂໍ້ມູນຖືກບັນທຶກດ້ວຍລະບົບເກົ່າ ')); const r=mk('button','btn primary','ໂຫຼດໃໝ່'); r.type='button'; r.onclick=()=>location.reload(); b.append(r); document.body.append(b); } }catch(_){} }
+setInterval(checkBuild,300000); document.addEventListener('visibilitychange',()=>{ if(!document.hidden) checkBuild(); });
 session.then(u=>{
   const out=document.createElement('button'); out.type='button'; out.textContent='🚪 ອອກ'; out.setAttribute('aria-label','ອອກຈາກລະບົບ '+(u.name||u.username||'')); out.className='btn sm lgx-out'; out.onclick=logout; document.body.appendChild(out);
   buildMobileMenu(u);
