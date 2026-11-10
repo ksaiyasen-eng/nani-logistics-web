@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-DcF1RfYzY4b0oWbWjyyMwn6RhC+PQnc8ciLLtQEHKIY=' 'sha256-xHICI4fYz6DQKazJPAjjyZM/Hn5qHoayYZRrrIvQ1Dc=' 'sha256-9aoy/tfIuuNWMxWPp+LmWPZD0dMSa2uyYvCipolI9lc=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdnjs.cloudflare.com/ajax/libs/xlsx/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data: blob:; connect-src 'self' https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="lgx-build" content="bb467c890556">
+<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-DcF1RfYzY4b0oWbWjyyMwn6RhC+PQnc8ciLLtQEHKIY=' 'sha256-hZU2oSmnVxMMWHFMNbTvinXgbFXGqRcFwQj/sTgiiJo=' 'sha256-zJBRAEiPgenKSqf7zB8yii4+gZF2W4JWmpiayn/OPRo=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdnjs.cloudflare.com/ajax/libs/xlsx/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data: blob:; connect-src 'self' https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="lgx-build" content="151d06917688">
 <meta name="robots" content="noindex"><title>Nani Logistics</title>
 <style>#fuScanBox{display:none!important}</style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.js" integrity="sha384-rwykjmWNwVxboyFmvK9OXN0wj9hnMHA2aAHtits54DuACyCq0M2PrSNxhRb+hvXT" crossorigin="anonymous"></script>
@@ -885,7 +885,9 @@ body.factory-only nav a:not([data-page="factory"]),body.factory-only #sampleBann
         <input type="date" id="fcDate" aria-label="ວັນທີ"><select id="fcTruck" aria-label="ລົດ"></select><select id="fcKind" aria-label="ປະເພດ"></select>
       </span></h3>
     <form id="fcForm" novalidate>
+      <fieldset id="fcOrd" hidden style="border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:0 0 10px"><legend style="font-weight:700;padding:0 6px">🧾 ເລືອກອໍເດີທີ່ໂຫຼດຂຶ້ນລົດ <small class="sub">(ຈຳນວນ ແລະ ຈຸດລົງຈະໃສ່ໃຫ້ເອງ · ແກ້ໄດ້)</small></legend><div id="fcOrdList" style="display:grid;gap:6px"></div></fieldset>
       <div class="fields" id="fcGrid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px"></div>
+      <p class="sub" style="margin:6px 0 0;font-size:12.5px">⚠ ຊ່ອງ "ເສຍ" = ໃນຈຳນວນນັ້ນ ມີຖັງ/ລັງ ແຕກ ຮົ່ວ ຫຼື ໃຊ້ບໍ່ໄດ້ ຈັກອັນ</p>
       <div id="fcFromWh" style="margin-top:8px;font-size:13px"></div>
       <div class="form" style="margin-top:10px;align-items:center">
         <label id="fcDestLab" style="display:flex;gap:6px;align-items:center;flex:1 1 220px;font-weight:700">📍 <span id="fcDestTxt">ເອົາລົງຈຸດໃດ</span><select id="fcDestSel" style="flex:1"></select><input id="fcDest" maxlength="60" autocomplete="off" placeholder="ພິມຊື່ຈຸດ" hidden style="flex:1"></label>
@@ -899,6 +901,12 @@ body.factory-only nav a:not([data-page="factory"]),body.factory-only #sampleBann
       <span class="actions" style="font-weight:400;font-size:14px"><select id="frPeriod" aria-label="ຊ່ວງ"><option value="day">ວັນ</option><option value="month">ເດືອນ</option></select><input type="date" id="frDate" aria-label="ວັນທີ"></span></h3>
     <p class="sub" style="margin:0 0 8px;font-size:13px">ນ້ຳເຕັມ: ໂຮງງານໂຫຼດ ທຽບ ສາງຮັບເຂົ້າ (ຮັບນ້ຳຈາກໂຮງງານ) · ເປົ່າ: ສາງສົ່ງໄປ (ສົ່ງເປົ່າໄປໂຮງງານ) ທຽບ ໂຮງງານຮັບ · ທຽບຕາມວັນ ແລະ ລົດ</p>
     <div class="tbl-wrap"><table class="tbl" id="frTbl"></table></div>
+  </div>
+  <div class="panel" style="margin-bottom:14px">
+    <h3>📊 ຕິດຕາມຖັງ/ລັງ: ເຕັມອອກ ↔ ເປົ່າຄືນ <span class="actions" style="font-weight:400;font-size:14px"><input type="month" id="ftMonth" aria-label="ເດືອນ"></span></h3>
+    <p class="sub" style="margin:0 0 8px;font-size:13px">ຈາກບັນທຶກໂຮງງານໃນເດືອນ · <b>ຄ້າງ</b> = ເຕັມອອກ − ເສຍຕອນໂຫຼດ − ເປົ່າຄືນ (ຍັງຢູ່ນຳສາຂາ/ລູກຄ້າ ຫຼື ຫາຍ) · ຕິດລົບ = ຄືນຫຼາຍກວ່າອອກ (ມີຖັງຄ້າງກ່ອນເດືອນ ຫຼື ລືມບັນທຶກຂາອອກ)</p>
+    <div id="ftKpis" class="kpis" style="margin-bottom:10px"></div>
+    <div class="tbl-wrap"><table class="tbl" id="ftTbl"></table></div>
   </div>
   <div class="panel">
     <h3>ປະຫວັດບັນທຶກຂອງໂຮງງານ <span class="actions" style="font-weight:400;font-size:14px"><input type="date" id="fhDate" aria-label="ວັນທີ"></span></h3>
@@ -1565,7 +1573,7 @@ function sanitizeFin(o){
   c.ord=vArr(o.ord,x=>({id:vInt(x.id,0,1),at:vStr(x.at,'',40),date:vDate(x.date,bd),c:vStr(x.c,'',100),cid:vStr(x.cid,'',40),vil:vStr(x.vil,'',60),dist:vStr(x.dist,'',60),tel:vStr(x.tel,'',30),items:(Array.isArray(x.items)?x.items:[]).filter(i=>i&&typeof i==='object').slice(0,10).map(i=>({pid:vStr(i.pid,'',12),q:vNum(i.q,0,0,1e6),free:vNum(i.free,0,0,1e6)})),
     pm:pmOk(x.pm),collect:vNum(x.collect,0,0,1e11),note:vStr(x.note,'',120),src:x.src==='tg'?'tg':'form',by:vStr(x.by,'',64),status:['new','ok','done','cancel'].includes(x.status)?x.status:'new',truck:vStr(x.truck,'',60),okAt:vStr(x.okAt,'',40),okBy:vStr(x.okBy,'',64),...(x.bill?{bill:vStr(x.bill,'',40),doneAt:vStr(x.doneAt,'',40),doneBy:vStr(x.doneBy,'',64)}:{})}));
   c.km=vArr(o.km,x=>({id:vInt(x.id,0,1),at:vStr(x.at,'',40),date:vDate(x.date,bd),truck:vStr(x.truck,'',60),km:vNum(x.km,0,0,1e8),by:vStr(x.by,'',64)}));
-  c.fac=vArr(o.fac,x=>{const q={}; Object.entries(x.q||{}).slice(0,60).forEach(([k,v])=>{const n=vInt(v,0,0,1e7); if(n>0) q[vStr(k,'',12)]=n;}); return {id:vInt(x.id,0,1),at:vStr(x.at,'',40),date:vDate(x.date,bd),truck:vStr(x.truck,'',60),kind:x.kind==='recv_empty'?'recv_empty':'load_full',q,...(x.dest?{dest:vStr(x.dest,'',60)}:{}),note:vStr(x.note,'',200),by:vStr(x.by,'',64)};});
+  c.fac=vArr(o.fac,x=>{const q={}; Object.entries(x.q||{}).slice(0,60).forEach(([k,v])=>{const n=vInt(v,0,0,1e7); if(n>0) q[vStr(k,'',12)]=n;}); return {id:vInt(x.id,0,1),at:vStr(x.at,'',40),date:vDate(x.date,bd),truck:vStr(x.truck,'',60),kind:x.kind==='recv_empty'?'recv_empty':'load_full',q,...(x.dest?{dest:vStr(x.dest,'',60)}:{}),note:vStr(x.note,'',200),by:vStr(x.by,'',64),...(Array.isArray(x.oids)&&x.oids.length?{oids:x.oids.slice(0,40).map(v=>vInt(v,0,1)).filter(Boolean)}:{}),...(x.ordDone?{ordDone:1}:{}),...(()=>{ const b={}; if(x.bad&&typeof x.bad==='object') Object.entries(x.bad).slice(0,60).forEach(([k,v])=>{ const n=vInt(v,0,0,1e7); if(n>0&&q[k]>=n) b[vStr(k,'',12)]=n; }); return Object.keys(b).length?{bad:b}:{}; })()};});
   c.mv=vArr(o.mv,x=>({id:vInt(x.id,0,1),at:vStr(x.at,'',40),date:vDate(x.date,bd),pid:vStr(x.pid,'',12),qty:vNum(x.qty,0,-1e7,1e7),reason:MV_REASONS.some(r=>r[0]===x.reason)?x.reason:'count',ref:vStr(x.ref,'',80),truck:vStr(x.truck,'',60),dest:vStr(x.dest,'',80),bid:vStr(x.bid,'',12),note:vStr(x.note,'',200),by:vStr(x.by,'',64),cause:DMG_CAUSES.some(c=>c[0]===x.cause)?x.cause:undefined,onTruck:x.onTruck===true||undefined,stg:['factory_in','back','out','factory_out','in'].includes(x.stg)?x.stg:undefined,sigs:vSigs(x.sigs)}));
   c.brd=vArr(o.brd,x=>({id:vInt(x.id,0,1),date:vDate(x.date,bd),bid:vStr(x.bid,'',12),orders:vNum(x.orders,0,0),sales:vNum(x.sales,0,0),at:vStr(x.at,'',40),by:vStr(x.by,'',64)}));
   c.log=vArr(o.log,x=>({id:vInt(x.id,0,1),at:vStr(x.at,'',40),date:vDate(x.date,bd),by:vStr(x.by,'',64),kind:LOG_KINDS.some(k=>k[0]===x.kind)?x.kind:'setting',text:vStr(x.text,'',200),amt:x.amt==null?null:vNum(x.amt,0)}));
@@ -1796,7 +1804,7 @@ board.addEventListener('contextmenu',e=>{if(td&&td.on) e.preventDefault();});
 /* ===== ໜ້າການເງິນ ===== */
 function renderFin(){
   if(liveMode&&isAdminUser&&bizDate<todayKey){ bizDate=todayKey; planDay(); setTimeout(save,60); } // ວັນທຳການຕາມປະຕິທິນ — ບໍ່ຕ້ອງລໍປິດຮອບ
-  autoChecks(); if(typeof odAutoMatch==='function'&&orders.length&&odAutoMatch()) setTimeout(save,60);
+  autoChecks(); if(typeof odAutoMatch==='function'&&orders.length&&(odFromFac()+odAutoMatch())) setTimeout(save,60);
   if(fuelMirror()&&typeof sync!=='undefined'&&sync&&sync.applying) setTimeout(save,60);
   try{ const x=saleDays.find(y=>y.date===bizDate); if(x&&isAdminUser){ const due={}; x.lines.forEach(l=>{ const t=slTruck(l.t); if(t&&!isBrLine(l)&&cashDue(l)) due[t]=(due[t]||0)+l.amt; }); drivers.forEach(d=>{ const v=Math.round(due[d.truck]||0); if(d.expected!==v) d.expected=v; }); } }catch(_){} // ເງິນສົດທີ່ຕ້ອງນຳສົ່ງ = ບິນສົດ + ບິນຄ້າງຂອງລູກຄ້າເງິນສົດ
   const arTotal=ar.reduce((s,r)=>s+outstanding(r),0);
@@ -3688,7 +3696,7 @@ function tankLedger(){ const from=tankOpen.date||bizDate, // ຍັງບໍ່�
     else if(m.reason==='factory_in'&&!isEmptyPid(m.pid)) add(b,'ໂຮງງານ',-m.qty); });
   // ໂຮງງານ ↔ ສາຂາ ໂດຍກົງ (ບໍ່ຜ່ານສາງ)
   facLog.forEach(x=>{ if(from&&x.date<from) return; if(!x.dest||x.dest===FAC_WH) return; const loc=x.dest.trim();
-    Object.entries(x.q||{}).forEach(([k,n])=>{ const b=baseOf(k); if(!tp.includes(b)||!n) return; if(x.kind==='load_full'&&!isEmptyPid(k)){ add(b,loc,n); add(b,'ໂຮງງານ',-n); } else if(x.kind!=='load_full'&&isEmptyPid(k)){ add(b,loc,-n); add(b,'ໂຮງງານ',n); } }); });
+    Object.entries(x.q||{}).forEach(([k,n])=>{ const b=baseOf(k); if(!tp.includes(b)||!n) return; const d=(x.bad||{})[k]||0; if(x.kind==='load_full'&&!isEmptyPid(k)){ add(b,loc,n-d); add(b,'ໂຮງງານ',-n); add(b,'ເສຍຫາຍ',-d); } else if(x.kind!=='load_full'&&isEmptyPid(k)){ add(b,loc,-n); add(b,'ໂຮງງານ',n-d); add(b,'ເສຍຫາຍ',-d); } }); });
   tkDeposits(from).forEach(d=>{ add(d.pid,d.loc,-d.n); add(d.pid,d.fr?'ລູກຄ້າມັດຈຳ · ແຟຣນໄຊ':'ລູກຄ້າມັດຈຳ',d.n); });
   return L; }
 const TK_FIXED=['ລູກຄ້າມັດຈຳ','ລູກຄ້າມັດຈຳ · ແຟຣນໄຊ','ໂຮງງານ','ເສຍຫາຍ'];
@@ -4012,7 +4020,7 @@ function renderFactory(){
     .map(([l,v,h])=>`<div class="kpi"><div class="label">${l}</div><div class="val">${v}</div><div class="hint">${h}</div></div>`).join('');
   if(!$('#fcGrid').contains(document.activeElement)){
     const kind=$('#fcKind').value;
-    $('#fcGrid').innerHTML=facItems(kind).map(x=>`<label style="font-size:13px">${esc(x.name)}${x.unit?' ('+esc(x.unit)+')':''}<input type="number" min="0" step="1" data-fc="${esc(x.pid)}" placeholder="0" aria-label="${esc(x.name)}"></label>`).join('');
+    $('#fcGrid').innerHTML=facItems(kind).map(x=>{ const ret=isEmptyPid(x.pid)||retPids().includes(x.pid); return `<div class="fc-it" style="font-size:13px;display:grid;grid-template-columns:${ret?'minmax(0,1fr) 84px':'1fr'};gap:6px;align-items:end"><label style="min-width:0">${esc(x.name)}${x.unit?' ('+esc(x.unit)+')':''}<input type="number" min="0" step="1" data-fc="${esc(x.pid)}" placeholder="0" aria-label="${esc(x.name)}" style="width:100%"></label>${ret?`<label style="min-width:0;color:var(--muted)">⚠ ເສຍ<input type="number" min="0" step="1" data-fcbad="${esc(x.pid)}" placeholder="0" style="width:100%" aria-label="${esc(x.name)} ເສຍຫາຍ"></label>`:''}</div>`; }).join('');
   }
   const out=$('#fcKind').value==='load_full'; $('#fcDestTxt').textContent=out?'ເອົາລົງຈຸດໃດ':'ມາຈາກຈຸດໃດ'; const ds=$('#fcDestSel'), dv=ds.value;
   ds.innerHTML=[...new Set([FAC_WH,'ສົ່ງລູກຄ້າໂດຍກົງ',...branches.map(b=>'ສາຂາ '+b.name),...facLog.map(x=>x.dest).filter(Boolean)])].map(d=>`<option value="${esc(d)}">${esc(d)}</option>`).join('')+'<option value="">➕ ຈຸດອື່ນ (ພິມເອງ)…</option>';
@@ -4020,23 +4028,40 @@ function renderFactory(){
   { const rs=$('#fcKind').value==='load_full'?'factory_in':'factory_out', agg={}; stockMoves.filter(m=>m.reason===rs&&m.date===day&&m.truck===$('#fcTruck').value).forEach(m=>{ agg[m.pid]=(agg[m.pid]||0)+Math.abs(m.qty); });
     const done=facLog.some(x=>x.date===day&&x.truck===$('#fcTruck').value&&x.kind===$('#fcKind').value);
     $('#fcFromWh').innerHTML=Object.keys(agg).length&&!fcEditId?`<span class="tag mid">ສາງບັນທຶກແລ້ວ: ${Object.entries(agg).map(([p,n])=>esc(pName(p))+' '+fmt(n)).join(', ')}</span> ${done?'<span class="tag done">ໂຮງງານບັນທຶກລົດຄັນນີ້ແລ້ວ</span>':`<button class="btn sm" type="button" id="fcFill">ໃຊ້ຕາມສາງ</button>`}`:''; window.__whAgg=agg; }
-  fcCheck(); renderFacRecon(); renderFacHist();
+  { const isOut=$('#fcKind').value==='load_full', box=$('#fcOrdList'), keep=new Set([...box.querySelectorAll('input:checked')].map(i=>+i.value));
+    const taken=new Set(facLog.filter(x=>x.oids&&x.id!==fcEditId).flatMap(x=>x.oids)), L=isOut?fcOrders(day).filter(o=>!taken.has(o.id)||keep.has(o.id)):[];
+    $('#fcOrd').hidden=!L.length; box.innerHTML=L.map(o=>`<label style="display:flex;gap:8px;align-items:flex-start;font-size:14px;cursor:pointer"><input type="checkbox" value="${o.id}"${keep.has(o.id)?' checked':''} style="margin-top:4px"><span><b>${esc(o.c)}</b>${o.date!==day?` <span class="tag wait">ຄ້າງ ${esc(dmOf(o.date))}</span>`:''}${o.truck?` <small class="sub">🚛 ${esc(o.truck)}</small>`:''}<br><small>${esc(odItemsTxt(o.items))}</small></span></label>`).join(''); }
+  fcCheck(); renderFacRecon(); renderFacTrack(); renderFacHist();
 }
+const fcOrders=day=>orders.filter(o=>(o.status==='new'||o.status==='ok')&&o.date<=day&&o.date>=addDays(day,-7)).sort((a,b)=>b.date.localeCompare(a.date)||String(a.c).localeCompare(String(b.c)));
+// ເລືອກອໍເດີ → ລວມຈຳນວນ (ລວມແຖມ) ໃສ່ຊ່ອງສິນຄ້າ ແລະ ຕັ້ງຈຸດລົງເປັນ "ສົ່ງລູກຄ້າໂດຍກົງ"
+$('#fcOrdList').addEventListener('change',()=>{ const ids=[...$('#fcOrdList').querySelectorAll('input:checked')].map(i=>+i.value), sum={};
+  orders.filter(o=>ids.includes(o.id)).forEach(o=>o.items.forEach(i=>{ if(i.pid) sum[i.pid]=(sum[i.pid]||0)+(+i.q||0)+(+i.free||0); }));
+  document.querySelectorAll('#fcGrid [data-fc]').forEach(i=>{ i.value=sum[i.dataset.fc]||''; });
+  if(ids.length){ $('#fcDestSel').value='ສົ່ງລູກຄ້າໂດຍກົງ'; $('#fcDest').hidden=true; } fcCheck(); });
+// ແອັດມິນ: ອໍເດີທີ່ໂຮງງານໂຫຼດແລ້ວ → ໃສ່ລົດ, ຍ້າຍມາວັນໂຫຼດ, ເຂົ້າແຜນ (ພະນັກງານໂຮງງານບໍ່ມີສິດຂຽນແຜນ)
+function odFromFac(){ if(!isAdminUser) return 0; let n=0;
+  facLog.filter(x=>x.kind==='load_full'&&x.oids&&!x.ordDone).forEach(x=>{ x.oids.forEach(id=>{ const o=orders.find(y=>y.id===id); if(!o||(o.status!=='new'&&o.status!=='ok')) return;
+      if(o.status==='ok'&&(o.date!==x.date||o.truck!==x.truck)){ odUnplace(o); o.status='new'; }
+      if(o.status==='new'){ o.date=x.date; o.truck=x.truck; if(odConfirm(o)) n++; } }); x.ordDone=1; });
+  if(n) logAct('trip','ໂຮງງານໂຫຼດອໍເດີຂຶ້ນລົດ → ເຂົ້າແຜນ '+n+' ລາຍການ'); return n; }
 $('#fcFromWh').addEventListener('click',e=>{ if(!e.target.closest('#fcFill')) return; const a=window.__whAgg||{}; document.querySelectorAll('#fcGrid [data-fc]').forEach(i=>{ i.value=a[i.dataset.fc]||''; }); fcCheck(); toast('ໃສ່ຕາມສາງແລ້ວ — ກວດຈຳນວນຈິງ ແລ້ວກົດບັນທຶກ'); });
-function fcRows(){ const r=[]; let bad=false; document.querySelectorAll('#fcGrid [data-fc]').forEach(i=>{ if(i.value==='') return; const n=Math.floor(+i.value); if(!(n>=0)){bad=true;return;} if(n>0) r.push([i.dataset.fc,n]); }); return {r,bad}; }
+function fcRows(){ const r=[], dmg={}; let bad=false; document.querySelectorAll('#fcGrid [data-fc]').forEach(i=>{ if(i.value==='') return; const n=Math.floor(+i.value); if(!(n>=0)){bad=true;return;} if(n>0) r.push([i.dataset.fc,n]); });
+  document.querySelectorAll('#fcGrid [data-fcbad]').forEach(i=>{ if(i.value==='') return; const n=Math.floor(+i.value), q=(r.find(x=>x[0]===i.dataset.fcbad)||[])[1]||0; if(!(n>=0)||n>q){ bad=true; i.style.borderColor='var(--danger)'; return; } i.style.borderColor=''; if(n>0) dmg[i.dataset.fcbad]=n; }); return {r,bad,dmg}; }
 function fcCheck(){ const {r,bad}=fcRows(), n=r.reduce((a,x)=>a+x[1],0);
-  $('#fcSave').disabled=bad||!n; $('#fcSave').textContent=bad?'ຈຳນວນບໍ່ຖືກຕ້ອງ':fcEditId?'💾 ບັນທຶກການແກ້ໄຂ'+(n?' · '+fmt(n):''):($('#fcKind').value==='load_full'?'ບັນທຶກລົດອອກ (ໂຫຼດເຕັມ)':'ບັນທຶກລົດມາຮອດ (ຮັບເປົ່າ)')+(n?' · '+fmt(n):''); }
+  $('#fcSave').disabled=bad||!n; $('#fcSave').textContent=bad?'ຈຳນວນບໍ່ຖືກຕ້ອງ (ເສຍ ຕ້ອງບໍ່ເກີນຈຳນວນ)':fcEditId?'💾 ບັນທຶກການແກ້ໄຂ'+(n?' · '+fmt(n):''):($('#fcKind').value==='load_full'?'ບັນທຶກລົດອອກ (ໂຫຼດເຕັມ)':'ບັນທຶກລົດມາຮອດ (ຮັບເປົ່າ)')+(n?' · '+fmt(n):''); }
 $('#fcGrid').addEventListener('input',fcCheck);
 $('#fcDestSel').addEventListener('change',e=>{ const o=e.target.value===''; $('#fcDest').hidden=!o; if(o) $('#fcDest').focus(); });
 ['#fcDate','#fcTruck','#fcKind'].forEach(sel=>$(sel).addEventListener('change',()=>{document.activeElement&&document.activeElement.blur&&document.activeElement.blur(); renderFactory();}));
-function fcEditEnd(){ fcEditId=null; $('#fcCancel').hidden=true; document.querySelectorAll('#fcGrid input').forEach(i=>i.value=''); $('#fcNote').value=''; fcCheck(); }
+function fcEditEnd(){ fcEditId=null; $('#fcCancel').hidden=true; document.querySelectorAll('#fcGrid input').forEach(i=>{ i.value=''; }); document.querySelectorAll('#fcOrdList input').forEach(i=>{ i.checked=false; }); $('#fcNote').value=''; renderFactory(); }
+const fcExtra=kind=>{ const ids=kind==='load_full'?[...$('#fcOrdList').querySelectorAll('input:checked')].map(i=>+i.value):[], b=fcRows().dmg; return {...(ids.length?{oids:ids}:{}),...(Object.keys(b).length?{bad:b}:{})}; };
 $('#fcCancel').onclick=fcEditEnd;
 $('#fcForm').addEventListener('submit',e=>{
   e.preventDefault(); const {r,bad}=fcRows(), date=$('#fcDate').value, truck=$('#fcTruck').value, kind=$('#fcKind').value; if(bad||!r.length||!vDate(date,null)) return;
-  if(fcEditId){ const x=facLog.find(y=>y.id===fcEditId); if(x){ Object.assign(x,{date,truck,kind,q:Object.fromEntries(r),dest:($('#fcDestSel').value||$('#fcDest').value.trim()).slice(0,60)||FAC_WH,note:$('#fcNote').value.trim().slice(0,200)}); note('factory','ໂຮງງານ: ແກ້ບັນທຶກລົດ '+truck+' ('+fmtKey(date)+')'); }
+  if(fcEditId){ const x=facLog.find(y=>y.id===fcEditId); if(x){ delete x.oids; delete x.bad; delete x.ordDone; Object.assign(x,fcExtra(kind),{date,truck,kind,q:Object.fromEntries(r),dest:($('#fcDestSel').value||$('#fcDest').value.trim()).slice(0,60)||FAC_WH,note:$('#fcNote').value.trim().slice(0,200)}); note('factory','ໂຮງງານ: ແກ້ບັນທຶກລົດ '+truck+' ('+fmtKey(date)+')'); }
     fcEditEnd(); renderFin(); return; }
-  facLog.push({id:newId(),at:stamp(),date,truck,kind,q:Object.fromEntries(r),dest:($('#fcDestSel').value||$('#fcDest').value.trim()).slice(0,60)||FAC_WH,note:$('#fcNote').value.trim().slice(0,200),by:me.id||''}); const dest=facLog[facLog.length-1].dest;
-  document.querySelectorAll('#fcGrid input').forEach(i=>i.value=''); $('#fcNote').value=''; $('#fcDest').value=''; if(!$('#fcDestSel').value){ $('#fcDestSel').add(new Option(dest,dest),0); $('#fcDestSel').value=dest; $('#fcDest').hidden=true; } document.activeElement&&document.activeElement.blur&&document.activeElement.blur();
+  facLog.push({id:newId(),at:stamp(),date,truck,kind,...fcExtra(kind),q:Object.fromEntries(r),dest:($('#fcDestSel').value||$('#fcDest').value.trim()).slice(0,60)||FAC_WH,note:$('#fcNote').value.trim().slice(0,200),by:me.id||''}); const dest=facLog[facLog.length-1].dest;
+  document.querySelectorAll('#fcGrid input').forEach(i=>i.value=''); document.querySelectorAll('#fcOrdList input').forEach(i=>i.checked=false); $('#fcNote').value=''; $('#fcDest').value=''; if(!$('#fcDestSel').value){ $('#fcDestSel').add(new Option(dest,dest),0); $('#fcDestSel').value=dest; $('#fcDest').hidden=true; } document.activeElement&&document.activeElement.blur&&document.activeElement.blur();
   renderFin(); note('factory','ໂຮງງານ: '+(kind==='load_full'?'ລົດ '+truck+' ອອກ ໂຫຼດ ':'ລົດ '+truck+' ມາຮອດ ຮັບເປົ່າ ')+r.map(([p,n])=>pName(p)+' '+fmt(n)).join(', ')+' · 📍 '+dest+' ('+fmtKey(date)+')');
 });
 // ກວດຍອດ ໂຮງງານ ↔ ສາງ
@@ -4060,19 +4085,34 @@ function renderFacRecon(){
       :'<tr><td colspan="7" class="sub">ບໍ່ມີການບັນທຶກໃນຊ່ວງນີ້</td></tr>');
 }
 ['#frPeriod','#frDate'].forEach(sel=>$(sel).addEventListener('change',renderFacRecon));
+// ຈຸດ: ສາຂາ / ສາງເຮົາ ຕາມຊື່ · ອື່ນໆ (ສົ່ງລູກຄ້າ ຫຼື ພິມຊື່ເອງ) ລວມຕາມລົດ: ຊື່ຮ້ານພິມເອງບໍ່ຄົງທີ່
+const ftKey=x=>{ const d=String(x.dest||FAC_WH).trim(); return tkIsBranch(d)||d===FAC_WH?d:'ລົດ '+x.truck+' · ລູກຄ້າ/ຈຸດອື່ນ'; };
+function facTrack(mm){ const T={}; facLog.forEach(x=>{ if(x.date.slice(0,7)!==mm) return; Object.entries(x.q||{}).forEach(([k,n])=>{ const p=baseOf(k); if(!retPids().includes(p)) return; const out=x.kind==='load_full'&&!isEmptyPid(k), back=x.kind==='recv_empty'&&isEmptyPid(k); if(!out&&!back) return;
+    const r=(T[ftKey(x)]=T[ftKey(x)]||{})[p]=(T[ftKey(x)]||{})[p]||{out:0,back:0,badOut:0,badBack:0}, d=(x.bad||{})[k]||0; if(out){ r.out+=n; r.badOut+=d; } else { r.back+=n; r.badBack+=d; } }); });
+  return T; }
+const ftOwe=r=>r.out-r.badOut-r.back;
+function renderFacTrack(){ const el=$('#ftMonth'); if(!el) return; if(!el.value) el.value=todayKey.slice(0,7); const T=facTrack(el.value), rows=[];
+  Object.keys(T).sort((a,b)=>(a.startsWith('ລົດ')?1:0)-(b.startsWith('ລົດ')?1:0)||a.localeCompare(b)).forEach(k=>Object.entries(T[k]).forEach(([p,r])=>rows.push([k,p,r])));
+  const tot={}; rows.forEach(([,p,r])=>{ const t=tot[p]=tot[p]||{out:0,back:0,badOut:0,badBack:0}; ['out','back','badOut','badBack'].forEach(f=>t[f]+=r[f]); });
+  $('#ftKpis').innerHTML=Object.entries(tot).map(([p,t])=>`<div class="kpi ${ftOwe(t)>0?'neg':''}"><div class="label">${esc(pName(p))}</div><div class="val">${fmt(ftOwe(t))}</div><div class="hint">ອອກ ${fmt(t.out)} · ຄືນ ${fmt(t.back)} · ເສຍ ${fmt(t.badOut+t.badBack)}</div></div>`).join('');
+  $('#ftTbl').innerHTML='<tr><th>ຈຸດ</th><th>ສິນຄ້າ</th><th class="r">ເຕັມອອກ</th><th class="r">ເປົ່າຄືນ</th><th class="r">ເສຍ</th><th class="r">ຄ້າງ</th><th>ສະຖານະ</th></tr>'+(rows.length?rows.map(([k,p,r])=>{ const o=ftOwe(r);
+    return `<tr><td><b>${esc(k)}</b></td><td>${esc(pName(p))}</td><td class="r">${fmt(r.out)}</td><td class="r">${fmt(r.back)}</td><td class="r">${r.badOut+r.badBack?`<span style="color:var(--danger)">${fmt(r.badOut+r.badBack)}</span>`:'0'}</td><td class="r"><b style="color:${o>0?'var(--danger)':'inherit'}">${fmt(o)}</b></td><td>${o>0?`<span class="tag high">ຍັງບໍ່ຄືນ ${fmt(o)}</span>`:o<0?`<span class="tag wait">ຄືນເກີນ ${fmt(-o)} — ກວດ</span>`:'<span class="tag done">ຄົບ ✓</span>'}</td></tr>`; }).join('')
+    :'<tr><td colspan="7" class="sub">ບໍ່ມີບັນທຶກໃນເດືອນນີ້</td></tr>'); }
+$('#ftMonth').addEventListener('change',renderFacTrack);
 let fhDelArmed=null;
 function renderFacHist(){
   if(!$('#fhDate').value) $('#fhDate').value=todayKey;
   const L=facLog.filter(x=>x.date===$('#fhDate').value).sort((a,b)=>String(b.at).localeCompare(String(a.at)));
   $('#fhTbl').innerHTML='<tr><th>ເວລາ</th><th>ລົດ</th><th>ປະເພດ</th><th>ລາຍການ</th><th>📍 ຈຸດລົງ / ມາຈາກ</th><th>ໝາຍເຫດ</th><th>ຜູ້ບັນທຶກ</th><th></th></tr>'+
     (L.length?L.map(x=>`<tr><td>${fmtTime(x.at)}</td><td><b>${esc(x.truck)}</b></td><td><span class="tag ${x.kind==='load_full'?'mid':'wait'}">${x.kind==='load_full'?'ອອກ · ໂຫຼດເຕັມ':'ມາຮອດ · ຮັບເປົ່າ'}</span></td>
-      <td>${Object.entries(x.q).map(([p,n])=>esc(pName(p))+' '+fmt(n)).join('<br>')}</td><td><b>${esc(x.dest||'–')}</b></td><td>${esc(x.note)}</td><td>${esc(who(x.by))}</td>
+      <td>${Object.entries(x.q).map(([p,n])=>esc(pName(p))+' '+fmt(n)).join('<br>')}${x.bad?Object.entries(x.bad).map(([p,n])=>`<br><span class="tag high">⚠ ${esc(pName(p))} ເສຍ ${fmt(n)}</span>`).join(''):''}</td><td><b>${esc(x.dest||'–')}</b>${x.oids?`<br><small>🧾 ${x.oids.map(id=>{ const o=orders.find(y=>y.id===id); return o?esc(o.c):''; }).filter(Boolean).join(', ')}</small>`:''}</td><td>${esc(x.note)}</td><td>${esc(who(x.by))}</td>
       <td class="r"><span style="white-space:nowrap"><button class="btn sm" data-fhedit="${x.id}">✏️ ແກ້</button> <button class="btn sm" data-fhdel="${x.id}">${fhDelArmed===x.id?'ກົດອີກຄັ້ງເພື່ອລົບ':'🗑 ລົບ'}</button></span></td></tr>`).join(''):'<tr><td colspan="8" class="sub">ບໍ່ມີບັນທຶກໃນວັນນີ້</td></tr>');
 }
 $('#fhDate').addEventListener('change',renderFacHist);
 $('#fhTbl').addEventListener('click',e=>{ const ed=e.target.closest('[data-fhedit]'); if(ed){ const x=facLog.find(y=>y.id===+ed.dataset.fhedit); if(!x) return;
-    document.activeElement&&document.activeElement.blur&&document.activeElement.blur(); $('#fcDate').value=x.date; $('#fcTruck').value=x.truck; $('#fcKind').value=x.kind; renderFactory();
-    document.querySelectorAll('#fcGrid [data-fc]').forEach(i=>{ i.value=x.q[i.dataset.fc]||''; }); const ds=$('#fcDestSel'), d=x.dest||FAC_WH; if(![...ds.options].some(o=>o.value===d)) ds.add(new Option(d,d),0); ds.value=d; $('#fcDest').hidden=true; $('#fcNote').value=x.note||'';
+    document.activeElement&&document.activeElement.blur&&document.activeElement.blur(); $('#fcDate').value=x.date; $('#fcTruck').value=x.truck; $('#fcKind').value=x.kind; fcEditId=x.id; renderFactory();
+    document.querySelectorAll('#fcOrdList input').forEach(i=>{ i.checked=!!(x.oids&&x.oids.includes(+i.value)); });
+    document.querySelectorAll('#fcGrid [data-fc]').forEach(i=>{ i.value=x.q[i.dataset.fc]||''; }); document.querySelectorAll('#fcGrid [data-fcbad]').forEach(i=>{ i.value=(x.bad||{})[i.dataset.fcbad]||''; }); const ds=$('#fcDestSel'), d=x.dest||FAC_WH; if(![...ds.options].some(o=>o.value===d)) ds.add(new Option(d,d),0); ds.value=d; $('#fcDest').hidden=true; $('#fcNote').value=x.note||'';
     fcEditId=x.id; $('#fcCancel').hidden=false; fcCheck(); $('#fcForm').scrollIntoView({behavior:'smooth',block:'center'}); return; }
   const b=e.target.closest('[data-fhdel]'); if(!b) return; const id=+b.dataset.fhdel, x=facLog.find(y=>y.id===id); if(!x) return;
   if(fhDelArmed!==id){fhDelArmed=id; renderFacHist(); setTimeout(()=>{if(fhDelArmed===id){fhDelArmed=null;renderFacHist();}},4000); return;}
@@ -5202,7 +5242,7 @@ function enhanceKpis(){ document.querySelectorAll('[data-pg] > .kpis').forEach(k
   b.hidden=false; const all=k.classList.contains('lgx-kall'); b.textContent=all?'▴ ຍໍ້ຕົວເລກ':'📊 ເບິ່ງຕົວເລກທັງໝົດ ('+n+') ▾'; b.setAttribute('aria-expanded',all); }); }
 // ຂັ້ນ 3: ຕາຕະລາງທີ່ໃຊ້ເລື້ອຍເປັນການ໌ດໃນມືຖື (ໃສ່ຊື່ຖັນໃຫ້ແຕ່ລະຊ່ອງ)
 // ຕາຕະລາງແກ້ໄຂທີ່ກວ້າງ (ຄວາມຈຸລົດ ກຳນົດຈ່າຍ ສິນຄ້າ) ກໍເປັນການ໌ດ: ໃນມືຖືເຫັນພຽງ 2-3 ຖັນ ແລະ ຊ່ອງກອກບີບຈົນອ່ານບໍ່ອອກ
-const CARD_TABLES='#odTbl,#planOver,#arTbl,#capTbl,#prodTbl,#page-fleet table:has([data-vd])';
+const CARD_TABLES='#odTbl,#planOver,#arTbl,#ftTbl,#capTbl,#prodTbl,#page-fleet table:has([data-vd])';
 function cardTables(){ document.querySelectorAll(CARD_TABLES).forEach(t=>{ t.classList.add('lgx-cards'); const rows=[...t.rows]; const head=rows.find(r=>r.querySelector('th')&&!r.querySelector('td')); if(!head) return; head.classList.add('lgx-head');
   const names=[]; [...head.cells].forEach(c=>{ for(let i=0;i<(c.colSpan||1);i++) names.push(c.textContent.trim()); });
   rows.forEach(r=>{ if(r===head) return; let col=0; [...r.cells].forEach(c=>{ c.setAttribute('data-label',c.colSpan>1&&r.cells.length===1?'':names[col]||''); const txt=c.textContent.trim(); c.classList.toggle('lgx-blank',!c.querySelector('input,select,button,a')&&(txt===''||txt==='–'||txt==='-')); col+=c.colSpan||1; }); }); }); }
