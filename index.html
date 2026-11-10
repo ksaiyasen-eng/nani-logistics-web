@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-DcF1RfYzY4b0oWbWjyyMwn6RhC+PQnc8ciLLtQEHKIY=' 'sha256-hZU2oSmnVxMMWHFMNbTvinXgbFXGqRcFwQj/sTgiiJo=' 'sha256-zJBRAEiPgenKSqf7zB8yii4+gZF2W4JWmpiayn/OPRo=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdnjs.cloudflare.com/ajax/libs/xlsx/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data: blob:; connect-src 'self' https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="lgx-build" content="151d06917688">
+<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-KwW/9ioLyi/tE6mzb7Zx4T98mxv2oQ0sQSvgFQXQT7E=' 'sha256-XFTixjBtQG5xDuyCttsAsIyM1/6WFgUlP6JnCfz2VbU=' 'sha256-zJBRAEiPgenKSqf7zB8yii4+gZF2W4JWmpiayn/OPRo=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdnjs.cloudflare.com/ajax/libs/xlsx/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="lgx-build" content="b4ef25c1e085"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#e8692e">
 <meta name="robots" content="noindex"><title>Nani Logistics</title>
 <style>#fuScanBox{display:none!important}</style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.js" integrity="sha384-rwykjmWNwVxboyFmvK9OXN0wj9hnMHA2aAHtits54DuACyCq0M2PrSNxhRb+hvXT" crossorigin="anonymous"></script>
@@ -65,9 +65,12 @@ async function onChange(pl){ const p=(pl.new&&pl.new.path)||(pl.old&&pl.old.path
   (docL[p]||[]).forEach(l=>l.cb(dsnap(p,d))); const c=parent(p); if(collL[c]&&collData[c]){ if(d===undefined) collData[c].delete(p); else collData[c].set(p,d); fireColl(c); } }
 async function resync(){ for(const p of Object.keys(docL)){ try{ const d=await readDoc(p); docL[p].forEach(l=>l.cb(dsnap(p,d))); }catch(_){} } for(const c of Object.keys(collL)){ try{ collData[c]=await loadColl(c); fireColl(c); }catch(_){} } }
 function ensureChan(){ if(chan) return; chan=sb.channel('lgx_docs').on('postgres_changes',{event:'*',schema:'public',table:'lgx_docs'},onChange).subscribe(st=>{ if(st==='SUBSCRIBED'){ if(dropped){ dropped=false; resync(); } } else if(st==='CHANNEL_ERROR'||st==='TIMED_OUT'||st==='CLOSED') dropped=true; }); }
+// ແຈ້ງເຕືອນໂທລະສັບ: ບອກເຊີບເວີວ່າເພີ່ງສ້າງລາຍການໃດ (ລວມ 3 ວິ ເປັນຄັ້ງດຽວ) · ຂໍ້ຄວາມສ້າງຢູ່ເຊີບເວີຈາກຖານຂໍ້ມູນ
+const PUSH_COLLS=new Set(['ord_items','mv_items','fac_items']); let pushQ=[], pushT=null;
+function pushEvent(p){ pushQ.push(p); clearTimeout(pushT); pushT=setTimeout(()=>{ const paths=pushQ.splice(0,40); sb.functions.invoke('lgx-push',{body:{action:'event',paths}}).catch(()=>{}); },3000); }
 const docRef=p=>({
   get:async()=>dsnap(p,await readDoc(p)),
-  set:async d=>{ const {error}=await sb.from('lgx_docs').upsert({path:p,data:d},{onConflict:'path'}); if(error) throw fail(error); },
+  set:async d=>{ const c=parent(p), isNew=PUSH_COLLS.has(c)&&collData[c]&&!collData[c].has(p); const {error}=await sb.from('lgx_docs').upsert({path:p,data:d},{onConflict:'path'}); if(error) throw fail(error); if(isNew) pushEvent(p); },
   delete:async()=>{ const {error}=await sb.from('lgx_docs').delete().eq('path',p); if(error) throw fail(error); },
   onSnapshot:(cb,err)=>{ ensureChan(); const l={cb}; (docL[p]=docL[p]||[]).push(l); readDoc(p).then(d=>cb(dsnap(p,d))).catch(e=>err&&err(e)); return ()=>{ docL[p]=docL[p].filter(x=>x!==l); }; }
 });
@@ -5085,6 +5088,7 @@ const {sb,session,logout}=window.LGX;
 const css=document.createElement('style');
 css.textContent=`
 .lgx-out{position:fixed;right:10px;bottom:max(10px,env(safe-area-inset-bottom));z-index:9000;opacity:.9}
+.lgx-push{position:fixed;right:84px;bottom:max(10px,env(safe-area-inset-bottom));z-index:9000;opacity:.9}
 .lgx-fab{display:none}
 .lgx-menu{border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--text);padding:0;width:min(420px,calc(100vw - 24px));max-height:calc(100dvh - 24px)}
 .lgx-menu::backdrop{background:rgba(0,0,0,.55)}
@@ -5104,7 +5108,7 @@ css.textContent=`
   .form>label{max-width:100%;min-width:0}
   #fcDestLab{flex-wrap:wrap;flex-basis:100%}
   #fcDest{min-width:0;width:100%;flex:1 1 100%}
-  .lgx-out{display:none}
+  .lgx-out,.lgx-push{display:none}
   .lgx-fab{display:block;position:fixed;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:9000;min-height:48px;padding:0 18px;border:0;border-radius:24px;background:var(--brand);color:#fff;font:inherit;font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,.35);cursor:pointer}
   main{padding:12px 12px calc(84px + env(safe-area-inset-bottom))!important}
   /* ແຖບໄອຄອນເທິງຊ້ຳກັບປຸ່ມເມນູ → ເຫຼືອແຕ່ໂລໂກ້ ໃຫ້ເນື້ອຫາຂຶ້ນມາສູງ */
@@ -5196,10 +5200,27 @@ body.lgx-m #filters:not(.lgx-filt-open){display:none}
 body.lgx-m #filters.lgx-filt-open{flex-wrap:wrap;overflow:visible;margin-inline:0;padding-inline:0}
 body.lgx-m #board .col:not(.lgx-all) .cards > :nth-child(n+6){display:none}
 body.lgx-m .lgx-colmore:not([hidden]){display:block;width:100%;margin-top:8px}
-@media print{.lgx-out,.lgx-fab,.lgx-menu,.lgx-sum,.lgx-more,.lgx-kpimore,#lgxFiltBtn,.lgx-colmore{display:none!important}}`;
+@media print{.lgx-out,.lgx-push,.lgx-fab,.lgx-menu,.lgx-sum,.lgx-more,.lgx-kpimore,#lgxFiltBtn,.lgx-colmore{display:none!important}}`;
 document.body.appendChild(css); // ຫຼັງ <style> ຂອງແອັບ ເພື່ອໃຫ້ກົດລະບຽບມືຖືຊະນະ
 document.addEventListener('click',e=>{ const s=e.target.closest('header.top .sub'); if(s&&matchMedia('(max-width:700px)').matches) s.classList.toggle('lgx-open'); });
 
+// ===== ແຈ້ງເຕືອນໂທລະສັບ (ແອັດມິນ) =====
+const isIOS=/iP(hone|ad|od)/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1), standalone=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
+const b64u=s=>{ const p='='.repeat((4-s.length%4)%4), r=atob((s+p).replace(/-/g,'+').replace(/_/g,'/')); return Uint8Array.from(r,c=>c.charCodeAt(0)); };
+async function enablePush(){ const sb=window.LGX.sb;
+  if(isIOS&&!standalone){ alert('iPhone: ກົດປຸ່ມ ແບ່ງປັນ (⬆) → "ເພີ່ມໃສ່ໜ້າຈໍຫຼັກ / Add to Home Screen" → ເປີດແອັບຈາກໄອຄອນໃໝ່ ແລ້ວກົດ 🔔 ອີກຄັ້ງ'); return; }
+  if(!('serviceWorker' in navigator)||!('PushManager' in window)){ alert('ເບົາເຊີນີ້ບໍ່ຮອງຮັບແຈ້ງເຕືອນ · ໃຊ້ Chrome (Android) ຫຼື Safari ຈາກໜ້າຈໍຫຼັກ (iPhone)'); return; }
+  if(await Notification.requestPermission()!=='granted'){ alert('ບໍ່ໄດ້ອະນຸຍາດແຈ້ງເຕືອນ · ເປີດໄດ້ທີ່ການຕັ້ງຄ່າຂອງເບົາເຊີ/ແອັບ'); return; }
+  try{ const reg=await navigator.serviceWorker.register('sw.js'); await navigator.serviceWorker.ready;
+    const {data:k,error:e1}=await sb.functions.invoke('lgx-push',{body:{action:'key'}}); if(e1||!k||!k.publicKey) throw e1||new Error('key');
+    const sub=(await reg.pushManager.getSubscription())||await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64u(k.publicKey)});
+    const uid=(await window.LGX.session).id, path='data/users/'+uid+'/push', {data:row}=await sb.from('lgx_docs').select('data').eq('path',path).maybeSingle();
+    const j=sub.toJSON(), subs=((row&&row.data&&row.data.subs)||[]).filter(x=>x.endpoint!==j.endpoint).slice(-4);
+    subs.push({endpoint:j.endpoint,keys:j.keys,ua:navigator.userAgent.slice(0,120),at:new Date().toISOString()});
+    const {error:e2}=await sb.from('lgx_docs').upsert({path,data:{subs}},{onConflict:'path'}); if(e2) throw e2;
+    await sb.functions.invoke('lgx-push',{body:{action:'test'}}); alert('✓ ເປີດແຈ້ງເຕືອນແລ້ວ · ຄວນໄດ້ຮັບແຈ້ງເຕືອນທົດລອງພາຍໃນບໍ່ເທົ່າໃດວິນາທີ');
+  }catch(e){ alert('ເປີດແຈ້ງເຕືອນບໍ່ສຳເລັດ: '+(e&&e.message||e)); } }
+const pushBtn=()=>{ const b=mk('button','btn',typeof Notification!=='undefined'&&Notification.permission==='granted'?'🔔 ແຈ້ງເຕືອນ (ທົດລອງ / ເປີດໃໝ່)':'🔔 ເປີດແຈ້ງເຕືອນໃນໂທລະສັບ'); b.type='button'; b.onclick=enablePush; return b; };
 function buildMobileMenu(u){
   const fab=document.createElement('button'); fab.type='button'; fab.className='lgx-fab'; fab.textContent='☰ ເມນູ'; fab.setAttribute('aria-haspopup','dialog');
   const dlg=document.createElement('dialog'); dlg.className='lgx-menu'; dlg.setAttribute('aria-label','ເມນູ');
@@ -5207,7 +5228,7 @@ function buildMobileMenu(u){
     document.querySelectorAll('nav .ngrp').forEach(g=>{ const links=[...g.querySelectorAll('a[data-page]')].filter(a=>!a.hasAttribute('data-role-off')&&a.style.display!=='none'); if(!links.length) return;
       const h=document.createElement('div'); h.className='lgx-menu-group'; h.textContent=g.querySelector('.nhead span').textContent; dlg.append(h);
       links.forEach(a=>{ const b=document.createElement('button'); b.type='button'; b.className='lgx-menu-item'; const t=document.createElement('span'); t.textContent=a.querySelector('span').textContent; b.append(t); const bd=a.querySelector('.badge'); if(bd&&!bd.hidden&&+bd.textContent>0){ const c=document.createElement('span'); c.className='badge'; c.textContent=bd.textContent; b.append(c); } if(a.getAttribute('aria-current')==='page') b.setAttribute('aria-current','page'); b.onclick=()=>{ dlg.close(); a.click(); window.scrollTo(0,0); }; dlg.append(b); }); });
-    const f=document.createElement('div'); f.className='lgx-menu-foot'; const o=document.createElement('button'); o.type='button'; o.className='btn'; o.textContent='🚪 ອອກຈາກລະບົບ'; o.onclick=logout; f.append(o); dlg.append(f); };
+    const f=document.createElement('div'); f.className='lgx-menu-foot'; const o=document.createElement('button'); o.type='button'; o.className='btn'; o.textContent='🚪 ອອກຈາກລະບົບ'; o.onclick=logout; if(u.is_admin) f.append(pushBtn()); f.append(o); dlg.append(f); };
   fab.onclick=()=>{ fill(); dlg.showModal(); }; dlg.addEventListener('click',e=>{ if(e.target===dlg) dlg.close(); });
   document.body.append(fab,dlg);
 }
@@ -5278,6 +5299,7 @@ setInterval(checkBuild,300000); document.addEventListener('visibilitychange',()=
 session.then(u=>{
   const out=document.createElement('button'); out.type='button'; out.textContent='🚪 ອອກ'; out.setAttribute('aria-label','ອອກຈາກລະບົບ '+(u.name||u.username||'')); out.className='btn sm lgx-out'; out.onclick=logout; document.body.appendChild(out);
   buildMobileMenu(u);
+  if(u.is_admin){ const pb=pushBtn(); pb.classList.add('sm','lgx-push'); document.body.appendChild(pb); }
   if(!u.is_admin) return;
   const panel=$('#rolePanel'); if(!panel) return;
   const box=document.createElement('div'); box.style.cssText='margin:0 0 12px;padding:12px;border:1px solid var(--line);border-radius:10px';
