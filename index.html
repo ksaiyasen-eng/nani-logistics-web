@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-KwW/9ioLyi/tE6mzb7Zx4T98mxv2oQ0sQSvgFQXQT7E=' 'sha256-XFTixjBtQG5xDuyCttsAsIyM1/6WFgUlP6JnCfz2VbU=' 'sha256-zJBRAEiPgenKSqf7zB8yii4+gZF2W4JWmpiayn/OPRo=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdnjs.cloudflare.com/ajax/libs/xlsx/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="lgx-build" content="b4ef25c1e085"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#e8692e">
+<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-KwW/9ioLyi/tE6mzb7Zx4T98mxv2oQ0sQSvgFQXQT7E=' 'sha256-XFTixjBtQG5xDuyCttsAsIyM1/6WFgUlP6JnCfz2VbU=' 'sha256-9TqJUuqak1K4hNJnT4bydWT7tVwwq5NgrJqLLxpv4f0=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdnjs.cloudflare.com/ajax/libs/xlsx/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="lgx-build" content="a58d2d0dbc7b"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#e8692e">
 <meta name="robots" content="noindex"><title>Nani Logistics</title>
 <style>#fuScanBox{display:none!important}</style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.js" integrity="sha384-rwykjmWNwVxboyFmvK9OXN0wj9hnMHA2aAHtits54DuACyCq0M2PrSNxhRb+hvXT" crossorigin="anonymous"></script>
@@ -98,27 +98,32 @@ Object.assign(window.LGX,{sb,session,logout,toEmail,canPush:n=>SCOPED[window.LGX
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@400;500;700&family=Poppins:ital,wght@1,600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#f6f7f9; --surface:#fff; --line:#e4e7ec; --text:#1d2433; --muted:#576175;
-  --chip:#eef0f4; --accent:#1d1d21; --brand:#f05a24; --brand-ink:#1d1d21; --side:#1d1d21; --side-text:#b9bcc6; --side-hover:#2b2b31;
+  /* light palette from ui-ux-pro-max design system: tracking blue + delivery orange */
+  --bg:#eff6ff; --surface:#fff; --line:#bfdbfe; --text:#1e3a8a; --muted:#475569;
+  --chip:#e9eff8; --accent:#1e3a8a; --brand:#ea580c; --brand-ink:#1d1d21; --side:#1d1d21; --side-text:#b9bcc6; --side-hover:#2b2b31;
   --warn:#c2410c; --warn-bg:#fff1e6; --danger:#b42318; --danger-bg:#fee4e2;
-  --info:#1d4ed8; --info-bg:#e8f0ff; --ok:#067647; --ok-bg:#dcf5e7;
+  --info:#2563eb; --info-bg:#dbeafe; --ok:#067647; --ok-bg:#dcf5e7;
   --radius:12px;
 }
 @media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){--bg:#0f131a; --surface:#171c26; --line:#2a3140; --text:#e8ebf2; --muted:#9aa4b8;
-  --chip:#232a38; --accent:#e8ebf2; --warn:#fdba74; --warn-bg:#3a2415; --danger:#fda29b; --danger-bg:#3d1b18;
-  --info:#93b4ff; --info-bg:#182545; --ok:#6ce9a6; --ok-bg:#12331f; color-scheme:dark}
+  :root:not([data-theme="light"]){--bg:#0b1220; --surface:#111a2e; --line:#1e3354; --text:#e2e8f0; --muted:#94a3b8;
+  --chip:#1a2540; --accent:#e2e8f0; --warn:#fdba74; --warn-bg:#3a2415; --danger:#fda29b; --danger-bg:#3d1b18;
+  --info:#60a5fa; --info-bg:#172554; --ok:#6ce9a6; --ok-bg:#12331f; color-scheme:dark}
 }
-:root[data-theme="dark"]{--bg:#0f131a; --surface:#171c26; --line:#2a3140; --text:#e8ebf2; --muted:#9aa4b8;
-  --chip:#232a38; --accent:#e8ebf2; --warn:#fdba74; --warn-bg:#3a2415; --danger:#fda29b; --danger-bg:#3d1b18;
-  --info:#93b4ff; --info-bg:#182545; --ok:#6ce9a6; --ok-bg:#12331f; color-scheme:dark}
+:root[data-theme="dark"]{--bg:#0b1220; --surface:#111a2e; --line:#1e3354; --text:#e2e8f0; --muted:#94a3b8;
+  --chip:#1a2540; --accent:#e2e8f0; --warn:#fdba74; --warn-bg:#3a2415; --danger:#fda29b; --danger-bg:#3d1b18;
+  --info:#60a5fa; --info-bg:#172554; --ok:#6ce9a6; --ok-bg:#12331f; color-scheme:dark}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font:15px/1.6 "Noto Sans Lao","Phetsarath OT","Saysettha OT",system-ui,sans-serif;display:flex;min-height:100vh}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.6 "Noto Sans Lao","Phetsarath OT","Saysettha OT",system-ui,sans-serif;font-variant-numeric:tabular-nums;display:flex;min-height:100vh}
+small{font-size:max(12px,.85em)}
 button,select,input{font:inherit;color:inherit}
 input,select{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:5px 8px;min-width:0}
 :focus-visible{outline:2px solid var(--brand);outline-offset:2px}
 [hidden]{display:none!important}
 .ic{margin-right:5px;font-style:normal}
+.form:has(> .fl){align-items:flex-end}
+.fl{display:flex;flex-direction:column;gap:2px;font-size:12px;font-weight:500;color:var(--muted);min-width:0}.fl>input,.fl>select{color:var(--text);width:100%}
+.svgi{display:inline-flex;vertical-align:-.15em;position:relative}.svgi svg{width:1.05em;height:1.05em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.ic .svgi{margin-right:0}.ice{position:absolute;width:1px;height:1px;overflow:hidden;opacity:0;font-style:normal}
 .dmgx{display:none}.withdmg .dmgx{display:block}.dmgx input{border-color:var(--danger)!important;margin-top:3px}
 
 /* Sidebar */
@@ -178,6 +183,7 @@ h1{font-size:22px;margin:0;line-height:1.4}
 .btn{border:1px solid var(--line);background:var(--surface);padding:7px 14px;border-radius:9px;cursor:pointer;font-weight:500}
 .btn:hover{background:var(--chip)}
 .btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand);font-weight:700}
+.tbl .btn.primary{background:var(--surface);color:var(--warn);border-color:var(--brand)}
 .btn.primary:hover{background:#e04e1b;border-color:#e04e1b}
 h1{position:relative}
 h1::after{content:'';display:block;width:36px;height:3px;border-radius:2px;background:var(--brand);margin-top:4px}
@@ -194,10 +200,11 @@ a.btn{text-decoration:none;color:inherit;display:inline-flex;align-items:center}
 .metric.check{border-left:4px solid var(--info)} .metric.check .num{color:var(--info)}
 
 .filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
-.chip{border:1px solid var(--line);background:var(--surface);padding:6px 14px;border-radius:99px;cursor:pointer;font-weight:500;display:inline-flex;gap:6px;align-items:center}
+.chip{border:1px solid var(--line);background:var(--surface);padding:4px 12px;font-size:13px;border-radius:99px;cursor:pointer;font-weight:500;display:inline-flex;gap:6px;align-items:center}
 .chip span{color:var(--muted);font-weight:700}
-.chip[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.chip[aria-pressed=true]{background:var(--info-bg);border-color:var(--info);color:var(--accent);font-weight:700}
 .chip[aria-pressed=true] span{color:inherit;opacity:.8}
+.chip .zero{display:none}
 
 /* Kanban */
 .board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;align-items:start;padding-bottom:8px}
@@ -211,7 +218,7 @@ a.btn{text-decoration:none;color:inherit;display:inline-flex;align-items:center}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px;cursor:grab;display:flex;flex-direction:column;gap:8px;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
 .card.dragging{opacity:.4}
 .card .row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
-.tag{font-size:11px;font-weight:700;padding:1px 8px;border-radius:99px;background:var(--chip);color:var(--muted);white-space:nowrap}
+.tag{font-size:12px;font-weight:700;padding:1px 8px;border-radius:99px;background:var(--chip);color:var(--muted);white-space:nowrap}
 .tag.high{background:var(--danger-bg);color:var(--danger)}
 .tag.mid{background:var(--info-bg);color:var(--info)}
 .tag.wait{background:var(--warn-bg);color:var(--warn)}
@@ -315,25 +322,49 @@ body.factory-only nav a:not([data-page="factory"]),body.factory-only #sampleBann
   .metrics,.board{grid-template-columns:1fr}
   .cards{max-height:60vh}
 }
+/* ໂທລະສັບ/ຈໍສຳຜັດ: ປຸ່ມ ແລະ ຊ່ອງປ້ອນ ສູງຢ່າງໜ້ອຍ 44px (ນິ້ວກົດໄດ້ແມ່ນ), ຕົວອັກສອນໃນຊ່ອງປ້ອນ 16px ບໍ່ໃຫ້ iPhone ຊູມເຂົ້າເວລາແຕະ */
+@media (max-width:700px),(pointer:coarse){
+  .btn,.chip,.act,summary{min-height:44px}
+  .btn.sm{font-size:14px;padding:4px 12px}
+  .act{display:inline-flex;align-items:center;font-size:13px}
+  input:not([type=checkbox]):not([type=radio]),select{min-height:44px;font-size:16px;max-width:100%}
+  input[type=checkbox],input[type=radio]{width:22px;height:22px;margin:0 6px 0 0;vertical-align:middle}
+  nav a{min-width:44px;min-height:44px}
+  .vcard table input,.vcard table select{min-height:44px;font-size:16px}
+  .lcard button{min-height:44px;align-items:center}
+  .form>label{min-width:0;max-width:100%;flex-wrap:wrap}
+}
+@media (max-width:700px){
+  .tbl.cardt,.tbl.cardt tbody,.tbl.cardt tfoot,.tbl.cardt tr,.tbl.cardt td,.tbl.cardt th{display:block;width:auto}
+  .tbl.cardt{min-width:0!important;width:100%;border:0}
+  .tbl.cardt tr.cth{display:none}
+  .tbl.cardt tr{border:1px solid var(--line);border-radius:10px;padding:4px 12px;margin:0 0 10px;background:var(--surface)}
+  .tbl.cardt td,.tbl.cardt th{border:0;padding:6px 0;text-align:right;white-space:normal!important}
+  .tbl.cardt td[data-label]{border-bottom:1px solid var(--chip);overflow:hidden}
+  .tbl.cardt td[data-label]:last-child{border-bottom:0}
+  .tbl.cardt td[data-label]::before{content:attr(data-label);float:left;max-width:45%;margin-right:12px;color:var(--muted);font-size:13px;font-weight:500;text-align:left}
+  .tbl.cardt td[data-label=""]::before{content:none}
+  .tbl.cardt tr.cspan td{text-align:left}
+}
 /* ໃບເບີກ/ໃບຮັບ ສຳລັບພິມ */
 #printArea{display:none}
 .slp{font:13px/1.5 "Noto Sans Lao","Phetsarath OT",sans-serif;color:#111;background:#fff;padding:6mm 7mm;box-sizing:border-box}
 .slp .hd{display:flex;gap:10px;align-items:center;border-bottom:2px solid #f05a24;padding-bottom:6px;margin-bottom:6px}
 .slp .hd img{width:42px;height:42px;border-radius:8px;object-fit:cover;background:#1a1b20}
-.slp .co b{font-size:15px}.slp .co small{display:block;color:#555;font-size:10.5px;line-height:1.35}
+.slp .co b{font-size:15px}.slp .co small{display:block;color:#555;font-size:11.5px;line-height:1.35}
 .slp .ttl{display:flex;justify-content:space-between;align-items:flex-end;gap:8px;margin:4px 0 6px}
-.slp .ttl h2{margin:0;font-size:17px}.slp .ttl .no{text-align:right;font-size:11.5px}
-.slp .copy{display:inline-block;border:1px solid #111;border-radius:4px;padding:0 6px;font-size:10.5px;margin-left:6px;vertical-align:middle}
+.slp .ttl h2{margin:0;font-size:17px}.slp .ttl .no{text-align:right;font-size:12px}
+.slp .copy{display:inline-block;border:1px solid #111;border-radius:4px;padding:0 6px;font-size:11.5px;margin-left:6px;vertical-align:middle}
 .slp .meta{display:grid;grid-template-columns:1fr 1fr;gap:2px 14px;font-size:12px;margin-bottom:6px}
 .slp table{width:100%;border-collapse:collapse;font-size:12.5px}
 .slp th,.slp td{border:1px solid #333;padding:3px 6px}.slp th{background:#f2f2f2;font-weight:700;text-align:left}
 .slp td.r,.slp th.r{text-align:right;font-variant-numeric:tabular-nums}
-.slp .note{font-size:11.5px;margin-top:4px}
-.slp .sig{display:grid;gap:10px;margin-top:12px}.slp .sig div{text-align:center;font-size:11.5px}
+.slp .note{font-size:12px;margin-top:4px}
+.slp .sig{display:grid;gap:10px;margin-top:12px}.slp .sig div{text-align:center;font-size:12px}
 .slp .sig .ln{border-bottom:1px dotted #333;height:34px;margin-bottom:3px}
-.slp .foot{font-size:9.5px;color:#666;margin-top:6px;text-align:right}
-.slp.w80{width:76mm;padding:3mm 2mm;font-size:11.5px}.slp.w80 .hd img{width:30px;height:30px}.slp.w80 .meta{grid-template-columns:1fr}.slp.w80 .sig{grid-template-columns:1fr!important}.slp.w80 .sig .ln{height:26px}.slp.w80 th,.slp.w80 td{border:0;border-bottom:1px dashed #555;padding:2px 1px}
-.slp-cut{border-top:1px dashed #888;margin:4mm 0;text-align:center;font-size:9px;color:#888}
+.slp .foot{font-size:11px;color:#666;margin-top:6px;text-align:right}
+.slp.w80{width:76mm;padding:3mm 2mm;font-size:12px}.slp.w80 .hd img{width:30px;height:30px}.slp.w80 .meta{grid-template-columns:1fr}.slp.w80 .sig{grid-template-columns:1fr!important}.slp.w80 .sig .ln{height:26px}.slp.w80 th,.slp.w80 td{border:0;border-bottom:1px dashed #555;padding:2px 1px}
+.slp-cut{border-top:1px dashed #888;margin:4mm 0;text-align:center;font-size:11px;color:#888}
 #sigModal{z-index:120}
 #sigPad{width:100%;max-width:600px;aspect-ratio:3/1;background:#fff;border:2px dashed #b8bcc6;border-radius:10px;touch-action:none;display:block;cursor:crosshair}
 .sigslot{display:flex;justify-content:space-between;align-items:center;gap:10px;border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin:6px 0}
@@ -442,19 +473,19 @@ body.factory-only nav a:not([data-page="factory"]),body.factory-only #sampleBann
       <h3>📥 ລູກໜີ້ຄ້າງຊຳລະ <button class="btn sm" id="btnExport">ຄັດລອກ CSV</button></h3>
       <div class="tbl-wrap"><table class="tbl" id="arTbl"></table></div>
       <form class="form" id="arForm" style="margin:12px 0 0">
-        <input id="arCust" placeholder="ຊື່ລູກຄ້າ" required maxlength="100" aria-label="ຊື່ລູກຄ້າ">
-        <input id="arInv" placeholder="ເລກໃບແຈ້ງໜີ້" maxlength="60" aria-label="ເລກໃບແຈ້ງໜີ້">
-        <input id="arAmt" type="number" min="1" step="1" placeholder="ຈຳນວນ (ກີບ)" required aria-label="ຈຳນວນເງິນ">
-        <input id="arDue" type="date" required aria-label="ວັນຄົບກຳນົດ">
+        <label class="fl"><span>ຊື່ລູກຄ້າ</span><input id="arCust" required maxlength="100" aria-label="ຊື່ລູກຄ້າ"></label>
+        <label class="fl"><span>ເລກໃບແຈ້ງໜີ້</span><input id="arInv" maxlength="60" aria-label="ເລກໃບແຈ້ງໜີ້"></label>
+        <label class="fl"><span>ຈຳນວນ (ກີບ)</span><input id="arAmt" type="number" min="1" step="1" required aria-label="ຈຳນວນເງິນ"></label>
+        <label class="fl"><span>ຄົບກຳນົດ</span><input id="arDue" type="date" required aria-label="ວັນຄົບກຳນົດ"></label>
         <button class="btn primary" type="submit">ເພີ່ມລູກໜີ້</button>
       </form>
     </div>
     <div class="panel" data-sec="exp">
       <h3>🚛 ຄ່າໃຊ້ຈ່າຍຖ້ຽວລົດ <small class="sub" id="expDate"></small></h3>
       <form class="form" id="expForm">
-        <select id="expTruck" aria-label="ລົດ"></select>
-        <select id="expType" aria-label="ປະເພດ"></select>
-        <input id="expAmt" type="number" min="1" step="1" placeholder="ຈຳນວນເງິນ (ກີບ)" required aria-label="ຈຳນວນເງິນ">
+        <label class="fl"><span>ລົດ</span><select id="expTruck" aria-label="ລົດ"></select></label>
+        <label class="fl"><span>ປະເພດ</span><select id="expType" aria-label="ປະເພດ"></select></label>
+        <label class="fl"><span>ຈຳນວນເງິນ (ກີບ)</span><input id="expAmt" type="number" min="1" step="1" required aria-label="ຈຳນວນເງິນ"></label>
         <button class="btn primary" type="submit">ບັນທຶກຈ່າຍ</button>
       </form>
       <div class="tbl-wrap"><table class="tbl" id="expTbl"></table></div>
@@ -614,7 +645,7 @@ body.factory-only nav a:not([data-page="factory"]),body.factory-only #sampleBann
   <div class="panels">
     <div class="panel"><h3>ສົ່ງຂໍ້ຄວາມຫາຜູ້ບໍລິຫານ</h3>
       <textarea id="pyMsg" rows="12" style="width:100%;font-family:inherit;font-size:14px;line-height:1.6" aria-label="ຂໍ້ຄວາມ"></textarea>
-      <div class="form" style="margin-top:8px"><button class="btn primary" id="pyCopy" type="button">ຄັດລອກຂໍ້ຄວາມ</button><button class="btn" id="pyShare" type="button">ແບ່ງປັນ…</button><button class="btn" id="pyRegen" type="button">ສ້າງຂໍ້ຄວາມໃໝ່</button></div>
+      <div class="form" style="margin-top:8px"><button class="btn" id="pyCopy" type="button">ຄັດລອກຂໍ້ຄວາມ</button><button class="btn" id="pyShare" type="button">ແບ່ງປັນ…</button><button class="btn" id="pyRegen" type="button">ສ້າງຂໍ້ຄວາມໃໝ່</button></div>
       <div id="pyLinks" class="form" style="margin-top:4px"></div>
       <p class="sub" style="font-size:12px;margin:6px 0 0">ກົດຊື່ຜູ້ບໍລິຫານເພື່ອເປີດ WhatsApp ພ້ອມຂໍ້ຄວາມ (ກວດກ່ອນກົດສົ່ງໃນ WhatsApp) · ຫຼື ຄັດລອກໄປວາງໃນ LINE / Messenger / Email</p>
       <h3 style="margin-top:14px">ຜູ້ບໍລິຫານທີ່ຮັບຂໍ້ຄວາມ</h3>
@@ -633,7 +664,7 @@ body.factory-only nav a:not([data-page="factory"]),body.factory-only #sampleBann
 <!-- ແຜນຂົນສົ່ງປະຈຳວັນ: ການ໌ດຂອງແຕ່ລະຄັນ ສົ່ງທາງ WhatsApp / Telegram -->
 <div id="page-orders" data-pg hidden>
   <header class="top"><div><h1>ກ່ອງອໍເດີ</h1><p class="sub">ທີມການຕະຫຼາດກອກອໍເດີ ຫຼື ວາງຂໍ້ຄວາມຈາກກຸ່ມ Telegram → ລະບົບແນະນຳລົດ (ຕາມລົດທີ່ເຄີຍສົ່ງຮ້ານນັ້ນ) → ແອັດມິນຢືນຢັນ → ເຂົ້າແຜນຂົນສົ່ງຂອງລົດແຕ່ລະຄັນ</p></div>
-    <div class="actions"><label style="display:flex;gap:6px;align-items:center">ວັນສົ່ງ <input type="date" id="odDate" aria-label="ວັນສົ່ງ"></label><button class="btn" type="button" data-odday="0">ມື້ນີ້</button><button class="btn" type="button" data-odday="1">ມື້ອື່ນ</button><button class="btn primary" type="button" id="odGoAdd">➕ ເພີ່ມອໍເດີ</button></div></header>
+    <div class="actions"><label style="display:flex;gap:6px;align-items:center">ວັນສົ່ງ <input type="date" id="odDate" aria-label="ວັນສົ່ງ"></label><button class="btn" type="button" data-odday="0">ມື້ນີ້</button><button class="btn" type="button" data-odday="1">ມື້ອື່ນ</button><button class="btn" type="button" id="odGoAdd">➕ ເພີ່ມອໍເດີ</button></div></header>
   <div class="kpis" id="odKpis"></div>
   <div id="odAlerts" style="margin:-4px 0 12px"></div>
   <div class="secbar" id="odSecBar" role="group" aria-label="ເລືອກສ່ວນທີ່ສະແດງ"></div>
@@ -648,7 +679,7 @@ body.factory-only nav a:not([data-page="factory"]),body.factory-only #sampleBann
         <label style="display:flex;flex-direction:column;gap:4px;flex:1 1 130px">ການຊຳລະ<select id="odPay"><option value="">💵 ເງິນສົດ (ເກັບເງິນ)</option><option value="credit">🏦 ເຄຣດິດ/ໂອນ</option><option value="support">🎁 ສະໜັບສະໜູນ</option><option value="debt">📝 ຕິດໜີ້</option></select></label>
         <label style="display:flex;flex-direction:column;gap:4px;flex:1 1 120px">💰 ເງິນທີ່ຕ້ອງເກັບ<input id="odCollect" inputmode="decimal"></label></div>
       <div id="odItems"></div><button class="btn sm" type="button" id="odAddItem">+ ສິນຄ້າ</button>
-      <div class="form" style="margin-top:8px"><input id="odNote" maxlength="120" placeholder="⏰ ໝາຍເຫດ / ເວລາເປີດ / ທີ່ຢູ່" style="flex:1 1 220px"><button class="btn primary" type="button" id="odSave">ສົ່ງອໍເດີ</button></div>
+      <div class="form" style="margin-top:8px"><label class="fl" style="flex:1 1 220px"><span>ໝາຍເຫດ / ເວລາເປີດ / ທີ່ຢູ່</span><input id="odNote" maxlength="120" placeholder="ເຊັ່ນ ເປີດ 8 ໂມງ, ຢູ່ຂ້າງຕະຫຼາດ"></label><button class="btn primary" type="button" id="odSave">ສົ່ງອໍເດີ</button></div>
       <div id="odMsg" class="sub" style="font-size:13px" aria-live="polite"></div>
     </div>
     <div id="odTabPaste" hidden><p class="sub" style="margin:0 0 6px;font-size:13px">ຫຼາຍອໍເດີກໍໄດ້ · ແຍກແຕ່ລະອໍເດີດ້ວຍແຖວວ່າງ · ລະບົບອ່ານ ລະຫັດ / ບ້ານ / ເມືອງ / ເບີໂທ ໃຫ້</p>
@@ -676,7 +707,7 @@ body.factory-only nav a:not([data-page="factory"]),body.factory-only #sampleBann
     <div class="form"><label style="display:flex;flex-direction:column;gap:2px;flex:1 1 140px">❌ ຂາດ<input data-att="absent" maxlength="120"></label><label style="display:flex;flex-direction:column;gap:2px;flex:1 1 140px">📝 ລາພັກ<input data-att="leave" maxlength="120"></label><label style="display:flex;flex-direction:column;gap:2px;flex:1 1 140px">💉 ປ່ວຍ<input data-att="sick" maxlength="120"></label><label style="display:flex;flex-direction:column;gap:2px;flex:1 1 140px">ລາກິດ<input data-att="personal" maxlength="120"></label><label style="display:flex;flex-direction:column;gap:2px;flex:1 1 140px">👨‍💻 ສະແຕນບາຍ<input data-att="standby" maxlength="120"></label></div>
     <div class="form"><label style="display:flex;flex-direction:column;gap:2px;flex:1 1 100%">📝 ໝາຍເຫດ<input id="plNoteAll" maxlength="200" placeholder="ເຊັ່ນ ບາງທີມີການປ່ຽນແປງ"></label></div></div>
   <div class="panel" data-sec="add" style="margin-bottom:14px"><h3>➕ ເພີ່ມລົດໃນແຜນມື້ນີ້ <small class="sub">ເພີ່ມລົດທີ່ບໍ່ມີໃນລາຍຊື່ ເຊັ່ນ ລົດຮ່ວມ / ລົດສາຂາ</small></h3>
-    <div class="form" style="align-items:center"><input id="plAddTruck" list="plTruckList" maxlength="60" placeholder="ຊື່ / ທະບຽນລົດ ເຊັ່ນ ລົດຮ່ວມໂນນຄໍ້" style="flex:1 1 200px"><input id="plAddCrew" maxlength="120" placeholder="ຄົນຂັບ + ຜູ້ຊ່ວຍ" style="flex:1 1 180px">
+    <div class="form" style="align-items:center"><label class="fl" style="flex:1 1 200px"><span>ລົດ</span><input id="plAddTruck" list="plTruckList" maxlength="60" placeholder="ຊື່ / ທະບຽນລົດ ເຊັ່ນ ລົດຮ່ວມໂນນຄໍ້"></label><label class="fl" style="flex:1 1 180px"><span>ຄົນຂັບ + ຜູ້ຊ່ວຍ</span><input id="plAddCrew" maxlength="120" ></label>
       <label style="display:flex;gap:6px;align-items:center;font-size:14px"><input type="checkbox" id="plAddFleet" style="width:auto;min-height:0"> ເພີ່ມເຂົ້າລາຍຊື່ລົດຖາວອນ</label><button class="btn" type="button" id="plAddBtn">+ ເພີ່ມລົດ</button></div>
     <datalist id="plTruckList"></datalist></div>
 </div>
@@ -691,9 +722,9 @@ body.factory-only nav a:not([data-page="factory"]),body.factory-only #sampleBann
       <label style="display:flex;flex-direction:column;gap:4px;flex:2 1 220px">ຜູກກັບ<select id="dfRef"></select></label>
       <label style="display:flex;flex-direction:column;gap:4px;flex:1 1 130px">ວັນທີເອກະສານ<input type="date" id="dfDate"></label>
       <label style="display:flex;flex-direction:column;gap:4px;flex:1 1 130px">⏰ ໝົດອາຍຸ (ຖ້າມີ)<input type="date" id="dfExp"></label></div>
-    <div class="form"><input id="dfTitle" maxlength="120" placeholder="ຊື່ເອກະສານ (ວ່າງ = ໃຊ້ຊື່ໄຟລ໌)" style="flex:2 1 220px"><input id="dfNote" maxlength="160" placeholder="ໝາຍເຫດ" style="flex:2 1 200px"></div>
+    <div class="form"><label class="fl" style="flex:2 1 220px"><span>ຊື່ເອກະສານ</span><input id="dfTitle" maxlength="120" placeholder="ຊື່ເອກະສານ (ວ່າງ = ໃຊ້ຊື່ໄຟລ໌)"></label><label class="fl" style="flex:2 1 200px"><span>ໝາຍເຫດ</span><input id="dfNote" maxlength="160" ></label></div>
     <div class="form" id="dfUpBox"><label class="btn primary" style="cursor:pointer">📤 ເລືອກໄຟລ໌ → ອັບໂຫຼດໄປ Google Drive<input type="file" id="dfFile" multiple accept="application/pdf,image/*,.doc,.docx,.xls,.xlsx" hidden></label><small class="sub" id="dfUpNote">PDF / ຮູບ / Word / Excel · ສູງສຸດ 16 MB ຕໍ່ໄຟລ໌</small></div>
-    <div class="form"><input id="dfLink" placeholder="🔗 ຫຼື ວາງລິ້ງ Google Drive ຂອງໄຟລ໌ທີ່ມີຢູ່ແລ້ວ" style="flex:3 1 260px"><button class="btn" type="button" id="dfLinkAdd">+ ເພີ່ມລິ້ງ</button></div>
+    <div class="form"><label class="fl" style="flex:3 1 260px"><span>ລິ້ງ Google Drive</span><input id="dfLink" placeholder="🔗 ຫຼື ວາງລິ້ງ Google Drive ຂອງໄຟລ໌ທີ່ມີຢູ່ແລ້ວ"></label><button class="btn" type="button" id="dfLinkAdd">+ ເພີ່ມລິ້ງ</button></div>
     <div id="dfMsg" class="sub" style="font-size:13px" aria-live="polite"></div>
     <details style="margin-top:8px"><summary class="sub" style="cursor:pointer">⚙ ໂຟນເດີໃນ Google Drive</summary><div class="form" style="margin-top:6px"><input id="dfFolder" placeholder="ວາງລິ້ງໂຟນເດີ Drive (ວ່າງ = My Drive)" style="flex:3 1 260px"><button class="btn sm" type="button" id="dfFolderSave">ບັນທຶກ</button><span id="dfFolderInfo" class="sub" style="font-size:12px"></span></div></details></div>
   <div class="panel"><h3>📁 ເອກະສານທັງໝົດ <span class="actions" style="font-weight:400"><select id="dfFilter" aria-label="ກັ່ນຕອງ"></select><input id="dfSearch" placeholder="🔍 ຄົ້ນຫາ" style="width:150px"></span></h3><div class="tbl-wrap"><table class="tbl" id="dfTbl"></table></div></div>
@@ -848,8 +879,8 @@ body.factory-only nav a:not([data-page="factory"]),body.factory-only #sampleBann
   <div class="panel">
     <h3>ເພີ່ມຖ້ຽວລົດ</h3>
     <form class="form" id="tripForm">
-      <select id="tripRoute" aria-label="ສາຍ"></select>
-      <input id="tripRev" type="number" min="1" step="1" placeholder="ລາຍໄດ້ຖ້ຽວນີ້ (ກີບ)" required aria-label="ລາຍໄດ້">
+      <label class="fl"><span>ສາຍ</span><select id="tripRoute" aria-label="ສາຍ"></select></label>
+      <label class="fl"><span>ລາຍໄດ້ຖ້ຽວນີ້ (ກີບ)</span><input id="tripRev" type="number" min="1" step="1" required aria-label="ລາຍໄດ້"></label>
       <button class="btn primary" type="submit">ເພີ່ມຖ້ຽວ</button>
     </form>
     <div class="tbl-wrap"><table class="tbl" id="tripTbl"></table></div>
@@ -862,11 +893,11 @@ body.factory-only nav a:not([data-page="factory"]),body.factory-only #sampleBann
     <div class="actions"><select id="mtTruck" aria-label="ເລືອກລົດ (ແອັດມິນ)"></select><input type="date" id="mtDate" aria-label="ວັນທີ"></div></header>
   <div id="mtAlerts" style="margin:0 0 12px"></div>
   <div class="panel" id="mtJob" style="margin-bottom:14px"></div>
-  <div class="form" style="margin:0 0 14px;gap:10px"><button class="btn primary" type="button" data-mtgo="mtKmForm" style="flex:1 1 140px;min-height:52px;font-size:17px">🔢 ບັນທຶກເລກໄມລ໌</button><button class="btn primary" type="button" data-mtgo="mtFuForm" style="flex:1 1 140px;min-height:52px;font-size:17px">⛽ ບັນທຶກເຕີມນ້ຳມັນ</button></div>
+  <div class="form" style="margin:0 0 14px;gap:10px"><button class="btn" type="button" data-mtgo="mtKmForm" style="flex:1 1 140px;min-height:52px;font-size:17px">🔢 ບັນທຶກເລກໄມລ໌</button><button class="btn" type="button" data-mtgo="mtFuForm" style="flex:1 1 140px;min-height:52px;font-size:17px">⛽ ບັນທຶກເຕີມນ້ຳມັນ</button></div>
   <div class="kpis" id="mtKpis"></div>
   <div class="panels">
     <div class="panel"><h3>🔢 ບັນທຶກເລກໄມລ໌</h3>
-      <form class="form" id="mtKmForm" novalidate><input id="mtKm" type="number" min="0" step="1" inputmode="numeric" placeholder="ເລກໄມລ໌ປັດຈຸບັນ" aria-label="ເລກໄມລ໌" style="font-size:20px;font-weight:700;width:200px"><button class="btn primary" type="submit">ບັນທຶກ</button></form>
+      <form class="form" id="mtKmForm" novalidate><label class="fl"><span>ເລກໄມລ໌ປັດຈຸບັນ</span><input id="mtKm" type="number" min="0" step="1" inputmode="numeric" aria-label="ເລກໄມລ໌" style="font-size:20px;font-weight:700;width:200px"></label><button class="btn primary" type="submit">ບັນທຶກ</button></form>
       <p class="sub" id="mtKmInfo" style="margin:0"></p></div>
     <div class="panel"><h3>⛽ ບັນທຶກເຕີມນ້ຳມັນ</h3>
       <form id="mtFuForm" novalidate><div class="form"><label style="display:flex;flex-direction:column;gap:4px;flex:1 1 140px">ບັດ<select id="mtFuCard"></select></label><label style="display:flex;flex-direction:column;gap:4px;flex:1 1 90px">ລິດ<input id="mtFuLit" inputmode="decimal" autocomplete="off" style="font-size:18px;font-weight:700"></label><label style="display:flex;flex-direction:column;gap:4px;flex:1 1 130px">ຈຳນວນເງິນ (ກີບ)<input id="mtFuAmt" inputmode="decimal" autocomplete="off" style="font-size:18px;font-weight:700"></label><label style="display:flex;flex-direction:column;gap:4px;flex:1 1 120px">ເລກໄມລ໌<input id="mtFuKm" inputmode="numeric" autocomplete="off"></label><button class="btn primary" type="submit" style="align-self:flex-end">ບັນທຶກ</button></div></form>
@@ -894,7 +925,7 @@ body.factory-only nav a:not([data-page="factory"]),body.factory-only #sampleBann
       <div id="fcFromWh" style="margin-top:8px;font-size:13px"></div>
       <div class="form" style="margin-top:10px;align-items:center">
         <label id="fcDestLab" style="display:flex;gap:6px;align-items:center;flex:1 1 220px;font-weight:700">📍 <span id="fcDestTxt">ເອົາລົງຈຸດໃດ</span><select id="fcDestSel" style="flex:1"></select><input id="fcDest" maxlength="60" autocomplete="off" placeholder="ພິມຊື່ຈຸດ" hidden style="flex:1"></label>
-        <input id="fcNote" maxlength="200" placeholder="ໝາຍເຫດ ເຊັ່ນ ເລກໃບສົ່ງເຄື່ອງ, ທະບຽນຄົນຂັບ" aria-label="ໝາຍເຫດ" style="flex:1 1 220px">
+        <label class="fl" style="flex:1 1 220px"><span>ໝາຍເຫດ</span><input id="fcNote" maxlength="200" placeholder="ໝາຍເຫດ ເຊັ່ນ ເລກໃບສົ່ງເຄື່ອງ, ທະບຽນຄົນຂັບ" aria-label="ໝາຍເຫດ"></label>
         <button class="btn primary" type="submit" id="fcSave">ບັນທຶກ</button><button class="btn" type="button" id="fcCancel" hidden>ຍົກເລີກການແກ້</button>
       </div>
     </form>
@@ -959,7 +990,7 @@ body.factory-only nav a:not([data-page="factory"]),body.factory-only #sampleBann
       <div class="fields" id="tlGrid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px"></div>
       <div class="form" style="margin-top:10px;align-items:center">
         <span id="tlDmgBox" style="display:contents"><label style="display:flex;gap:6px;align-items:center;font-size:14px;flex:0 0 auto"><input type="checkbox" id="tlDmg" style="width:auto;min-height:0"> ⚠ ມີສິນຄ້າເສຍຫາຍ</label><select id="tlDmgCause" class="dmgx" aria-label="ສາເຫດເສຍຫາຍ" style="flex:0 1 auto"></select></span>
-        <input id="tlNote" maxlength="200" placeholder="ໝາຍເຫດ (ບໍ່ບັງຄັບ)" aria-label="ໝາຍເຫດ" style="flex:1 1 220px">
+        <label class="fl" style="flex:1 1 220px"><span>ໝາຍເຫດ (ບໍ່ບັງຄັບ)</span><input id="tlNote" maxlength="200" aria-label="ໝາຍເຫດ"></label>
         <button class="btn primary" type="submit" id="tlSave">ບັນທຶກ</button>
       </div>
       <div id="tlAlerts" aria-live="polite"></div>
@@ -1056,8 +1087,8 @@ body.factory-only nav a:not([data-page="factory"]),body.factory-only #sampleBann
     <h3>ຂໍ້ມູນສາຂາ</h3>
     <div class="tbl-wrap"><table class="tbl" id="brTbl"></table></div>
     <form class="form" id="brForm" style="margin:12px 0 0">
-      <input id="brName" placeholder="ຊື່ສາຂາໃໝ່" required maxlength="80" aria-label="ຊື່ສາຂາໃໝ່">
-      <input id="brRate" type="number" min="0" step="100" placeholder="ຜົນຕອບແທນ (ກີບ/ຖັງ)" aria-label="ຜົນຕອບແທນ">
+      <label class="fl"><span>ຊື່ສາຂາ</span><input id="brName" placeholder="ຊື່ສາຂາໃໝ່" required maxlength="80" aria-label="ຊື່ສາຂາໃໝ່"></label>
+      <label class="fl"><span>ຜົນຕອບແທນ (ກີບ/ຖັງ)</span><input id="brRate" type="number" min="0" step="100" aria-label="ຜົນຕອບແທນ"></label>
       <button class="btn primary" type="submit">ເພີ່ມສາຂາ</button>
     </form>
     <p class="sub" style="margin:8px 0 0;font-size:12px">ຍອດສັ່ງ/ຍອດຂາຍ (ອ້າງອີງ) = ຕົວເລກຈາກຕາຕະລາງທີ່ສົ່ງມາ ໃຊ້ທຽບກັບຍອດລາຍເດືອນ (ແກ້ໄດ້) · "ສົ່ງມື້ນີ້" ນັບຈາກລາຍການສິນຄ້າໃນຖ້ຽວລົດທີ່ເລືອກສາຂານີ້ · ຜົນຕອບແທນ 0 = ຍັງບໍ່ມີຍອດ</p>
@@ -1086,7 +1117,7 @@ body.factory-only nav a:not([data-page="factory"]),body.factory-only #sampleBann
   <header class="top"><div><h1>ລົດ ແລະ ຄົນຂັບ</h1><p class="sub">ທະບຽນ ໂຊເຟີ ຜູ້ຊ່ວຍ ຄວາມຈຸລົດ ເລກໄມລ໌ ຮອບບຳລຸງ ອາກອນ ແລະ ຄ່າເສື່ອມລາຄາ</p></div></header>
   <div class="kpis" id="fleetKpis"></div>
   <div class="panel" style="margin-bottom:14px">
-    <div class="form" style="align-items:center"><b>+ ເພີ່ມລົດ:</b><input id="flAddTruck" maxlength="60" placeholder="ທະບຽນ / ຊື່ລົດ" style="flex:1 1 140px"><input id="flAddType" maxlength="80" placeholder="ປະເພດ ເຊັ່ນ ລົດຮ່ວມ / ລົດສາຂາ" style="flex:1 1 160px"><input id="flAddDriver" maxlength="80" placeholder="ໂຊເຟີ" style="flex:1 1 110px"><input id="flAddAsst" maxlength="120" placeholder="ຜູ້ຊ່ວຍ" style="flex:1 1 110px"><button class="btn primary" type="button" id="flAddBtn">ເພີ່ມ</button></div>
+    <div class="form" style="align-items:center"><b>+ ເພີ່ມລົດ:</b><label class="fl" style="flex:1 1 140px"><span>ທະບຽນ / ຊື່ລົດ</span><input id="flAddTruck" maxlength="60" ></label><label class="fl" style="flex:1 1 160px"><span>ປະເພດ</span><input id="flAddType" maxlength="80" placeholder="ປະເພດ ເຊັ່ນ ລົດຮ່ວມ / ລົດສາຂາ"></label><label class="fl" style="flex:1 1 110px"><span>ໂຊເຟີ</span><input id="flAddDriver" maxlength="80" ></label><label class="fl" style="flex:1 1 110px"><span>ຜູ້ຊ່ວຍ</span><input id="flAddAsst" maxlength="120" ></label><button class="btn primary" type="button" id="flAddBtn">ເພີ່ມ</button></div>
     <h3>ຄວາມຈຸລົດ ແລະ ທີມງານ <small class="sub">ຄວາມຈຸເຕັມຄັນຂອງແຕ່ລະສິນຄ້າ (ຖ້າບັນທຸກສະເພາະສິນຄ້ານັ້ນ) · ແກ້ໄຂໄດ້</small></h3>
     <div class="tbl-wrap"><table class="tbl" id="capTbl"></table></div>
   </div>
@@ -1218,7 +1249,7 @@ body.factory-only nav a:not([data-page="factory"]),body.factory-only #sampleBann
 <script>
 const $=s=>document.querySelector(s);
 const fmt=n=>Math.round(n).toLocaleString('en-US');
-const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const LAO_MONTHS=['ມັງກອນ','ກຸມພາ','ມີນາ','ເມສາ','ພຶດສະພາ','ມິຖຸນາ','ກໍລະກົດ','ສິງຫາ','ກັນຍາ','ຕຸລາ','ພະຈິກ','ທັນວາ'];
 const NOW=new Date();
 const fmtDate=d=>d.getDate()+' '+LAO_MONTHS[d.getMonth()]+' '+(d.getFullYear()+543);
@@ -1732,7 +1763,7 @@ function renderFilters(){
   filtersEl.innerHTML=chips.map(([key,l,n])=>`<button class="chip" data-f="${key}" aria-pressed="${key===filter}">${l} <span>${n}</span></button>`).join('');
 }
 function dueChip(due){ const d=Math.round((keyToDate(due)-keyToDate(bizDate))/864e5);
-  return `<div><span class="due${d<0?' late':d===0?' today':''}">📅 ${fmtKey(due)} · ${d<0?'ເກີນ '+(-d)+' ວັນ':d===0?'ມື້ນີ້':'ອີກ '+d+' ວັນ'}</span></div>`; }
+  return `<div><span class="due${d<0?' late':d===0?' today':''}"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="vertical-align:-1px;margin-right:3px"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>${fmtKey(due)} · ${d<0?'ເກີນ '+(-d)+' ວັນ':d===0?'ມື້ນີ້':'ອີກ '+d+' ວັນ'}</span></div>`; }
 function cardHTML(t){
   const opts=COLS.map(c=>`<option value="${c.id}" ${c.id===t.status?'selected':''}>${c.label}</option>`).join('');
   const priTag=t.status==='done'?'<span class="tag done">ກວດຜ່ານແລ້ວ</span>':t.pri==='high'?'<span class="tag high">ຕ້ອງແກ້</span>':'<span class="tag mid">ຄວນກວດ</span>';
@@ -1898,7 +1929,7 @@ function renderProfit(){
       TR.map(r=>{
         const rev=rv(r.truck), c=costOf(r.truck), p=rev-c;
         T.tr+=r.n;T.rev+=rev;T.cost+=c;T.q+=q18(r.truck);
-        return `<tr><td>ສາຍ ${esc(r.route)} <small>${esc(r.truck)}</small></td><td class="r">${r.n}</td><td class="r">${q18(r.truck)?fmt(q18(r.truck)):'–'}</td><td class="r">${fmt(rev)}</td><td class="r">${fmt(c)}</td><td class="r" ${cls(p)}>${fmt(p)}</td><td class="r">${pct(p,rev)}</td></tr>`;
+        return `<tr><td>ສາຍ ${esc(r.route||'–')} <small>${esc(r.truck)}</small></td><td class="r">${r.n}</td><td class="r">${q18(r.truck)?fmt(q18(r.truck)):'–'}</td><td class="r">${fmt(rev)}</td><td class="r">${fmt(c)}</td><td class="r" ${cls(p)}>${fmt(p)}</td><td class="r">${pct(p,rev)}</td></tr>`;
       }).join('')+
       (ext?`<tr><td>ແຟຣນໄຊ (ສ່ວນຕ່າງ) / ລົດ ສນງ. ເບີກສາງເຮົາ</td><td class="r">–</td><td class="r">${q18('')?fmt(q18('')):'–'}</td><td class="r">${fmt(ext)}</td><td class="r">–</td><td class="r">${fmt(ext)}</td><td class="r"></td></tr>`:'')+
       `<tr style="font-weight:700"><td>ລວມ</td><td class="r">${T.tr}</td><td class="r">${fmt(T.q+q18(''))}</td><td class="r">${fmt(T.rev+ext)}</td><td class="r">${fmt(T.cost)}</td><td class="r">${fmt(T.rev+ext-T.cost)}</td><td class="r">${pct(T.rev+ext-T.cost,T.rev+ext)}</td></tr>`;
@@ -1991,14 +2022,14 @@ function renderPerf(){
     CHANNELS.map(([ch,lab])=>{const G=L.filter(x=>x.channel===ch), t=G.reduce((a,x)=>a+x.trips,0), rv=G.reduce((a,x)=>a+x.rev,0), co=G.reduce((a,x)=>a+x.cost,0), nt=rv-co;
       return `<tr><td>${lab}</td><td class="r">${G.length}</td><td class="r">${t}</td><td class="r">${fmt(rv)}</td><td class="r">${fmt(co)}</td><td class="r" style="font-weight:700;color:${nt<0?'var(--danger)':'var(--ok)'}">${fmt(nt)}</td><td class="r">${rv?Math.round(nt/rv*100):0}%</td><td class="r">${fmt(t?nt/t:0)}</td></tr>`;}).join('');
   const max=Math.max(1,...L.map(x=>Math.abs(x.net)));
-  $('#perfChart').innerHTML=L.map(x=>`<div class="list-row"><div class="hd"><span style="font-weight:500">${esc(x.truck)} <small style="color:var(--muted)">ສາຍ ${esc(x.route)} · ${esc(x.driver)}</small></span>
+  $('#perfChart').innerHTML=L.map(x=>`<div class="list-row"><div class="hd"><span style="font-weight:500">${esc(x.truck)} <small style="color:var(--muted)">ສາຍ ${esc(x.route||'–')} · ${esc(x.driver)}</small></span>
     <span style="font-size:13px;font-variant-numeric:tabular-nums;color:${x.net<0?'var(--danger)':'inherit'}">${fmt(x.net)} (${Math.round(x.margin)}%)</span></div>
     <div class="bar"><div style="width:${Math.abs(x.net)/max*100}%;background:${x.net<0?'var(--danger)':'var(--ok)'}"></div></div></div>`).join('');
 
   const th=EXP_TYPES.map(t=>`<th class="r">${t}</th>`).join('');
   const tot=EXP_TYPES.map(t=>L.reduce((s,x)=>s+x.byType[t],0));
   $('#perfTbl').innerHTML=`<tr><th>ລົດ / ສາຍ</th><th class="r">ຖ້ຽວ</th><th class="r">ລາຍໄດ້</th>${th}<th class="r">ຄ່າເສື່ອມລາຄາ</th><th class="r">ດອກເບ້ຍກູ້ລົດ</th><th class="r">ລາຍຈ່າຍລວມ</th><th class="r">ກຳໄລສຸດທິ</th><th class="r">%</th><th class="r">ກຳໄລ/ຖ້ຽວ</th></tr>`+
-    L.map(x=>`<tr><td>${esc(x.truck)}<br><small>ສາຍ ${esc(x.route)} · ${esc(x.driver)}</small></td><td class="r">${x.done}/${x.trips}</td><td class="r">${fmt(x.rev)}</td>
+    L.map(x=>`<tr><td>${esc(x.truck)}<br><small>ສາຍ ${esc(x.route||'–')} · ${esc(x.driver)}</small></td><td class="r">${x.done}/${x.trips}</td><td class="r">${fmt(x.rev)}</td>
       ${EXP_TYPES.map(t=>`<td class="r">${fmt(x.byType[t])}</td>`).join('')}<td class="r">${fmt(x.dep)}</td><td class="r">${fmt(x.int)}</td><td class="r">${fmt(x.cost)}</td>
       <td class="r" style="font-weight:700;color:${x.net<0?'var(--danger)':'var(--ok)'}">${fmt(x.net)}</td><td class="r">${Math.round(x.margin)}%</td><td class="r">${fmt(x.netPerTrip)}</td></tr>`).join('')+
     `<tr style="font-weight:700"><td>ລວມ</td><td class="r">${L.reduce((s,x)=>s+x.done,0)}/${L.reduce((s,x)=>s+x.trips,0)}</td><td class="r">${fmt(rev)}</td>${tot.map(v=>`<td class="r">${fmt(v)}</td>`).join('')}<td class="r">${fmt(L.reduce((s,x)=>s+x.dep,0))}</td><td class="r">${fmt(L.reduce((s,x)=>s+x.int,0))}</td><td class="r">${fmt(cost)}</td><td class="r">${fmt(net)}</td><td class="r">${rev?Math.round(net/rev*100):0}%</td><td class="r">${fmt(L.length&&L.reduce((s,x)=>s+x.trips,0)?net/L.reduce((s,x)=>s+x.trips,0):0)}</td></tr>`;
@@ -2008,7 +2039,7 @@ function renderPerf(){
   const x=L.find(y=>y.truck===sel.value);
   if(!x){$('#perfDetail').innerHTML='';return;}
   const avg=L.length?net/Math.max(1,L.reduce((s,y)=>s+y.trips,0)):0, diff=x.netPerTrip-avg;
-  $('#perfDetail').innerHTML=`<p class="sub" style="margin:0 0 10px">ສາຍ ${esc(x.route)} · ຄົນຂັບ ${esc(x.driver)} · ຖ້ຽວສຳເລັດ ${x.done}/${x.trips}</p>
+  $('#perfDetail').innerHTML=`<p class="sub" style="margin:0 0 10px">ສາຍ ${esc(x.route||'–')} · ຄົນຂັບ ${esc(x.driver)} · ຖ້ຽວສຳເລັດ ${x.done}/${x.trips}</p>
     <div class="kpis" style="margin-bottom:10px">
       <div class="kpi"><div class="label">ລາຍໄດ້ / ຖ້ຽວ</div><div class="val" style="font-size:16px">${fmt(x.revPerTrip)}</div></div>
       <div class="kpi ${x.netPerTrip<0?'neg':'pos'}"><div class="label">ກຳໄລ / ຖ້ຽວ</div><div class="val" style="font-size:16px">${fmt(x.netPerTrip)}</div><div class="hint">${diff>=0?'ສູງກວ່າ':'ຕ່ຳກວ່າ'}ຄ່າສະເລ່ຍ ${fmt(Math.abs(diff))}</div></div>
@@ -2910,7 +2941,7 @@ function veForm(){return {id:veEditId,date:$('#veDate').value,truck:$('#veVeh').
 function veFormRefresh(){
   const vs=veVehicles(), cv=$('#veVeh').value; $('#veVeh').innerHTML=vs.map(p=>`<option>${esc(p)}</option>`).join(''); if(vs.includes(cv)) $('#veVeh').value=cv;
   if(!$('#veDate').value) $('#veDate').value=bizDate;
-  $('#veTypes').innerHTML=EXP_TYPES.map(t=>`<button type="button" class="btn${t===veType?' primary':''}" data-vetype="${t}" aria-pressed="${t===veType}">${veLabel(t)}</button>`).join('');
+  $('#veTypes').innerHTML=EXP_TYPES.map(t=>`<button type="button" class="chip" data-vetype="${t}" aria-pressed="${t===veType}">${veLabel(t)}</button>`).join('');
   veCheck();
 }
 function veCheck(){
@@ -3098,7 +3129,7 @@ function renderTrips(){
   $('#tripKpis').innerHTML=[['ຖ້ຽວທັງໝົດ',all.length,''],['ສຳເລັດ',n('done'),'pos'],['ກຳລັງສົ່ງ',n('go'),''],['ລໍຖ້າອອກ',n('wait'),''],['ລາຍໄດ້ລວມ',fmt(salesTotal())+' ກີບ','']]
     .map(([l,v,c])=>`<div class="kpi ${c}"><div class="label">${l}</div><div class="val">${v}</div></div>`).join('');
   const cur=$('#tripRoute').value;
-  $('#tripRoute').innerHTML=TRIPS.map((r,i)=>`<option value="${i}">ສາຍ ${esc(r.route)} (${esc(r.truck)})</option>`).join(''); if(cur) $('#tripRoute').value=cur;
+  $('#tripRoute').innerHTML=TRIPS.map((r,i)=>`<option value="${i}">ສາຍ ${esc(r.route||'–')} (${esc(r.truck)})</option>`).join(''); if(cur) $('#tripRoute').value=cur;
   $('#tripTbl').innerHTML='<tr><th>ຖ້ຽວ</th><th>ສາຍ</th><th>ຄົນຂັບ</th><th>ຊ່ອງທາງ</th><th class="r">ຄວາມຈຸ (ຖັງ 18L)</th><th>ລາຍການສິນຄ້າ</th><th class="r">ລາຍໄດ້</th><th>ສະຖານະ</th><th></th></tr>'+
     all.map(x=>{const l=lotOf(x.ri,x.ti), hasLot=lotQty(l)>0, key=x.ri+':'+x.ti, ch=chOf(x.truck), c=hasLot?lotCalc(x.truck,l):null;
       return `<tr><td>${esc(x.truck)} #${x.ti+1}</td><td>${esc(x.route)}</td><td>${esc(driverOf(x.truck))}</td>
@@ -3477,13 +3508,13 @@ function renderPlan(force){ if(!plDate) plDate=bizDate;
   const pOpt=products.filter(p=>p.active).map(p=>`<option value="${esc(p.id)}">${esc(p.name)}</option>`).join('');
   $('#plTrucks').innerHTML=P.trucks.map((T,ti)=>[T,ti]).sort((a,b)=>({work:0,standby:1,off:2})[a[0].status]-({work:0,standby:1,off:2})[b[0].status]).map(([T,ti])=>{ const card=planCard(P,T), changed=T.sent&&T.sent!==planHash(card);
     return `<div class="vcard" data-pt="${ti}"><h4><span>🚛 ${esc(T.truck)} <button class="btn sm" type="button" data-ptdel="${ti}" title="ເອົາອອກຈາກແຜນມື້ນີ້">${plDelArm===ti?'ກົດອີກຄັ້ງ':'✕'}</button> ${changed?'<span class="tag wait">🔄 ປ່ຽນແປງ ຍັງບໍ່ສົ່ງໃໝ່</span>':T.sent?'<span class="tag done">ສົ່ງແລ້ວ</span>':''}</span><select data-pf="status" aria-label="ສະຖານະ"><option value="work"${T.status==='work'?' selected':''}>ອອກງານ</option><option value="standby"${T.status==='standby'?' selected':''}>ສະແຕນບາຍ</option><option value="off"${T.status==='off'?' selected':''}>ພັກ</option></select></h4>
-      <div class="form"><input data-pf="crew" value="${esc(T.crew)}" placeholder="ຄົນຂັບ + ຜູ້ຊ່ວຍ" style="flex:2 1 160px"><input data-pf="route" value="${esc(T.route)}" placeholder="ແຜນ / ເສັ້ນທາງ ເຊັ່ນ ແຜນຊຽງດາ" style="flex:2 1 160px"></div>
+      <div class="form"><label class="fl" style="flex:2 1 160px"><span>ຄົນຂັບ + ຜູ້ຊ່ວຍ</span><input data-pf="crew" value="${esc(T.crew)}" ></label><label class="fl" style="flex:2 1 160px"><span>ແຜນ / ເສັ້ນທາງ</span><input data-pf="route" value="${esc(T.route)}" placeholder="ແຜນ / ເສັ້ນທາງ ເຊັ່ນ ແຜນຊຽງດາ"></label></div>
       ${T.status==='off'?'':T.rounds.map((r,ri)=>{ const ld=roundLoad(r); return `<div style="border-top:1px dashed var(--line);margin-top:8px;padding-top:6px"><div class="form" style="align-items:center;margin:0 0 4px"><b>📦</b><input data-pr="${ri}" value="${esc(r.name)}" style="width:110px;font-weight:700"><small class="sub" style="flex:1">ເບີກ: ${Object.keys(ld).length?Object.entries(ld).map(([p,q])=>esc(pName(p))+' '+fmt(q)).join(' · '):'–'}</small>${Object.keys(ld).length?`<button class="btn sm" type="button" data-pload="${ri}">ເບີກຈາກສາງ</button>`:''}${T.rounds.length>1?`<button class="btn sm" type="button" data-prdel="${ri}">✕</button>`:''}</div>
         ${r.stops.map((st,si)=>`<div style="margin:4px 0 6px 10px"><div class="form" style="margin:0;align-items:center"><b>${si+1}.</b><input data-ps="${ri}.${si}.cid" value="${esc(st.cid||'')}" placeholder="🆔 ລະຫັດລູກຄ້າ" autocomplete="off" style="flex:1 1 130px;max-width:190px;font-family:ui-monospace,monospace;font-size:13px"><input data-ps="${ri}.${si}.c" value="${esc(st.c)}" list="plCust" placeholder="ຮ້ານ / ລູກຄ້າ / ສາຂາ" style="flex:2 1 150px"><input data-ps="${ri}.${si}.collect" value="${st.collect?fmt(st.collect):''}" inputmode="decimal" placeholder="💰 ເງິນທີ່ຕ້ອງເກັບ" style="flex:1 1 110px"><select data-ps="${ri}.${si}.pm" aria-label="ການຊຳລະ" style="flex:0 1 auto">${pmOpts(st.pm||'')}</select><input data-ps="${ri}.${si}.note" value="${esc(st.note)}" placeholder="⏰ ໝາຍເຫດ / ເວລາເປີດ" style="flex:1 1 130px"><button class="btn sm" type="button" data-psdel="${ri}.${si}">✕</button></div>
           <div class="form" style="margin:2px 0 0 18px;align-items:center"><input data-ps="${ri}.${si}.vil" value="${esc(st.vil||'')}" placeholder="ບ້ານ" style="flex:1 1 110px;font-size:13px"><input data-ps="${ri}.${si}.dist" value="${esc(st.dist||'')}" placeholder="ເມືອງ" style="flex:1 1 100px;font-size:13px"><input data-ps="${ri}.${si}.tel" value="${esc(st.tel||'')}" inputmode="tel" placeholder="📞 ເບີໂທ" style="flex:1 1 110px;font-size:13px"></div>
-          <div class="form" style="margin:2px 0 0 18px;align-items:center">${st.items.map((it,ii)=>`<span style="display:inline-flex;gap:3px;align-items:center"><select data-pi="${ri}.${si}.${ii}.pid" style="max-width:150px"><option value="">— ສິນຄ້າ —</option>${pOpt.replace(`value="${esc(it.pid)}"`,`value="${esc(it.pid)}" selected`)}</select><input data-pi="${ri}.${si}.${ii}.q" value="${it.q||''}" inputmode="numeric" placeholder="ຈຳນວນ" style="width:64px"><input data-pi="${ri}.${si}.${ii}.free" value="${it.free||''}" inputmode="numeric" placeholder="ແຖມ" style="width:52px"></span>`).join('')}<button class="btn sm" type="button" data-piadd="${ri}.${si}">+ ສິນຄ້າ</button></div></div>`).join('')}
+          <div class="form" style="margin:2px 0 0 18px;align-items:center">${st.items.map((it,ii)=>`<span style="display:inline-flex;gap:3px;align-items:center"><label class="fl" style="max-width:150px"><span>ສິນຄ້າ</span><select data-pi="${ri}.${si}.${ii}.pid"><option value="">— ສິນຄ້າ —</option>${pOpt.replace(`value="${esc(it.pid)}"`,`value="${esc(it.pid)}" selected`)}</select></label><label class="fl"><span>ຈຳນວນ</span><input data-pi="${ri}.${si}.${ii}.q" value="${it.q||''}" inputmode="numeric" style="width:64px"></label><label class="fl"><span>ແຖມ</span><input data-pi="${ri}.${si}.${ii}.free" value="${it.free||''}" inputmode="numeric" style="width:52px"></label></span>`).join('')}<button class="btn sm" type="button" data-piadd="${ri}.${si}">+ ສິນຄ້າ</button></div></div>`).join('')}
         <button class="btn sm" type="button" data-psadd="${ri}" style="margin-left:10px">+ ເພີ່ມຮ້ານ</button></div>`; }).join('')+(T.rounds.length<PL_ROUNDS.length?`<button class="btn sm" type="button" data-pradd style="margin-top:6px">+ ເພີ່ມຮອບ</button>`:'')}
-      <div class="form" style="margin-top:6px"><input data-pf="note" value="${esc(T.note)}" placeholder="📝 ໝາຍເຫດສຳລັບຄັນນີ້" style="flex:1 1 100%"></div>
+      <div class="form" style="margin-top:6px"><label class="fl" style="flex:1 1 100%"><span>ໝາຍເຫດສຳລັບຄັນນີ້</span><input data-pf="note" value="${esc(T.note)}" ></label></div>
       <details style="margin-top:4px"><summary class="sub" style="cursor:pointer;font-size:13px">ເບິ່ງການ໌ດທີ່ຈະສົ່ງ</summary><pre class="out" data-pcard="${ti}">${esc(card)}</pre></details>
       <div class="form" style="margin-top:6px;justify-content:flex-end" data-pshare="${ti}">${shareBtns(card,'t'+ti)}</div></div>`; }).join(''); }
 // ພາບລວມ: ຕົວເລກສຳຄັນ · ສິ່ງທີ່ຕ້ອງເຮັດ · ຕາຕະລາງທຸກຄັນ
@@ -3816,7 +3847,7 @@ function odDate(){ const el=$('#odDate'); if(!el.value) el.value=addDays(bizDate
 function renderOrders(){ const d=odDate(), H=odHist(), pOpt=products.filter(p=>p.active).map(p=>`<option value="${esc(p.id)}">${esc(p.name)}</option>`).join('');
   $('#odCidList').innerHTML=[...new Map(orders.filter(o=>o.cid).map(o=>[o.cid,o.c])).entries()].slice(0,400).map(([k,c])=>`<option value="${esc(k)}">${esc(c)}</option>`).join('');
   $('#odCustList').innerHTML=[...new Set(planDays.flatMap(p=>p.trucks.flatMap(T=>T.rounds.flatMap(r=>r.stops.map(s=>s.c)))).concat(orders.map(o=>o.c)).filter(Boolean))].slice(0,400).map(c=>`<option value="${esc(c)}">`).join('');
-  if(!$('#odItems').contains(document.activeElement)) $('#odItems').innerHTML=odDraft.map((it,i)=>`<div class="form" style="margin:0 0 4px;align-items:center"><select data-odi="${i}.pid" style="flex:2 1 160px"><option value="">— ສິນຄ້າ —</option>${pOpt.replace(`value="${esc(it.pid)}"`,`value="${esc(it.pid)}" selected`)}</select><input data-odi="${i}.q" value="${it.q||''}" inputmode="numeric" placeholder="ຈຳນວນ" style="width:80px"><input data-odi="${i}.free" value="${it.free||''}" inputmode="numeric" placeholder="ແຖມ" style="width:64px">${odDraft.length>1?`<button class="btn sm" type="button" data-odirm="${i}">✕</button>`:''}</div>`).join('');
+  if(!$('#odItems').contains(document.activeElement)) $('#odItems').innerHTML=odDraft.map((it,i)=>`<div class="form" style="margin:0 0 4px;align-items:center"><label class="fl" style="flex:1 1 120px"><span>ສິນຄ້າ</span><select data-odi="${i}.pid"><option value="">— ສິນຄ້າ —</option>${pOpt.replace(`value="${esc(it.pid)}"`,`value="${esc(it.pid)}" selected`)}</select></label><label class="fl"><span>ຈຳນວນ</span><input data-odi="${i}.q" value="${it.q||''}" inputmode="numeric" style="width:80px"></label><label class="fl"><span>ແຖມ</span><input data-odi="${i}.free" value="${it.free||''}" inputmode="numeric" style="width:64px"></label>${odDraft.length>1?`<button class="btn sm" type="button" data-odirm="${i}">✕</button>`:''}</div>`).join('');
   applyOdSecs(); const LA=orders.filter(o=>o.date===d&&o.status!=='cancel').sort((a,b)=>({new:0,ok:1,done:2})[a.status]-({new:0,ok:1,done:2})[b.status]||String(a.at).localeCompare(String(b.at))), N=LA.filter(o=>o.status==='new'), A=isAdminUser, L=odFilter==='all'?LA:LA.filter(o=>o.status===odFilter);
   const tOpt=fleet.map(f=>`<option value="${esc(f.truck)}">${esc(f.truck)}</option>`).join('');
   const other={}; orders.filter(o=>o.status==='new'&&o.date!==d).forEach(o=>other[o.date]=(other[o.date]||0)+1); const OD=Object.entries(other).sort();
@@ -4413,7 +4444,7 @@ $('#fleetTbl').addEventListener('click',e=>{
 
 function renderCap(){
   if($('#capTbl').contains(document.activeElement)) return;
-  const txt=(i,key,v,w)=>`<input type="text" value="${esc(v||'')}" data-vt="${i}:${key}" aria-label="${key} ${esc(fleet[i].truck)}" style="width:${w}px">`;
+  const txt=(i,key,v,w)=>`<input type="text" value="${esc(v||'')}" data-vt="${i}:${key}" aria-label="${({driver:'ຄົນຂັບ',assistant:'ຜູ້ຊ່ວຍ',cost:'ລາຄາຊື້',date:'ວັນທີຊື້',salvage:'ມູນຄ່າຊາກ',years:'ອາຍຸໃຊ້ງານ (ປີ)'})[key]||key} ${esc(fleet[i].truck)}" style="width:${w}px">`;
   const num=(attr,v,w)=>`<input type="number" min="0" value="${v}" ${attr} style="width:${w||70}px;text-align:right">`;
   $('#capTbl').innerHTML='<tr><th>ທະບຽນ / ປະເພດ</th><th>ໂຊເຟີປະຈຳ</th><th>ຜູ້ຊ່ວຍປະຈຳ</th><th>ຊ່ອງທາງສົ່ງ</th>'+prodPairs().map(([p,u])=>`<th class="r">${esc(p)}${u?'<br><small>('+esc(u)+')</small>':''}</th>`).join('')+'<th class="r">ຮອບ/ວັນ</th><th class="r">ຖັງ 18L / ວັນ</th></tr>'+
     fleet.map((f,i)=>`<tr><td><b>${esc(f.truck)}</b><br><small>${esc(f.type)}</small></td><td>${txt(i,'driver',f.driver,90)}</td><td>${txt(i,'assistant',f.assistant,150)}</td><td><select data-ch="${i}" aria-label="ຊ່ອງທາງສົ່ງ ${esc(f.truck)}">${CHANNELS.map(([v,l])=>`<option value="${v}" ${f.channel===v?'selected':''}>${l}</option>`).join('')}</select></td>`+
@@ -4433,7 +4464,7 @@ $('#capTbl').addEventListener('change',e=>{
 });
 
 function renderDep(){
-  const inp=(i,key,v,type,w)=>`<input type="${type||'number'}" ${type==='date'?'':'min="0"'} value="${esc(v)}" data-dep="${i}:${key}" aria-label="${key} ${esc(fleet[i].truck)}" style="width:${w||120}px;${type==='date'?'':'text-align:right'}">`;
+  const inp=(i,key,v,type,w)=>`<input type="${type||'number'}" ${type==='date'?'':'min="0"'} value="${esc(v)}" data-dep="${i}:${key}" aria-label="${({driver:'ຄົນຂັບ',assistant:'ຜູ້ຊ່ວຍ',cost:'ລາຄາຊື້',date:'ວັນທີຊື້',salvage:'ມູນຄ່າຊາກ',years:'ອາຍຸໃຊ້ງານ (ປີ)'})[key]||key} ${esc(fleet[i].truck)}" style="width:${w||120}px;${type==='date'?'':'text-align:right'}">`;
   const totDay=fleet.reduce((s,f)=>s+depPerDay(f),0);
   $('#depTbl').innerHTML='<tr><th>ລົດ</th><th class="r">ລາຄາຊື້ (ກີບ)</th><th class="r">ມູນຄ່າຊາກ</th><th class="r">ອາຍຸ (ປີ)</th><th>ວັນທີຊື້</th><th class="r">ຕໍ່ວັນ</th><th class="r">ຕໍ່ເດືອນ</th><th class="r">ສະສົມ</th><th class="r">ມູນຄ່າຕາມບັນຊີ</th></tr>'+
     fleet.map((f,i)=>`<tr><td>${esc(f.truck)}</td><td class="r">${inp(i,'cost',f.dep.cost)}</td><td class="r">${inp(i,'salvage',f.dep.salvage)}</td><td class="r">${inp(i,'years',f.dep.years,'number',60)}</td><td>${inp(i,'date',f.dep.date,'date',140)}</td>
@@ -4845,11 +4876,48 @@ const ICONS=[[/ສະແດງທັງໝົດ|ສະແດງໜ້ອຍລ�
  [/ຍອດຂາຍ|ບິນ|ໃບແຈ້ງໜີ້|ອິນວອຍ/,'🧾'],[/ອໍເດີ/,'🛍️'],[/ໂຮງງານ/,'🏭'],[/ສາຂາ|ແຟຣນໄຊ/,'🏪'],[/ລົດຮ່ວມ|ພາດເນີ|ຄູ່ຮ່ວມ/,'🤝'],[/ສຳນັກງານໃຫຍ່|ສນງ/,'🏢'],
  [/ຖັງເປົ່າ|ເປົ່າ|ຄືນ/,'🔁'],[/ສະຕັອກ|ສາງ|ຄັງ|ຮັບເຂົ້າ|ເບີກ/,'📦'],[/ສິນຄ້າ|ຖັງ|ລັງ|ຂວດ|ແພັກ/,'🧴'],[/ແຜນ/,'📋'],[/ຖ້ຽວ|ເສັ້ນທາງ|ສາຍ/,'🛣️'],[/ຄົນຂັບ|ທີມ|ພະນັກງານ|ຜູ້ໃຊ້|ສິດ/,'👷'],[/ລົດ/,'🚛'],
  [/ຮ້ານ|ລູກຄ້າ/,'👤'],[/ເອກະສານ|ໃບ|ລາຍງານ|ສະຫຼຸບ/,'📄'],[/ອະນຸມັດ|ເຊັນ/,'✍️'],[/ກວດ|ທຽບ/,'🔍'],[/ປະຫວັດ|ບັນທຶກປະຈຳວັນ/,'🕘'],[/ຕັ້ງຄ່າ|ເລດ/,'⚙️'],[/ມື້ນີ້|ວັນ/,'📅'],[/ເດືອນ/,'🗓️'],[/ງານ/,'🗂️'],[/ພາບລວມ|ທຸກໜ້າ/,'🧭'],[/ລວມ|ທັງໝົດ/,'🧮'],[/ລາຍການ|ທີລະ/,'📝']];
+// ໄອຄອນ SVG ແທນອີໂມຈິ (ຮູບແບບ Lucide, stroke): ອີໂມຈິເດີມຍັງຢູ່ໃນ .ice ທີ່ເບິ່ງບໍ່ເຫັນ ເພື່ອໃຫ້ textContent/ການຄັດລອກ ຍັງໄດ້ອີໂມຈິຄືເກົ່າ
+const SVG_P={truck:'M14 18V6H2v12h3M15 18H9M19 18h3v-5l-4-4h-4|c17,18,2|c7,18,2',clip:'M9 2h6v4H9z|M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2|M9 12h6M9 16h4',
+receipt:'M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z|M8 8h8M8 12h8M8 16h5',pen:'M12 20h9|M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z',
+cash:'M4 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z|c12,12,2|M6 12h.01M18 12h.01',x:'c12,12,10|m15 9-6 6m0-6 6 6',ok:'c12,12,10|m9 12 2 2 4-4',
+pin:'M12 22s8-6 8-12a8 8 0 0 0-16 0c0 6 8 12 8 12Z|c12,10,3',inbox:'M12 3v12|m7 10 5 5 5-5|M5 21h14',outbox:'M12 15V3|m7 8 5-5 5 5|M5 21h14',clock:'c12,12,10|M12 7v5l3 2',
+box:'M21 8 12 3 3 8v8l9 5 9-5Z|M3 8l9 5 9-5M12 13v8',bank:'M3 21h18|M5 21V11M9 21V11M15 21V11M19 21V11|m3 9 9-6 9 6Z',bar:'M3 3v18h18|M8 17v-5M13 17V8M18 17v-9',
+up:'M3 3v18h18|m7 14 4-4 3 3 6-6',down:'M3 3v18h18|m7 8 4 4 3-3 6 6',plus:'M12 5v14M5 12h14',fuel:'M3 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18|M2 22h14|M3 10h12|M15 13h2a2 2 0 0 1 2 2v3a2 2 0 0 0 4 0V9l-3-3',
+adown:'M12 5v14|m6 13 6 6 6-6',aup:'M12 19V5|m6 11 6-6 6 6',aright:'M5 12h14|m13 6 6 6-6 6',user:'c12,8,4|M4 21a8 8 0 0 1 16 0',users:'c9,8,4|M2 21a7 7 0 0 1 14 0|M16 4a4 4 0 0 1 0 8M22 21a7 7 0 0 0-4-6.3',
+print:'M6 9V2h12v7|M6 14h12v8H6z|M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2',gear:'M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3|M1 14h6M9 8h6M17 16h6',
+cal:'M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z|M16 2v4M8 2v4M3 10h18',phone:'M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z',
+gift:'M3 8h18v4H3z|M12 8v13|M19 12v9H5v-9|M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5',laptop:'M6 4h12a2 2 0 0 1 2 2v10H4V6a2 2 0 0 1 2-2Z|M2 20h20',search:'c11,11,8|m21 21-4.3-4.3',
+hash:'M4 9h16M4 15h16M10 3 8 21M16 3l-2 18',repeat:'m17 2 4 4-4 4|M3 11v-1a4 4 0 0 1 4-4h14|m7 22-4-4 4-4|M21 13v1a4 4 0 0 1-4 4H3',map:'m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3Z|M9 3v15M15 6v15',
+folder:'M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-8l-2-3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z',store:'m3 9 1.5-5h15L21 9|M3 9h18|M5 9v12h14V9|M10 21v-5h4v5',save:'M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z|M17 21v-8H7v8|M7 3v5h8',
+trash:'M3 6h18|M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6|M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2',pause:'M6 4h4v16H6zM14 4h4v16h-4z',factory:'M2 20h20|M4 20V8l6 4V8l6 4V4h4v16',
+shield:'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z',wrench:'M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-7.9 7.9l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 7.9-7.9l-3.8 3.8Z',
+link:'M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7|M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7',file:'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z|M14 2v6h6',
+lock:'M5 11h14a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2Z|M7 11V7a5 5 0 0 1 10 0v4',warn:'M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z|M12 9v4M12 17h.01',
+mail:'M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z|m22 7-10 6L2 7',mobile:'M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Z|M12 18h.01',
+burst:'M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8',camera:'M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3Z|c12,13,3',
+card:'M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z|M2 10h20',spark:'M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6 5.6 18.4',updown:'m7 15 5 5 5-5M7 9l5-5 5 5',med:'M4 4h16v16H4z|M12 8v8M8 12h8'};
+const EMO_ICON={};Object.entries({truck:'🚛🚚🛻🚐⛟',clip:'📋📑🗂',receipt:'🧾',pen:'📝✍✏',cash:'💰💵💸',x:'❌',ok:'✅',pin:'📍',inbox:'📥',outbox:'📤',clock:'⏰⏳🕘',box:'📦🧴',bank:'🏦🏢',bar:'📊',up:'📈',down:'📉',plus:'➕',fuel:'⛽',
+adown:'⬇',aup:'⬆',aright:'➡',user:'👨👤👷',users:'👥🤝',print:'🖨',gear:'⚙',cal:'📅🗓',phone:'📞☎',gift:'🎁',laptop:'💻',search:'🔍',hash:'🔢🧮',repeat:'🔁🔄',map:'🗺🛣🧭',folder:'📁',store:'🏪🏬🛍🛒',save:'💾',
+trash:'🗑',pause:'⏸',factory:'🏭',shield:'🛡',wrench:'🔧',link:'🔗📎',file:'📄',lock:'🔒🔐',warn:'⚠',mail:'✉',mobile:'📲',burst:'💥',camera:'📷',card:'💳🆔',spark:'❇',updown:'↕',med:'💉'}).forEach(([k,v])=>[...v].forEach(e=>EMO_ICON[e]=k));
+const EMO_RE=new RegExp('('+Object.keys(EMO_ICON).join('|')+')\\uFE0F?','u'), EMO_SPLIT=new RegExp('((?:'+Object.keys(EMO_ICON).join('|')+')\\uFE0F?)','gu');
+const svgIcon=e=>{ const k=EMO_ICON[e.replace(/️/g,'')]; return '<span class="ic svgi" aria-hidden="true"><svg viewBox="0 0 24 24">'+SVG_P[k].split('|').map(d=>d[0]==='c'?(([x,y,r])=>`<circle cx="${x}" cy="${y}" r="${r}"/>`)(d.slice(1).split(',')):`<path d="${d}"/>`).join('')+'</svg><i class="ice">'+e+'</i></span>'; };
+// shortcut: ອີໂມຈິໃນ <option>/<textarea>/<pre> ແລະ ກ່ອງທີ່ຢູ່ນອກ <main> ຍັງເປັນອີໂມຈິ — ຖ້າຕ້ອງການ ໃຫ້ເອີ້ນ svgEmoji ກັບກ່ອງນັ້ນ
+// ຫໍ່ຂໍ້ຄວາມ+ໄອຄອນເປັນ <span> ກ້ອນດຽວ: ບໍ່ໃຫ້ໄອຄອນແຍກອອກເປັນ item ຂອງຫົວຂໍ້ແບບ flex
+function svgEmoji(root){ if(!root) return; const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>EMO_RE.test(n.nodeValue)&&!n.parentElement.closest('textarea,pre,option,select,script,style,.ice,[contenteditable]')?1:3}), L=[]; while(w.nextNode()) L.push(w.currentNode);
+  L.forEach(n=>{ const t=document.createElement('template'); t.innerHTML='<span>'+n.nodeValue.split(EMO_SPLIT).map((x,i)=>i%2?svgIcon(x):esc(x)).join('')+'</span>'; n.replaceWith(t.content); }); }
 const ICON_LEAD=/^[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{2100}-\u{21FF}\u{2300}-\u{23FF}\u{25A0}-\u{25FF}\u{3297}\u{3299}\u{00A9}\u{00AE}]/u;
+// ໂທລະສັບ: ຕາຕະລາງ (ແຖວທຳອິດເປັນ <th> ≥4 ຖັນ) ສະແດງເປັນບັດ — ແຕ່ລະຊ່ອງໄດ້ data-label ຈາກຫົວຖັນ, CSS ໃນ @media 700px ເປັນຄົນປ່ຽນຮູບແບບ
+function cardTables(root){ if(!root) return; root.querySelectorAll('table.tbl').forEach(t=>{ const hr=t.rows[0]; if(!hr||hr.cells.length<4||[...hr.cells].some(c=>c.tagName!=='TH')) return;
+  const L=[...hr.cells].map(c=>c.textContent.replace(EMO_SPLIT,'').replace(/\s+/g,' ').trim()); t.classList.add('cardt'); hr.classList.add('cth');
+  for(let i=1;i<t.rows.length;i++){ const r=t.rows[i], C=[...r.cells]; if(C.length===L.length&&C.every(c=>c.colSpan===1)) C.forEach((c,j)=>{ if(!c.hasAttribute('data-label')) c.setAttribute('data-label',L[j]); }); else r.classList.add('cspan'); } }); }
+// <option> ໃສ່ SVG ບໍ່ໄດ້: ລຶບອີໂມຈິອອກຈາກຂໍ້ຄວາມແທນ
+function optEmoji(root){ if(root) root.querySelectorAll('option').forEach(o=>{ if(EMO_RE.test(o.textContent)) o.textContent=o.textContent.replace(EMO_SPLIT,'').trim(); }); }
+// ເມນູແບບໄອຄອນ: ໃສ່ຊື່ໃຫ້ (hover ເຫັນ tooltip, ໂປຣແກຣມອ່ານໜ້າຈໍອ່ານໄດ້)
+document.querySelectorAll('nav a[data-page]').forEach(a=>{ const t=(a.querySelector('span')||{}).textContent; if(t&&!a.title){ a.title=t.trim(); a.setAttribute('aria-label',t.trim()); } });
 function addIcons(root){ if(!root) return; root.querySelectorAll('h1,.panel > h3,.panel > h4,h4,.kpi .label,.secbar .chip,details > summary').forEach(el=>{ if(el.querySelector(':scope > .ic')) return; const own=[...el.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join(' ').trim(), t=own||el.textContent.trim(); const t1=t.replace(/^[\s✓]+/,''); if(!t1||ICON_LEAD.test(t1)||ICON_LEAD.test(el.textContent.trim().replace(/^[\s✓]+/,''))) return;
   const hit=ICONS.find(([re])=>re.test(t1)); if(!hit) return; const tn=[...el.childNodes].find(n=>n.nodeType===3&&n.textContent.trim()); // ໃສ່ໃນຂໍ້ຄວາມເລີຍ ເພື່ອບໍ່ໃຫ້ແຍກອອກໃນຫົວຂໍ້ແບບ flex
   if(tn&&tn===[...el.childNodes].find(n=>n.nodeType!==3||n.textContent.trim())) tn.textContent=tn.textContent.replace(/^(\s*✓?\s*)/,'$1'+hit[1]+' '); else el.insertAdjacentHTML('afterbegin',`<span class="ic" aria-hidden="true">${hit[1]}</span>`); }); }
-{ let icT=null; new MutationObserver(()=>{ if(icT) return; icT=setTimeout(()=>{ icT=null; try{ addIcons(document.getElementById('page-'+curPage())); }catch(_){} },30); }).observe(document.querySelector('main'),{childList:true,subtree:true}); }
+{ let icT=null; new MutationObserver(()=>{ if(icT) return; icT=setTimeout(()=>{ icT=null; try{ const pg=document.getElementById('page-'+curPage()); addIcons(pg); [pg,...document.querySelectorAll('.modal:not([hidden])')].forEach(r=>{ svgEmoji(r); optEmoji(r); cardTables(r); r.querySelectorAll('.chip > span:last-child').forEach(x=>x.classList.toggle('zero',x.textContent.trim()==='0')); }); }catch(_){} },30); }).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['hidden']}); }
 function doRefresh(){
   ensureVdues(); ensurePartners();
   const fn=PAGE_RENDER[curPage()]; if(fn) fn(); try{ autoOrganize(curPage()); }catch(e){ console.error(e); } try{ addIcons(document.getElementById('page-'+curPage())); }catch(_){}
