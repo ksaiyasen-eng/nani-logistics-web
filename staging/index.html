@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Z9zZvF4i51FSU/iN9FjUHdh2IHGIsq+LX3hNmIXgL0Q=' 'sha256-+jukipwnY0vzWu2jhmRUWXUZxmRaNPeLwvI3qt+aAgI=' 'sha256-Bhu8eS1V/gws5sLAbEbs0lHr8EPrNLL+CwPpH3yRvE4=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdnjs.cloudflare.com/ajax/libs/xlsx/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="lgx-build" content="7ead362acb4a"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#e8692e">
+<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Z9zZvF4i51FSU/iN9FjUHdh2IHGIsq+LX3hNmIXgL0Q=' 'sha256-FDolKxxs1ougRlrO8On8owW6Fax4yuxUg9H6qWllKNk=' 'sha256-Bhu8eS1V/gws5sLAbEbs0lHr8EPrNLL+CwPpH3yRvE4=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdnjs.cloudflare.com/ajax/libs/xlsx/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="lgx-build" content="1e382029d057"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#e8692e">
 <meta name="robots" content="noindex"><title>Nani Logistics</title>
 <style>#fuScanBox{display:none!important}</style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.js" integrity="sha384-rwykjmWNwVxboyFmvK9OXN0wj9hnMHA2aAHtits54DuACyCq0M2PrSNxhRb+hvXT" crossorigin="anonymous"></script>
@@ -5305,7 +5305,25 @@ let snapLast='', snapAt=0;
 async function tgSnap(uid){ try{ if(typeof payables!=='function'||typeof ar==='undefined'||typeof saleDays==='undefined') return;
   const mm=todayKey.slice(0,7), un={}, nm={}; orders.forEach(o=>{ if(o.cid) nm[o.cid]=o.c; });
   saleDays.forEach(d=>{ if(d.date.slice(0,7)!==mm||!d.bx) return; d.bx.forEach(b=>{ if(b[5]!==1) return; const x=un[b[1]||'?']=un[b[1]||'?']||{cid:b[1]||'?',a:0,n:0}; x.a+=+b[4]||0; x.n++; }); });
-  const U=Object.values(un), body={biz:bizDate,pay:payables(30).map(r=>({d:r.due,t:r.title,p:r.payee||'',a:r.amt||0,s:r.src})),
+  const U=Object.values(un), t=todayKey, inM=d=>String(d||'').slice(0,7)===mm, sumA=(L,f)=>L.reduce((s,x)=>s+(+f(x)||0),0);
+  // ຍອດຂາຍ/ລາຍຮັບ: ຟັງຊັນດຽວກັບໜ້າການເງິນ (hqRev + frCalc) · ລາຍວັນ = ໄຟລ໌ຂາຍລ່າສຸດ ≤ ມື້ນີ້
+  let extra={}; try{
+  const dayRev=d=>{ const h=hqRev(d.lines||[]), f=frCalc(d.lines||[]); return {d:d.date,sales:sumA(d.bx||[],b=>b[4]),bills:(d.bx||[]).length,rev:Math.round(h.amt+f.rev-f.pay),own:Math.round(h.amt),fr:Math.round(f.rev-f.pay),q18:Math.round((d.lines||[]).filter(l=>tankPids().includes(slProd(l.p))).reduce((s,l)=>s+l.q,0))}; }; // ສູດດຽວກັບ trRevDay
+  const sdM=saleDays.filter(d=>inM(d.date)&&d.date<=t), last=saleDays.filter(d=>d.date<=t).sort((p,q)=>q.date.localeCompare(p.date))[0], R=sdM.map(dayRev);
+  const sales={last:last?dayRev(last):null,month:{mm,days:R.length,sales:sumA(R,r=>r.sales),bills:sumA(R,r=>r.bills),rev:sumA(R,r=>r.rev),own:sumA(R,r=>r.own),fr:sumA(R,r=>r.fr),q18:sumA(R,r=>r.q18)}};
+  const by=(L,k,v)=>{ const o={}; L.forEach(x=>{ const kk=k(x)||'–'; o[kk]=(o[kk]||0)+(+v(x)||0); }); return Object.entries(o).sort((p,q)=>q[1]-p[1]); };
+  const fu=fuelLog.filter(x=>inM(x.date)), ex=exps.filter(x=>inM(x.date)&&!x.fuel);
+  const P=typeof planOf==='function'?planOf(t):null, br={}; sdM.forEach(d=>(d.lines||[]).forEach(l=>{ if(!isBrLine(l)) return; const pid=slProd(l.p), k=String(l.b).trim(), x=br[k]=br[k]||{q18:0,qo:0}; if(tankPids().includes(pid)) x.q18+=l.q; else x.qo+=l.q; }));
+  let tkb={}; try{ const L=tankLedger(); tankPids().forEach(p=>Object.entries(L[p]||{}).forEach(([k,n])=>{ if(tkIsBranch(k)) tkb[k]=(tkb[k]||0)+n; })); }catch(_){}
+  const docs={fd:fdocs.filter(d=>!['paid','received','cancelled'].includes(d.status)).sort((p,q)=>String(p.due||p.date).localeCompare(String(q.due||q.date))).slice(0,15).map(d=>({ty:d.type,no:d.no,p:d.party,st:(FD_ST[d.status]||[d.status])[0],a:Math.round(fdTot(d).total),d:d.date,due:d.due||''})),
+    files:(typeof dfiles!=='undefined'?dfiles:[]).filter(f=>f.exp&&f.exp<=addDays(t,30)).sort((p,q)=>p.exp.localeCompare(q.exp)).slice(0,10).map(f=>({t:f.title,k:f.kind,exp:f.exp,u:f.url||''})),
+    recent:(typeof dfiles!=='undefined'?dfiles:[]).slice().sort((p,q)=>String(q.at).localeCompare(String(p.at))).slice(0,8).map(f=>({t:f.title,k:f.kind,d:f.date,u:f.url||''}))};
+  extra={sales,plan:P?planSummary(P):'',fuel:{n:fu.length,amt:sumA(fu,x=>x.amt),lit:sumA(fu,x=>x.lit),by:by(fu,x=>x.truck,x=>x.amt).slice(0,8)},
+    exp:{amt:sumA(ex,x=>x.amt),type:by(ex,x=>x.type,x=>x.amt).slice(0,8),truck:by(ex,x=>x.truck,x=>x.amt).slice(0,8)},
+    loans:loans.map(L=>{ const S=loanSched(L).filter(r=>!r.paid); return {t:L.truck,l:L.lender,left:Math.round(sumA(S,r=>r.pay)),n:S.length,next:S[0]?{d:S[0].due,a:Math.round(S[0].pay)}:null}; }),
+    br:Object.entries(br).map(([k,v])=>({b:k,...v})).sort((p,q)=>q.q18-p.q18),tkb:Object.entries(tkb).sort((p,q)=>q[1]-p[1]),docs};
+  }catch(_){ extra={}; } // ສ່ວນເພີ່ມພັງ → ຍອດໜີ້ (pay/ar/unpaid) ຍັງສົ່ງໄດ້
+  const body={...extra,biz:bizDate,pay:payables(30).map(r=>({d:r.due,t:r.title,p:r.payee||'',a:r.amt||0,s:r.src})),
     ar:ar.filter(r=>outstanding(r)>0).map(r=>({c:r.cust,i:r.inv,d:r.due,a:outstanding(r)})),
     unpaid:{month:mm,total:U.reduce((s,x)=>s+x.a,0),n:U.reduce((s,x)=>s+x.n,0),top:U.sort((p,q)=>q.a-p.a).slice(0,10).map(x=>({...x,name:nm[x.cid]||''}))}};
   const j=JSON.stringify(body); if(j===snapLast&&Date.now()-snapAt<3600e3) return; snapLast=j; snapAt=Date.now();
