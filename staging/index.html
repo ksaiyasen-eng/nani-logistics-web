@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Z9zZvF4i51FSU/iN9FjUHdh2IHGIsq+LX3hNmIXgL0Q=' 'sha256-GmFBleQK9T6Nf95dDvRMvMTFvkbiM7kcTxBfdCPlv5o=' 'sha256-Bhu8eS1V/gws5sLAbEbs0lHr8EPrNLL+CwPpH3yRvE4=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdnjs.cloudflare.com/ajax/libs/xlsx/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="lgx-build" content="095a62ff7a9d"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#e8692e">
+<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Z9zZvF4i51FSU/iN9FjUHdh2IHGIsq+LX3hNmIXgL0Q=' 'sha256-+jukipwnY0vzWu2jhmRUWXUZxmRaNPeLwvI3qt+aAgI=' 'sha256-Bhu8eS1V/gws5sLAbEbs0lHr8EPrNLL+CwPpH3yRvE4=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdnjs.cloudflare.com/ajax/libs/xlsx/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="lgx-build" content="7ead362acb4a"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#e8692e">
 <meta name="robots" content="noindex"><title>Nani Logistics</title>
 <style>#fuScanBox{display:none!important}</style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.js" integrity="sha384-rwykjmWNwVxboyFmvK9OXN0wj9hnMHA2aAHtits54DuACyCq0M2PrSNxhRb+hvXT" crossorigin="anonymous"></script>
@@ -5161,6 +5161,7 @@ const css=document.createElement('style');
 css.textContent=`
 .lgx-out{position:fixed;right:10px;bottom:max(10px,env(safe-area-inset-bottom));z-index:9000;opacity:.9}
 .lgx-push{position:fixed;right:84px;bottom:max(10px,env(safe-area-inset-bottom));z-index:9000;opacity:.9}
+.lgx-tgb{position:fixed;right:84px;bottom:calc(max(10px,env(safe-area-inset-bottom)) + 44px);z-index:9000;opacity:.9}
 .lgx-fab{display:none}
 .lgx-menu{border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--text);padding:0;width:min(420px,calc(100vw - 24px));max-height:calc(100dvh - 24px)}
 .lgx-menu::backdrop{background:rgba(0,0,0,.55)}
@@ -5180,7 +5181,7 @@ css.textContent=`
   .form>label{max-width:100%;min-width:0}
   #fcDestLab{flex-wrap:wrap;flex-basis:100%}
   #fcDest{min-width:0;width:100%;flex:1 1 100%}
-  .lgx-out,.lgx-push{display:none}
+  .lgx-out,.lgx-push,.lgx-tgb{display:none}
   .lgx-fab{display:block;position:fixed;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:9000;min-height:48px;padding:0 18px;border:0;border-radius:24px;background:var(--brand);color:#fff;font:inherit;font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,.35);cursor:pointer}
   main{padding:12px 12px calc(84px + env(safe-area-inset-bottom))!important}
   /* ແຖບໄອຄອນເທິງຊ້ຳກັບປຸ່ມເມນູ → ເຫຼືອແຕ່ໂລໂກ້ ໃຫ້ເນື້ອຫາຂຶ້ນມາສູງ */
@@ -5272,7 +5273,7 @@ body.lgx-m #filters:not(.lgx-filt-open){display:none}
 body.lgx-m #filters.lgx-filt-open{flex-wrap:wrap;overflow:visible;margin-inline:0;padding-inline:0}
 body.lgx-m #board .col:not(.lgx-all) .cards > :nth-child(n+6){display:none}
 body.lgx-m .lgx-colmore:not([hidden]){display:block;width:100%;margin-top:8px}
-@media print{.lgx-out,.lgx-push,.lgx-fab,.lgx-menu,.lgx-sum,.lgx-more,.lgx-kpimore,#lgxFiltBtn,.lgx-colmore{display:none!important}}`;
+@media print{.lgx-out,.lgx-push,.lgx-tgb,.lgx-fab,.lgx-menu,.lgx-sum,.lgx-more,.lgx-kpimore,#lgxFiltBtn,.lgx-colmore{display:none!important}}`;
 document.body.appendChild(css); // ຫຼັງ <style> ຂອງແອັບ ເພື່ອໃຫ້ກົດລະບຽບມືຖືຊະນະ
 document.addEventListener('click',e=>{ const s=e.target.closest('header.top .sub'); if(s&&matchMedia('(max-width:700px)').matches) s.classList.toggle('lgx-open'); });
 
@@ -5403,6 +5404,7 @@ setInterval(checkBuild,300000); document.addEventListener('visibilitychange',()=
 session.then(u=>{
   const out=document.createElement('button'); out.type='button'; out.textContent='🚪 ອອກ'; out.setAttribute('aria-label','ອອກຈາກລະບົບ '+(u.name||u.username||'')); out.className='btn sm lgx-out'; out.onclick=logout; document.body.appendChild(out);
   buildMobileMenu(u);
+  if(u.is_admin||u.scoped){ const tb=tgBtn(); tb.classList.add('sm','lgx-tgb'); document.body.appendChild(tb); } // ຈໍຄອມ (ມືຖືໃຊ້ໃນເມນູ)
   if(u.is_admin){ const pb=pushBtn(); pb.classList.add('sm','lgx-push'); document.body.appendChild(pb);
     const tick=()=>{ if(document.hidden) return; tgSnap(u.id); tgImport(); }; setTimeout(tick,8000); setInterval(tick,60000); document.addEventListener('visibilitychange',tick); }
   if(!u.is_admin) return;
