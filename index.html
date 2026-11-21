@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Z9zZvF4i51FSU/iN9FjUHdh2IHGIsq+LX3hNmIXgL0Q=' 'sha256-FDolKxxs1ougRlrO8On8owW6Fax4yuxUg9H6qWllKNk=' 'sha256-Bhu8eS1V/gws5sLAbEbs0lHr8EPrNLL+CwPpH3yRvE4=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdnjs.cloudflare.com/ajax/libs/xlsx/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="lgx-build" content="1e382029d057"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#e8692e">
+<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Z9zZvF4i51FSU/iN9FjUHdh2IHGIsq+LX3hNmIXgL0Q=' 'sha256-vTFr64IQViYlFs4AQYvbnqFkJ1eNkbM7IoKSEfIR3ww=' 'sha256-Bhu8eS1V/gws5sLAbEbs0lHr8EPrNLL+CwPpH3yRvE4=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdnjs.cloudflare.com/ajax/libs/xlsx/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="lgx-build" content="7501f9f0e68c"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#e8692e">
 <meta name="robots" content="noindex"><title>Nani Logistics</title>
 <style>#fuScanBox{display:none!important}</style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.js" integrity="sha384-rwykjmWNwVxboyFmvK9OXN0wj9hnMHA2aAHtits54DuACyCq0M2PrSNxhRb+hvXT" crossorigin="anonymous"></script>
@@ -5365,13 +5365,15 @@ new MutationObserver(()=>{ if(!nameTimer) nameTimer=setTimeout(nameAll,200); }).
 // ===== ມືຖື: ການ໌ດລົດໃນແຜນ ແລະ ຟອມອໍເດີ ຍໍ້ໄວ້ ສະແດງສະເພາະສິ່ງທີ່ຕ້ອງໃຊ້ =====
 const MQ=matchMedia('(max-width:700px)'), syncM=()=>document.body.classList.toggle('lgx-m',MQ.matches); MQ.addEventListener('change',()=>{ syncM(); enhancePlan(); enhanceOrder(); }); syncM();
 const openCards=new Set(), openStops=new Set();
+// ຂຽນຂໍ້ຄວາມເມື່ອປ່ຽນແທ້ເທົ່ານັ້ນ: ການຂຽນຊ້ຳນັບເປັນການປ່ຽນໜ້າ → enh ເຮັດວຽກວົນ → ຕົວໜັງສືກະພິບ
+const setTxt=(el,v)=>{ if(el.textContent!==v) el.textContent=v; };
 const mk=(tag,cls,txt)=>{ const e=document.createElement(tag); if(cls) e.className=cls; if(txt!=null) e.textContent=txt; return e; };
 function enhancePlan(){ const box=document.getElementById('plTrucks'); if(!box) return; if(!box.children.length||typeof plDate==='undefined'||!plDate) return; const P=planDays.find(p=>p.date===plDate); if(!P) return; // ອ່ານຢ່າງດຽວ ບໍ່ສ້າງແຜນໃໝ່
   box.querySelectorAll('.vcard[data-pt]').forEach(card=>{ const T=P.trucks[+card.dataset.pt]; if(!T) return; const key=plDate+'|'+T.truck;
     // ສະຫຼຸບຂອງຄັນນີ້ (ກົດເພື່ອແກ້ໄຂ)
     let sum=card.querySelector(':scope > .lgx-sum'); if(!sum){ sum=mk('button','lgx-sum'); sum.type='button'; card.querySelector('h4').after(sum); sum.onclick=()=>{ openCards.has(key)?openCards.delete(key):openCards.add(key); enhancePlan(); if(openCards.has(key)) card.scrollIntoView({block:'start',behavior:'smooth'}); }; }
     const stops=T.rounds.flatMap(r=>r.stops), tank=new Set(products.filter(is18L).map(p=>p.id)), q18=stops.reduce((a,s)=>a+s.items.reduce((b,it)=>b+(tank.has(it.pid)?+it.q||0:0),0),0), cash=stops.reduce((a,s)=>a+(+s.collect||0),0), open=openCards.has(key);
-    sum.textContent=(T.status==='off'?'ພັກ':'🏪 '+stops.filter(s=>s.c||s.cid).length+' ຮ້ານ · 🧴 '+fmt(q18)+' · 💵 '+fmt(cash))+(open?'  ▴ ຍໍ້':'  ✏️ ແກ້ໄຂ ▾'); sum.setAttribute('aria-expanded',open);
+    setTxt(sum,(T.status==='off'?'ພັກ':'🏪 '+stops.filter(s=>s.c||s.cid).length+' ຮ້ານ · 🧴 '+fmt(q18)+' · 💵 '+fmt(cash))+(open?'  ▴ ຍໍ້':'  ✏️ ແກ້ໄຂ ▾')); sum.setAttribute('aria-expanded',open);
     card.classList.toggle('lgx-closed',!open);
     // ບ້ານ / ເມືອງ / ເບີໂທ / ໝາຍເຫດ ຂອງແຕ່ລະຮ້ານ: ເຊື່ອງໄວ້ຖ້າຍັງວ່າງ
     card.querySelectorAll('input[data-ps$=".cid"]').forEach(cid=>{ const st=cid.closest('.form').parentElement, k=key+'|'+cid.dataset.ps.replace(/\.cid$/,''); st.classList.add('lgx-stop');
@@ -5383,11 +5385,11 @@ function enhanceOrder(){ const v=document.getElementById('odVil'); if(!v) return
 // ຂັ້ນ 1: ຕົວເລກຫົວໜ້າເຫຼືອ 4 ກ່ອງ ທີ່ເຫຼືອພັບໄວ້ (ມືຖືເທົ່ານັ້ນ)
 function enhanceKpis(){ document.querySelectorAll('[data-pg] > .kpis').forEach(k=>{ const n=k.querySelectorAll(':scope > .kpi').length; let b=k.nextElementSibling&&k.nextElementSibling.classList.contains('lgx-kpimore')?k.nextElementSibling:null;
   if(n<=4){ if(b) b.hidden=true; return; } if(!b){ b=mk('button','btn sm lgx-kpimore'); b.type='button'; b.onclick=()=>{ k.classList.toggle('lgx-kall'); enhanceKpis(); }; k.after(b); }
-  b.hidden=false; const all=k.classList.contains('lgx-kall'); b.textContent=all?'▴ ຍໍ້ຕົວເລກ':'📊 ເບິ່ງຕົວເລກທັງໝົດ ('+n+') ▾'; b.setAttribute('aria-expanded',all); }); }
+  b.hidden=false; const all=k.classList.contains('lgx-kall'); setTxt(b,all?'▴ ຍໍ້ຕົວເລກ':'📊 ເບິ່ງຕົວເລກທັງໝົດ ('+n+') ▾'); b.setAttribute('aria-expanded',all); }); }
 // ຂັ້ນ 3: ຕາຕະລາງທີ່ໃຊ້ເລື້ອຍເປັນການ໌ດໃນມືຖື (ໃສ່ຊື່ຖັນໃຫ້ແຕ່ລະຊ່ອງ)
 // ຕາຕະລາງແກ້ໄຂທີ່ກວ້າງ (ຄວາມຈຸລົດ ກຳນົດຈ່າຍ ສິນຄ້າ) ກໍເປັນການ໌ດ: ໃນມືຖືເຫັນພຽງ 2-3 ຖັນ ແລະ ຊ່ອງກອກບີບຈົນອ່ານບໍ່ອອກ
 const CARD_TABLES='#odTbl,#planOver,#arTbl,#ftTbl,#capTbl,#prodTbl,#page-fleet table:has([data-vd])';
-function cardTables(){ document.querySelectorAll(CARD_TABLES).forEach(t=>{ t.classList.add('lgx-cards'); const rows=[...t.rows]; const head=rows.find(r=>r.querySelector('th')&&!r.querySelector('td')); if(!head) return; head.classList.add('lgx-head');
+function cardTables(){ document.querySelectorAll(CARD_TABLES).forEach(t=>{ if(!t.classList.contains('lgx-cards')) t.classList.add('lgx-cards'); const rows=[...t.rows]; const head=rows.find(r=>r.querySelector('th')&&!r.querySelector('td')); if(!head) return; head.classList.add('lgx-head');
   const names=[]; [...head.cells].forEach(c=>{ for(let i=0;i<(c.colSpan||1);i++) names.push(c.textContent.trim()); });
   rows.forEach(r=>{ if(r===head) return; let col=0; [...r.cells].forEach(c=>{ c.setAttribute('data-label',c.colSpan>1&&r.cells.length===1?'':names[col]||''); const txt=c.textContent.trim(); c.classList.toggle('lgx-blank',!c.querySelector('input,select,button,a')&&(txt===''||txt==='–'||txt==='-')); col+=c.colSpan||1; }); }); }); }
 // ຂັ້ນ 4: ໜ້າງານວັນນີ້ — ແຕ່ລະຖັນສະແດງ 5 ງານທີ່ຄົບກຳນົດກ່ອນ · ຕົວກັ່ນຕອງພັບໄວ້ໃນປຸ່ມດຽວ
@@ -5395,9 +5397,9 @@ const openCols=new Set(); let filtOpen=false;
 function enhanceTasks(){ const board=document.getElementById('board'), filt=document.getElementById('filters'); if(!board||!filt) return;
   [...board.querySelectorAll(':scope > .col')].forEach((col,i)=>{ const cards=col.querySelector('.cards'); if(!cards) return; const n=cards.children.length; col.classList.toggle('lgx-all',openCols.has(i)); let b=col.querySelector(':scope > .lgx-colmore');
     if(n<=5){ if(b) b.hidden=true; return; } if(!b){ b=mk('button','btn sm lgx-colmore'); b.type='button'; b.onclick=()=>{ openCols.has(i)?openCols.delete(i):openCols.add(i); enhanceTasks(); }; col.append(b); }
-    b.hidden=false; b.textContent=openCols.has(i)?'▴ ສະແດງ 5 ງານ':'ເບິ່ງທັງໝົດ ('+n+') ▾'; b.setAttribute('aria-expanded',openCols.has(i)); });
+    b.hidden=false; setTxt(b,openCols.has(i)?'▴ ສະແດງ 5 ງານ':'ເບິ່ງທັງໝົດ ('+n+') ▾'); b.setAttribute('aria-expanded',openCols.has(i)); });
   let fb=document.getElementById('lgxFiltBtn'); if(!fb){ fb=mk('button','btn sm'); fb.type='button'; fb.id='lgxFiltBtn'; fb.onclick=()=>{ filtOpen=!filtOpen; enhanceTasks(); }; filt.before(fb); filt.addEventListener('click',e=>{ if(e.target.closest('.chip')){ filtOpen=false; setTimeout(enhanceTasks,50); } }); }
-  const cur=filt.querySelector('.chip[aria-pressed=true]'); fb.textContent='🔍 ປະເພດ: '+(cur?cur.textContent.replace(/\s+/g,' ').trim():'ທັງໝົດ')+(filtOpen?' ▴':' ▾'); fb.setAttribute('aria-expanded',filtOpen); filt.classList.toggle('lgx-filt-open',filtOpen); }
+  const cur=filt.querySelector('.chip[aria-pressed=true]'); setTxt(fb,'🔍 ປະເພດ: '+(cur?cur.textContent.replace(/\s+/g,' ').trim():'ທັງໝົດ')+(filtOpen?' ▴':' ▾')); fb.setAttribute('aria-expanded',filtOpen); filt.classList.toggle('lgx-filt-open',filtOpen); }
 // ມືຖື: ການ໌ດແກ້ໄຂທີ່ຍາວ (ກຳນົດຈ່າຍ ຄວາມຈຸລົດ ສິນຄ້າ) ຍໍ້ໄວ້ ກົດຫົວການ໌ດເພື່ອເປີດ
 const openFold=new Set();
 function foldEl(el,head,key){ el.classList.add('lgx-fold'); head.dataset.lgxKey=key; const open=openFold.has(key); el.classList.toggle('lgx-open',open); head.setAttribute('aria-expanded',open);
