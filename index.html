@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Z9zZvF4i51FSU/iN9FjUHdh2IHGIsq+LX3hNmIXgL0Q=' 'sha256-XFTixjBtQG5xDuyCttsAsIyM1/6WFgUlP6JnCfz2VbU=' 'sha256-yGwSimgiTWGdv5BJDC4iGcsSLFKxWLuefk/M66oty2E=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdnjs.cloudflare.com/ajax/libs/xlsx/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="lgx-build" content="ed0942d0da4c"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#e8692e">
+<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Z9zZvF4i51FSU/iN9FjUHdh2IHGIsq+LX3hNmIXgL0Q=' 'sha256-FDolKxxs1ougRlrO8On8owW6Fax4yuxUg9H6qWllKNk=' 'sha256-Bhu8eS1V/gws5sLAbEbs0lHr8EPrNLL+CwPpH3yRvE4=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdnjs.cloudflare.com/ajax/libs/xlsx/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="lgx-build" content="1e382029d057"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#e8692e">
 <meta name="robots" content="noindex"><title>Nani Logistics</title>
 <style>#fuScanBox{display:none!important}</style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.js" integrity="sha384-rwykjmWNwVxboyFmvK9OXN0wj9hnMHA2aAHtits54DuACyCq0M2PrSNxhRb+hvXT" crossorigin="anonymous"></script>
@@ -3943,11 +3943,15 @@ $('#odSave').onclick=()=>{ const c=$('#odCust').value.trim(), it=odDraft.filter(
   if(!c||!it.length){ $('#odMsg').innerHTML='<span class="tag high">ໃສ່ຊື່ຮ້ານ ແລະ ສິນຄ້າຢ່າງໜ້ອຍ 1 ລາຍການ</span>'; return; }
   odAdd({c:c.slice(0,100),cid:$('#odCid').value.trim().slice(0,40),vil:$('#odVil').value.trim().slice(0,60),dist:$('#odDist').value.trim().slice(0,60),tel:$('#odTel').value.trim().slice(0,30),items:it,pm:pmOk($('#odPay').value),collect:Math.max(0,+String($('#odCollect').value).replace(/,/g,'')||0),note:$('#odNote').value.trim().slice(0,120)});
   odDraft=[{pid:'',q:0,free:0}]; ['#odCid','#odCust','#odVil','#odDist','#odTel','#odCollect','#odNote'].forEach(x=>$(x).value=''); $('#odPay').value=''; $('#odMsg').innerHTML='<span class="tag done">ສົ່ງອໍເດີແລ້ວ ✓ ລໍຖ້າຢືນຢັນເຂົ້າລົດ</span>'; renderFin(); note('trip','ອໍເດີໃໝ່ '+c+' · '+fmtKey(odDate())); };
-$('#odRead').onclick=()=>{ const txt=$('#odPaste').value.trim(); if(!txt) return; let n=0, dup=0, bad=[];
-  txt.split(/\n\s*\n/).forEach(b=>{ const line=b.split('\n').map(x=>x.trim()).filter(Boolean).join(' '); if(!line) return; const st=plParseStop(line), it=st.items.filter(i=>i.pid&&(i.q||i.free));
+// ອ່ານຂໍ້ຄວາມອໍເດີແບບກຸ່ມ Telegram (ໃຊ້ທັງປຸ່ມວາງ ແລະ ບອທ Telegram) · d = ວັນສົ່ງເລີ່ມຕົ້ນ
+function odImportText(txt,d,src){ let n=0, dup=0; const bad=[], ids=[]; d=d||odDate();
+  String(txt||'').split(/\n\s*\n/).forEach(b=>{ const line=b.split('\n').map(x=>x.trim()).filter(Boolean).join(' '); if(!line) return; const st=plParseStop(line), it=st.items.filter(i=>i.pid&&(i.q||i.free));
     if(!st.name||!it.length){ bad.push(line.slice(0,40)); return; } const cu=odCustParse(line), nm=odStrip(st.name,cu)||st.name, prev=odCustOf(cu.cid,nm)||{};
-    if(orders.some(o=>o.date===odDate()&&o.status!=='cancel'&&odNorm(o.c)===odNorm(nm)&&odItemsTxt(o.items)===odItemsTxt(it))){ dup++; return; }
-    odAdd({...(st.date&&st.date>=addDays(todayKey,-3)?{date:st.date}:{}),cid:cu.cid||prev.cid||'',vil:cu.vil||prev.vil||'',dist:cu.dist||prev.dist||'',tel:cu.tel||prev.tel||'',c:nm.slice(0,100),items:it.map(({pid,q,free})=>({pid,q,free})),pm:pmOk(st.pm),collect:st.collect||0,note:(st.note||'').slice(0,120),src:'tg'}); n++; });
+    const dd=st.date&&st.date>=addDays(todayKey,-3)?st.date:d;
+    if(orders.some(o=>o.date===dd&&o.status!=='cancel'&&odNorm(o.c)===odNorm(nm)&&odItemsTxt(o.items)===odItemsTxt(it))){ dup++; return; }
+    odAdd({date:dd,cid:cu.cid||prev.cid||'',vil:cu.vil||prev.vil||'',dist:cu.dist||prev.dist||'',tel:cu.tel||prev.tel||'',c:nm.slice(0,100),items:it.map(({pid,q,free})=>({pid,q,free})),pm:pmOk(st.pm),collect:st.collect||0,note:(st.note||'').slice(0,120),src:src||'tg'}); ids.push(orders[orders.length-1].id); n++; });
+  return {n,dup,bad,ids}; }
+$('#odRead').onclick=()=>{ const txt=$('#odPaste').value.trim(); if(!txt) return; const {n,dup,bad}=odImportText(txt);
   if(n){ $('#odPaste').value=''; renderFin(); note('trip','ນຳເຂົ້າອໍເດີຈາກ Telegram '+n+' ລາຍການ · '+fmtKey(odDate())); }
   $('#odPasteMsg').innerHTML=(n?`<span class="tag done">ເພີ່ມ ${n} ອໍເດີ</span> `:'')+(dup?`<span class="tag wait">ຂ້າມອໍເດີຊ້ຳ ${dup}</span> `:'')+(bad.length?`<span class="tag high">ອ່ານບໍ່ໄດ້ ${bad.length}: ${esc(bad.join(' | '))}</span> — ກອກດ້ວຍຟອມແທນ`:''); };
 $('#odTbl').addEventListener('change',e=>{ const s=e.target.closest('[data-odtruck]'); if(!s||!isAdminUser) return; const o=orders.find(x=>x.id===+s.dataset.odtruck); if(!o||o.status==='cancel') return;
@@ -5157,6 +5161,7 @@ const css=document.createElement('style');
 css.textContent=`
 .lgx-out{position:fixed;right:10px;bottom:max(10px,env(safe-area-inset-bottom));z-index:9000;opacity:.9}
 .lgx-push{position:fixed;right:84px;bottom:max(10px,env(safe-area-inset-bottom));z-index:9000;opacity:.9}
+.lgx-tgb{position:fixed;right:84px;bottom:calc(max(10px,env(safe-area-inset-bottom)) + 44px);z-index:9000;opacity:.9}
 .lgx-fab{display:none}
 .lgx-menu{border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--text);padding:0;width:min(420px,calc(100vw - 24px));max-height:calc(100dvh - 24px)}
 .lgx-menu::backdrop{background:rgba(0,0,0,.55)}
@@ -5176,7 +5181,7 @@ css.textContent=`
   .form>label{max-width:100%;min-width:0}
   #fcDestLab{flex-wrap:wrap;flex-basis:100%}
   #fcDest{min-width:0;width:100%;flex:1 1 100%}
-  .lgx-out,.lgx-push{display:none}
+  .lgx-out,.lgx-push,.lgx-tgb{display:none}
   .lgx-fab{display:block;position:fixed;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:9000;min-height:48px;padding:0 18px;border:0;border-radius:24px;background:var(--brand);color:#fff;font:inherit;font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,.35);cursor:pointer}
   main{padding:12px 12px calc(84px + env(safe-area-inset-bottom))!important}
   /* ແຖບໄອຄອນເທິງຊ້ຳກັບປຸ່ມເມນູ → ເຫຼືອແຕ່ໂລໂກ້ ໃຫ້ເນື້ອຫາຂຶ້ນມາສູງ */
@@ -5268,7 +5273,7 @@ body.lgx-m #filters:not(.lgx-filt-open){display:none}
 body.lgx-m #filters.lgx-filt-open{flex-wrap:wrap;overflow:visible;margin-inline:0;padding-inline:0}
 body.lgx-m #board .col:not(.lgx-all) .cards > :nth-child(n+6){display:none}
 body.lgx-m .lgx-colmore:not([hidden]){display:block;width:100%;margin-top:8px}
-@media print{.lgx-out,.lgx-push,.lgx-fab,.lgx-menu,.lgx-sum,.lgx-more,.lgx-kpimore,#lgxFiltBtn,.lgx-colmore{display:none!important}}`;
+@media print{.lgx-out,.lgx-push,.lgx-tgb,.lgx-fab,.lgx-menu,.lgx-sum,.lgx-more,.lgx-kpimore,#lgxFiltBtn,.lgx-colmore{display:none!important}}`;
 document.body.appendChild(css); // ຫຼັງ <style> ຂອງແອັບ ເພື່ອໃຫ້ກົດລະບຽບມືຖືຊະນະ
 document.addEventListener('click',e=>{ const s=e.target.closest('header.top .sub'); if(s&&matchMedia('(max-width:700px)').matches) s.classList.toggle('lgx-open'); });
 
@@ -5289,6 +5294,56 @@ async function enablePush(){ const sb=window.LGX.sb;
     await sb.functions.invoke('lgx-push',{body:{action:'test'}}); alert('✓ ເປີດແຈ້ງເຕືອນແລ້ວ · ຄວນໄດ້ຮັບແຈ້ງເຕືອນທົດລອງພາຍໃນບໍ່ເທົ່າໃດວິນາທີ');
   }catch(e){ alert('ເປີດແຈ້ງເຕືອນບໍ່ສຳເລັດ: '+(e&&e.message||e)); } }
 const pushBtn=()=>{ const b=mk('button','btn',typeof Notification!=='undefined'&&Notification.permission==='granted'?'🔔 ແຈ້ງເຕືອນ (ທົດລອງ / ເປີດໃໝ່)':'🔔 ເປີດແຈ້ງເຕືອນໃນໂທລະສັບ'); b.type='button'; b.onclick=enablePush; return b; };
+// ===== Telegram =====
+async function linkTg(){ try{ const {data,error}=await window.LGX.sb.functions.invoke('lgx-tg',{body:{action:'link'}});
+    if(error){ let m=error.message; try{ m=(await error.context.json()).message||m; }catch(_){} throw new Error(m); }
+    if(confirm('ກົດ OK ເພື່ອເປີດບອທ @'+data.bot+' ໃນ Telegram ແລ້ວກົດ Start\n(ລິ້ງໃຊ້ໄດ້ 10 ນາທີ ແລະ ໃຊ້ໄດ້ຄັ້ງດຽວ)')) window.open(data.url,'_blank','noopener');
+  }catch(e){ alert('ເຊື່ອມ Telegram ບໍ່ສຳເລັດ: '+(e&&e.message||e)); } }
+const tgBtn=()=>{ const b=mk('button','btn','💬 ເຊື່ອມ Telegram'); b.type='button'; b.onclick=linkTg; return b; };
+// ເຈົ້າຂອງ: ສົ່ງຍອດໜີ້ (ຄິດໄລ່ດ້ວຍຟັງຊັນດຽວກັບໜ້າເວັບ) ໃຫ້ບອທຕອບ /debt · ເກັບໃນຂໍ້ມູນສ່ວນຕົວຂອງເຈົ້າຂອງ ຄົນອື່ນອ່ານບໍ່ໄດ້
+let snapLast='', snapAt=0;
+async function tgSnap(uid){ try{ if(typeof payables!=='function'||typeof ar==='undefined'||typeof saleDays==='undefined') return;
+  const mm=todayKey.slice(0,7), un={}, nm={}; orders.forEach(o=>{ if(o.cid) nm[o.cid]=o.c; });
+  saleDays.forEach(d=>{ if(d.date.slice(0,7)!==mm||!d.bx) return; d.bx.forEach(b=>{ if(b[5]!==1) return; const x=un[b[1]||'?']=un[b[1]||'?']||{cid:b[1]||'?',a:0,n:0}; x.a+=+b[4]||0; x.n++; }); });
+  const U=Object.values(un), t=todayKey, inM=d=>String(d||'').slice(0,7)===mm, sumA=(L,f)=>L.reduce((s,x)=>s+(+f(x)||0),0);
+  // ຍອດຂາຍ/ລາຍຮັບ: ຟັງຊັນດຽວກັບໜ້າການເງິນ (hqRev + frCalc) · ລາຍວັນ = ໄຟລ໌ຂາຍລ່າສຸດ ≤ ມື້ນີ້
+  let extra={}; try{
+  const dayRev=d=>{ const h=hqRev(d.lines||[]), f=frCalc(d.lines||[]); return {d:d.date,sales:sumA(d.bx||[],b=>b[4]),bills:(d.bx||[]).length,rev:Math.round(h.amt+f.rev-f.pay),own:Math.round(h.amt),fr:Math.round(f.rev-f.pay),q18:Math.round((d.lines||[]).filter(l=>tankPids().includes(slProd(l.p))).reduce((s,l)=>s+l.q,0))}; }; // ສູດດຽວກັບ trRevDay
+  const sdM=saleDays.filter(d=>inM(d.date)&&d.date<=t), last=saleDays.filter(d=>d.date<=t).sort((p,q)=>q.date.localeCompare(p.date))[0], R=sdM.map(dayRev);
+  const sales={last:last?dayRev(last):null,month:{mm,days:R.length,sales:sumA(R,r=>r.sales),bills:sumA(R,r=>r.bills),rev:sumA(R,r=>r.rev),own:sumA(R,r=>r.own),fr:sumA(R,r=>r.fr),q18:sumA(R,r=>r.q18)}};
+  const by=(L,k,v)=>{ const o={}; L.forEach(x=>{ const kk=k(x)||'–'; o[kk]=(o[kk]||0)+(+v(x)||0); }); return Object.entries(o).sort((p,q)=>q[1]-p[1]); };
+  const fu=fuelLog.filter(x=>inM(x.date)), ex=exps.filter(x=>inM(x.date)&&!x.fuel);
+  const P=typeof planOf==='function'?planOf(t):null, br={}; sdM.forEach(d=>(d.lines||[]).forEach(l=>{ if(!isBrLine(l)) return; const pid=slProd(l.p), k=String(l.b).trim(), x=br[k]=br[k]||{q18:0,qo:0}; if(tankPids().includes(pid)) x.q18+=l.q; else x.qo+=l.q; }));
+  let tkb={}; try{ const L=tankLedger(); tankPids().forEach(p=>Object.entries(L[p]||{}).forEach(([k,n])=>{ if(tkIsBranch(k)) tkb[k]=(tkb[k]||0)+n; })); }catch(_){}
+  const docs={fd:fdocs.filter(d=>!['paid','received','cancelled'].includes(d.status)).sort((p,q)=>String(p.due||p.date).localeCompare(String(q.due||q.date))).slice(0,15).map(d=>({ty:d.type,no:d.no,p:d.party,st:(FD_ST[d.status]||[d.status])[0],a:Math.round(fdTot(d).total),d:d.date,due:d.due||''})),
+    files:(typeof dfiles!=='undefined'?dfiles:[]).filter(f=>f.exp&&f.exp<=addDays(t,30)).sort((p,q)=>p.exp.localeCompare(q.exp)).slice(0,10).map(f=>({t:f.title,k:f.kind,exp:f.exp,u:f.url||''})),
+    recent:(typeof dfiles!=='undefined'?dfiles:[]).slice().sort((p,q)=>String(q.at).localeCompare(String(p.at))).slice(0,8).map(f=>({t:f.title,k:f.kind,d:f.date,u:f.url||''}))};
+  extra={sales,plan:P?planSummary(P):'',fuel:{n:fu.length,amt:sumA(fu,x=>x.amt),lit:sumA(fu,x=>x.lit),by:by(fu,x=>x.truck,x=>x.amt).slice(0,8)},
+    exp:{amt:sumA(ex,x=>x.amt),type:by(ex,x=>x.type,x=>x.amt).slice(0,8),truck:by(ex,x=>x.truck,x=>x.amt).slice(0,8)},
+    loans:loans.map(L=>{ const S=loanSched(L).filter(r=>!r.paid); return {t:L.truck,l:L.lender,left:Math.round(sumA(S,r=>r.pay)),n:S.length,next:S[0]?{d:S[0].due,a:Math.round(S[0].pay)}:null}; }),
+    br:Object.entries(br).map(([k,v])=>({b:k,...v})).sort((p,q)=>q.q18-p.q18),tkb:Object.entries(tkb).sort((p,q)=>q[1]-p[1]),docs};
+  }catch(_){ extra={}; } // ສ່ວນເພີ່ມພັງ → ຍອດໜີ້ (pay/ar/unpaid) ຍັງສົ່ງໄດ້
+  const body={...extra,biz:bizDate,pay:payables(30).map(r=>({d:r.due,t:r.title,p:r.payee||'',a:r.amt||0,s:r.src})),
+    ar:ar.filter(r=>outstanding(r)>0).map(r=>({c:r.cust,i:r.inv,d:r.due,a:outstanding(r)})),
+    unpaid:{month:mm,total:U.reduce((s,x)=>s+x.a,0),n:U.reduce((s,x)=>s+x.n,0),top:U.sort((p,q)=>q.a-p.a).slice(0,10).map(x=>({...x,name:nm[x.cid]||''}))}};
+  const j=JSON.stringify(body); if(j===snapLast&&Date.now()-snapAt<3600e3) return; snapLast=j; snapAt=Date.now();
+  await window.LGX.sb.from('lgx_docs').upsert({path:'data/users/'+uid+'/tgsnap',data:{...body,at:new Date().toISOString()}},{onConflict:'path'}); }catch(_){} }
+// ເຈົ້າຂອງ: ຂໍ້ຄວາມອໍເດີທີ່ບອທເກັບຈາກກຸ່ມ → ອໍເດີ "ລໍຖ້າເລືອກລົດ" (ຕົວອ່ານດຽວກັບປຸ່ມ ວາງຈາກ Telegram)
+let tgBusy=false;
+async function tgImport(){ if(tgBusy||typeof odImportText!=='function'||typeof orders==='undefined') return; tgBusy=true; const sb=window.LGX.sb;
+  try{ const {data}=await sb.from('lgx_docs').select('path,data').eq('coll','tg_items').in('data->>status',['new','proc']).order('path').limit(30); let n=0, bad=0; const done=[];
+    for(const r of data||[]){
+      if(r.data.status==='proc'){ if(Date.now()-Date.parse(r.data.claimAt||0)>10*60e3) await sb.from('lgx_docs').update({data:{...r.data,status:'new'}}).eq('path',r.path).eq('data->>status','proc'); continue; } // ແທັບທີ່ຄ້າງ → ໃຫ້ອ່ານໃໝ່ (ອໍເດີຊ້ຳຈະຖືກຂ້າມ)
+      const {data:got}=await sb.from('lgx_docs').update({data:{...r.data,status:'proc',claimAt:new Date().toISOString()}}).eq('path',r.path).eq('data->>status','new').select('path'); if(!got||!got.length) continue; // ແທັບອື່ນເອົາໄປແລ້ວ
+      let x; try{ x=odImportText(r.data.text,addDays(r.data.date||todayKey,1),'tg'); }catch(_){ x={n:0,dup:0,bad:[String(r.data.text).slice(0,40)],ids:[]}; } // ວັນສົ່ງ = ມື້ຖັດຈາກວັນທີ່ສົ່ງຂໍ້ຄວາມ
+      const looks=/\d/.test(r.data.text)&&/ລັງ|ຖັງ|ແພັກ|ແພກ|ແກັດ|18L|ມລ|ml/i.test(r.data.text); n+=x.n; if(x.bad.length&&looks) bad+=x.bad.length; // ຂໍ້ຄວາມລົມກັນທຳມະດາ ບໍ່ເຕືອນ
+      done.push([r,{status:x.n?'done':x.dup?'dup':looks?'bad':'skip',oids:x.ids,badText:x.bad.slice(0,5)}]); }
+    const want=done.flatMap(([,st])=>st.oids.map(id=>'ord_items/'+id));
+    if(n){ logAct('trip','ອໍເດີຈາກກຸ່ມ Telegram (ບອທ) '+n+' ລາຍການ'); renderFin(); saveNow(); }
+    for(let i=0;want.length&&i<20;i++){ const {data:have}=await sb.from('lgx_docs').select('path').in('path',want); if((have||[]).length>=want.length) break; if(i===19){ tgBusy=false; return; } await new Promise(r=>setTimeout(r,1000)); } // ລໍໃຫ້ອໍເດີຂຶ້ນຖານຂໍ້ມູນກ່ອນ ຈຶ່ງປິດຂໍ້ຄວາມ · ບໍ່ຂຶ້ນ → ຄ້າງ proc ແລ້ວອ່ານໃໝ່ພາຍຫຼັງ
+    for(const [r,st] of done) await sb.from('lgx_docs').update({data:{...r.data,...st}}).eq('path',r.path);
+    if(bad) toast('⚠ ບອທ Telegram: ມີ '+bad+' ຮ້ານທີ່ອ່ານເປັນອໍເດີບໍ່ໄດ້ — ກວດໃນກຸ່ມ ແລະ ກອກເອງ');
+  }catch(_){} tgBusy=false; }
 function buildMobileMenu(u){
   const fab=document.createElement('button'); fab.type='button'; fab.className='lgx-fab'; fab.textContent='☰ ເມນູ'; fab.setAttribute('aria-haspopup','dialog');
   const dlg=document.createElement('dialog'); dlg.className='lgx-menu'; dlg.setAttribute('aria-label','ເມນູ');
@@ -5296,7 +5351,7 @@ function buildMobileMenu(u){
     document.querySelectorAll('nav .ngrp').forEach(g=>{ const links=[...g.querySelectorAll('a[data-page]')].filter(a=>!a.hasAttribute('data-role-off')&&a.style.display!=='none'); if(!links.length) return;
       const h=document.createElement('div'); h.className='lgx-menu-group'; h.textContent=g.querySelector('.nhead span').textContent; dlg.append(h);
       links.forEach(a=>{ const b=document.createElement('button'); b.type='button'; b.className='lgx-menu-item'; const t=document.createElement('span'); t.textContent=a.querySelector('span').textContent; b.append(t); const bd=a.querySelector('.badge'); if(bd&&!bd.hidden&&+bd.textContent>0){ const c=document.createElement('span'); c.className='badge'; c.textContent=bd.textContent; b.append(c); } if(a.getAttribute('aria-current')==='page') b.setAttribute('aria-current','page'); b.onclick=()=>{ dlg.close(); a.click(); window.scrollTo(0,0); }; dlg.append(b); }); });
-    const f=document.createElement('div'); f.className='lgx-menu-foot'; const o=document.createElement('button'); o.type='button'; o.className='btn'; o.textContent='🚪 ອອກຈາກລະບົບ'; o.onclick=logout; if(u.is_admin) f.append(pushBtn()); f.append(o); dlg.append(f); };
+    const f=document.createElement('div'); f.className='lgx-menu-foot'; const o=document.createElement('button'); o.type='button'; o.className='btn'; o.textContent='🚪 ອອກຈາກລະບົບ'; o.onclick=logout; if(u.is_admin) f.append(pushBtn()); if(u.is_admin||u.scoped) f.append(tgBtn()); f.append(o); dlg.append(f); };
   fab.onclick=()=>{ fill(); dlg.showModal(); }; dlg.addEventListener('click',e=>{ if(e.target===dlg) dlg.close(); });
   document.body.append(fab,dlg);
 }
@@ -5367,7 +5422,9 @@ setInterval(checkBuild,300000); document.addEventListener('visibilitychange',()=
 session.then(u=>{
   const out=document.createElement('button'); out.type='button'; out.textContent='🚪 ອອກ'; out.setAttribute('aria-label','ອອກຈາກລະບົບ '+(u.name||u.username||'')); out.className='btn sm lgx-out'; out.onclick=logout; document.body.appendChild(out);
   buildMobileMenu(u);
-  if(u.is_admin){ const pb=pushBtn(); pb.classList.add('sm','lgx-push'); document.body.appendChild(pb); }
+  if(u.is_admin||u.scoped){ const tb=tgBtn(); tb.classList.add('sm','lgx-tgb'); document.body.appendChild(tb); } // ຈໍຄອມ (ມືຖືໃຊ້ໃນເມນູ)
+  if(u.is_admin){ const pb=pushBtn(); pb.classList.add('sm','lgx-push'); document.body.appendChild(pb);
+    const tick=()=>{ if(document.hidden) return; tgSnap(u.id); tgImport(); }; setTimeout(tick,8000); setInterval(tick,60000); document.addEventListener('visibilitychange',tick); }
   if(!u.is_admin) return;
   const panel=$('#rolePanel'); if(!panel) return;
   const box=document.createElement('div'); box.style.cssText='margin:0 0 12px;padding:12px;border:1px solid var(--line);border-radius:10px';
