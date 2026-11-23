@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-vPudtkeVnOJ50ooqSGjsOtHLetK9INPPb6oG6ov0zoE=' 'sha256-PdAhchsLcw/Kw056MRvodDH96FAulf6bqXIZ5xeXCLg=' 'sha256-HNuDxs6asMoixr0RYmLhPogO6qQT9Z7bnVLBBD9i4s8=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdnjs.cloudflare.com/ajax/libs/xlsx/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="lgx-build" content="1f48439784b9"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-180.png"><link rel="icon" href="icon-192.png"><meta name="theme-color" content="#e8692e">
+<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-vPudtkeVnOJ50ooqSGjsOtHLetK9INPPb6oG6ov0zoE=' 'sha256-WIHUOWdx7j0HbomXyJNLUe00wY8yq5ab6xRdYxPF0i4=' 'sha256-NckmQRjQO5NHrNP+Fqm2Q4+pOtPDeFtZh7SAkeMVnzs=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdnjs.cloudflare.com/ajax/libs/xlsx/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="lgx-build" content="c5915f8948ed"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-180.png"><link rel="icon" href="icon-192.png"><meta name="theme-color" content="#e8692e">
 <meta name="robots" content="noindex"><title>Nani Logistics</title>
 <style>#fuScanBox{display:none!important}</style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.js" integrity="sha384-rwykjmWNwVxboyFmvK9OXN0wj9hnMHA2aAHtits54DuACyCq0M2PrSNxhRb+hvXT" crossorigin="anonymous"></script>
@@ -183,6 +183,7 @@ h1{font-size:22px;margin:0;line-height:1.4}
 .period i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ok);margin-right:6px}
 .period.late i{background:var(--warn)}
 .btn{border:1px solid var(--line);background:var(--surface);padding:7px 14px;border-radius:9px;cursor:pointer;font-weight:500}
+.btn.armed{border-color:var(--danger);color:var(--danger);font-weight:700}
 .btn:hover{background:var(--chip)}
 .btn.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand);font-weight:700}
 .tbl .btn.primary{background:var(--surface);color:var(--warn);border-color:var(--brand)}
@@ -1972,6 +1973,14 @@ $('#expForm').addEventListener('submit',e=>{
   const ex={id:newId(),truck:$('#expTruck').value,type:$('#expType').value,amt,date:bizDate,at:stamp(),by:me.id||''}; exps.push(ex);
   $('#expAmt').value=''; renderFin(); note('fin','ບັນທຶກຄ່າໃຊ້ຈ່າຍ '+ex.type+' ລົດ '+ex.truck+' '+fmt(amt)+' ກີບ',amt);
 });
+// ປຸ່ມລົບທີ່ຍັງບໍ່ມີ "ກົດອີກຄັ້ງ": ກົດຄັ້ງທຳອິດ = ຖາມ, ກົດອີກຄັ້ງພາຍໃນ 4 ວິນາທີ = ລົບແທ້ (ກັນກົດພາດ)
+const ARM_ATTRS=['data-del','data-ptadjdel','data-rolerm','data-sigdel','data-psdel','data-prdel']; let armEl=null, armUntil=0; // ຈັບຄູ່ກັບປຸ່ມອັນດຽວກັນ (ເລກແຖວຊ້ຳກັນໄດ້ຂ້າມລົດ)
+const disarm=b=>{ if(b&&b.classList.contains('armed')){ b.textContent=b.dataset.armOld||b.textContent; b.classList.remove('armed'); } };
+document.addEventListener('click',e=>{ const b=e.target.closest(ARM_ATTRS.map(a=>'['+a+']').join(',')); if(!b) return;
+  if(b===armEl&&Date.now()<armUntil){ armEl=null; disarm(b); return; }
+  e.stopPropagation(); e.preventDefault(); disarm(armEl); armEl=b; armUntil=Date.now()+4000;
+  b.dataset.armOld=b.textContent; b.textContent='ກົດອີກຄັ້ງ'; b.classList.add('armed');
+  setTimeout(()=>{ if(armEl===b) armEl=null; disarm(b); },4000); },true);
 $('#expTbl').addEventListener('click',e=>{
   const b=e.target.closest('[data-del]'); if(!b) return;
   const ex=exps.find(x=>x.id===+b.dataset.del); exps=exps.filter(x=>x.id!==+b.dataset.del); renderFin(); note('fin','ລົບຄ່າໃຊ້ຈ່າຍ '+(ex?ex.type+' ລົດ '+ex.truck+' '+fmt(ex.amt)+' ກີບ':''),ex?-ex.amt:null);
@@ -5248,9 +5257,7 @@ const {sb,session,logout}=window.LGX;
 // ມືຖື: ຕົວອັກສອນ 16px ບໍ່ໃຫ້ iPhone ຊູມຕອນແຕະຊ່ອງກອກ, ພື້ນທີ່ກົດກວ້າງຂຶ້ນ, ເມນູເຕັມຈໍມີຊື່ໜ້າ
 const css=document.createElement('style');
 css.textContent=`
-.lgx-out{position:fixed;right:10px;bottom:max(10px,env(safe-area-inset-bottom));z-index:9000;opacity:.9}
-.lgx-push{position:fixed;right:84px;bottom:max(10px,env(safe-area-inset-bottom));z-index:9000;opacity:.9}
-.lgx-tgb{position:fixed;right:84px;bottom:calc(max(10px,env(safe-area-inset-bottom)) + 44px);z-index:9000;opacity:.9}
+.lgx-dock{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:8px;margin:0 0 10px}
 .lgx-fab{display:none}
 .lgx-menu{border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--text);padding:0;width:min(420px,calc(100vw - 24px));max-height:calc(100dvh - 24px)}
 .lgx-menu::backdrop{background:rgba(0,0,0,.55)}
@@ -5270,7 +5277,7 @@ css.textContent=`
   .form>label{max-width:100%;min-width:0}
   #fcDestLab{flex-wrap:wrap;flex-basis:100%}
   #fcDest{min-width:0;width:100%;flex:1 1 100%}
-  .lgx-out,.lgx-push,.lgx-tgb{display:none}
+  .lgx-out,.lgx-push,.lgx-tgb,.lgx-dock{display:none}
   .lgx-fab{display:block;position:fixed;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:9000;min-height:48px;padding:0 18px;border:0;border-radius:24px;background:var(--brand);color:#fff;font:inherit;font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,.35);cursor:pointer}
   main{padding:12px 12px calc(84px + env(safe-area-inset-bottom))!important}
   /* ແຖບໄອຄອນເທິງຊ້ຳກັບປຸ່ມເມນູ → ເຫຼືອແຕ່ໂລໂກ້ ໃຫ້ເນື້ອຫາຂຶ້ນມາສູງ */
@@ -5287,9 +5294,9 @@ css.textContent=`
   .kpi .val{font-size:20px;line-height:1.3;overflow-wrap:anywhere}
   .kpi .sub,.kpi small{font-size:11.5px}
   /* ແຖບເລືອກສ່ວນ / ຕົວກັ່ນຕອງ: ແຖວດຽວ ເລື່ອນຂ້າງ ແທນທີ່ຈະຊ້ອນ 3-4 ແຖວ */
-  .secbar,.filters{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:4px;margin-inline:-12px;padding-inline:12px}
+  .filters{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:4px;margin-inline:-12px;padding-inline:12px;-webkit-mask-image:linear-gradient(90deg,#000 88%,transparent);mask-image:linear-gradient(90deg,#000 88%,transparent)}
   .secbar::-webkit-scrollbar,.filters::-webkit-scrollbar{display:none}
-  .secbar>*,.filters>*{flex:none;white-space:nowrap}
+  .filters>*{flex:none;white-space:nowrap}
   .cards{max-height:none!important;overflow:visible!important}
   .metrics{grid-template-columns:1fr 1fr!important;gap:8px}
   .metric{padding:10px 12px!important}
@@ -5359,10 +5366,10 @@ body.lgx-m small{font-size:max(12px,.83em)}
 #lgxFiltBtn,.lgx-colmore{display:none}
 body.lgx-m #lgxFiltBtn{display:inline-flex;margin:0 0 10px;max-width:100%}
 body.lgx-m #filters:not(.lgx-filt-open){display:none}
-body.lgx-m #filters.lgx-filt-open{flex-wrap:wrap;overflow:visible;margin-inline:0;padding-inline:0}
+body.lgx-m #filters.lgx-filt-open{-webkit-mask-image:none;mask-image:none;flex-wrap:wrap;overflow:visible;margin-inline:0;padding-inline:0}
 body.lgx-m #board .col:not(.lgx-all) .cards > :nth-child(n+6){display:none}
 body.lgx-m .lgx-colmore:not([hidden]){display:block;width:100%;margin-top:8px}
-@media print{.lgx-out,.lgx-push,.lgx-tgb,.lgx-fab,.lgx-menu,.lgx-sum,.lgx-more,.lgx-kpimore,#lgxFiltBtn,.lgx-colmore{display:none!important}}`;
+@media print{.lgx-dock,.lgx-out,.lgx-push,.lgx-tgb,.lgx-fab,.lgx-menu,.lgx-sum,.lgx-more,.lgx-kpimore,#lgxFiltBtn,.lgx-colmore{display:none!important}}`;
 document.body.appendChild(css); // ຫຼັງ <style> ຂອງແອັບ ເພື່ອໃຫ້ກົດລະບຽບມືຖືຊະນະ
 document.addEventListener('click',e=>{ const s=e.target.closest('header.top .sub'); if(s&&matchMedia('(max-width:700px)').matches) s.classList.toggle('lgx-open'); });
 
@@ -5536,7 +5543,7 @@ const MAN_ALL=null, MAN=[
  ['💬 Telegram ແລະ ແຈ້ງເຕືອນ',['txadmin','finadmin'],`<ol><li>ກົດ <b>💬 ເຊື່ອມ Telegram</b> → ກົດ OK ເພື່ອເປີດບອທໃນ Telegram → ກົດ <b>Start</b> (ລິ້ງໃຊ້ໄດ້ 10 ນາທີ ແລະ ຄັ້ງດຽວ).</li><li>ພິມ <b>/menu</b> ເພື່ອເບິ່ງສະຫຼຸບ. ເລື່ອງເງິນ (ລວມ <b>/debt</b>) ສະເພາະເຈົ້າຂອງ, ຜູ້ອຳນວຍການ ແລະ ແອັດມິນການເງິນ.</li><li>ຈະໄດ້ຮັບແຈ້ງເຕືອນ: ອໍເດີໃໝ່, ສາງ, ລົດອອກ/ມາຮອດ ແລະ ສະຫຼຸບຕອນເຊົ້າ.</li><li>ຜູ້ຈັດການທີມຂົນສົ່ງ ແລະ ຕຳແໜ່ງອື່ນ ຍັງບໍ່ໄດ້ໃຊ້ບອທ.</li></ol>`],
  ['👑 ສຳລັບເຈົ້າຂອງ',['admin'],`<ul><li><b>ຕັ້ງຄ່າ → ສ້າງບັນຊີພະນັກງານ</b>: ໃສ່ຊື່, ຊື່ຜູ້ໃຊ້, ລະຫັດຜ່ານ ແລະ ເລືອກຕຳແໜ່ງ.</li><li>ປ່ຽນ ຫຼື <b>ຖອນສິດ</b> ໃນຕາຕະລາງສິດ. ຖອນສິດແລ້ວ ຄົນນັ້ນຖືກຕັດອອກຈາກບອທນຳ.</li><li><b>🔔 ເປີດແຈ້ງເຕືອນໃນໂທລະສັບ</b> ເພື່ອຮັບແຈ້ງເຕືອນເທິງມືຖື.</li><li>ຕັ້ງກຸ່ມ Telegram ຮັບອໍເດີ: ພິມ <b>/setgroup</b> ໃນກຸ່ມ.</li><li>ໄຟລ໌ສັນຍາ/ບິນ ເອົາອອກໄດ້ສະເພາະເຈົ້າຂອງ (🗑) — ໄຟລ໌ໃນ Drive ຍັງຢູ່.</li></ul>`],
  ['🔒 ຄວາມປອດໄພ',MAN_ALL,`<ul><li>ຢ່າບອກລະຫັດຜ່ານໃຫ້ໃຜ. ລືມລະຫັດ: ແຈ້ງເຈົ້າຂອງ.</li><li>ໃຊ້ເຄື່ອງຮ່ວມກັນ: ກົດ <b>🚪 ອອກ</b> ທຸກຄັ້ງ — ລະບົບລ້າງຂໍ້ມູນໃນເຄື່ອງໃຫ້.</li><li>ທຸກການແກ້ໄຂ ບັນທຶກຊື່ຄົນແກ້ ແລະ ເວລາ ໃນ <b>ບັນທຶກປະຈຳວັນ</b>.</li></ul>`]];
-const manCss=document.createElement('style'); manCss.textContent=`.lgx-help{position:fixed;right:10px;bottom:calc(max(10px,env(safe-area-inset-bottom)) + 88px);z-index:9000;opacity:.9}
+const manCss=document.createElement('style'); manCss.textContent=`
 .lgx-man{border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--text);padding:0;width:min(760px,calc(100vw - 24px));max-height:calc(100dvh - 24px)}
 .lgx-man::backdrop{background:rgba(0,0,0,.55)} .lgx-man header{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--surface)}
 .lgx-man .bd{padding:8px 16px 16px;line-height:1.7} .lgx-man details{border:1px solid var(--line);border-radius:10px;margin:8px 0;padding:0 12px} .lgx-man summary{cursor:pointer;font-weight:700;padding:10px 0;min-height:24px}
@@ -5550,12 +5557,14 @@ function openManual(){ const role=(typeof myRole!=='undefined'&&myRole)||'none',
 const helpBtn=()=>{ const b=mk('button','btn','📖 ຄູ່ມື'); b.type='button'; b.onclick=openManual; return b; };
 session.then(u=>{
   if(u.scoped==='txmgr') viewOnlyPages();
-  { const h=helpBtn(); h.classList.add('sm','lgx-help'); document.body.appendChild(h); } // ຈໍຄອມ (ມືຖືໃຊ້ໃນເມນູ ☰)
-  const out=document.createElement('button'); out.type='button'; out.textContent='🚪 ອອກ'; out.setAttribute('aria-label','ອອກຈາກລະບົບ '+(u.name||u.username||'')); out.className='btn sm lgx-out'; out.onclick=logout; document.body.appendChild(out);
+  const dock=document.createElement('div'); dock.className='lgx-dock'; (document.querySelector('main')||document.body).prepend(dock);
+  { const h=helpBtn(); h.classList.add('sm','lgx-help'); dock.appendChild(h); } // ຈໍຄອມ (ມືຖືໃຊ້ໃນເມນູ ☰)
+  const out=document.createElement('button'); out.type='button'; out.textContent='🚪 ອອກ'; out.setAttribute('aria-label','ອອກຈາກລະບົບ '+(u.name||u.username||'')); out.className='btn sm lgx-out'; out.onclick=logout;
   buildMobileMenu(u);
-  if(u.is_admin||TG_ROLES.has(u.scoped)){ const tb=tgBtn(); tb.classList.add('sm','lgx-tgb'); document.body.appendChild(tb); } // ຈໍຄອມ (ມືຖືໃຊ້ໃນເມນູ)
-  if(u.is_admin){ const pb=pushBtn(); pb.classList.add('sm','lgx-push'); document.body.appendChild(pb);
+  if(u.is_admin||TG_ROLES.has(u.scoped)){ const tb=tgBtn(); tb.classList.add('sm','lgx-tgb'); dock.appendChild(tb); } // ຈໍຄອມ (ມືຖືໃຊ້ໃນເມນູ)
+  if(u.is_admin){ const pb=pushBtn(); pb.classList.add('sm','lgx-push'); dock.appendChild(pb);
     const tick=()=>{ if(document.hidden) return; tgSnap(u.id); tgImport(); }; setTimeout(tick,8000); setInterval(tick,60000); document.addEventListener('visibilitychange',tick); }
+  dock.appendChild(out); // ອອກ ຢູ່ທ້າຍແຖວ (ຂວາສຸດ)
   if(!u.is_admin) return;
   const panel=$('#rolePanel'); if(!panel) return;
   const box=document.createElement('div'); box.style.cssText='margin:0 0 12px;padding:12px;border:1px solid var(--line);border-radius:10px';
