@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Z9zZvF4i51FSU/iN9FjUHdh2IHGIsq+LX3hNmIXgL0Q=' 'sha256-vTFr64IQViYlFs4AQYvbnqFkJ1eNkbM7IoKSEfIR3ww=' 'sha256-Bhu8eS1V/gws5sLAbEbs0lHr8EPrNLL+CwPpH3yRvE4=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdnjs.cloudflare.com/ajax/libs/xlsx/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="lgx-build" content="7501f9f0e68c"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#e8692e">
+<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-vPudtkeVnOJ50ooqSGjsOtHLetK9INPPb6oG6ov0zoE=' 'sha256-hIyskeumyGhR4TL5ET76gdMwo+tHUD0i4OuTr6wcx1A=' 'sha256-vGEt3MweHKQ6p0VdO2T/1nOkuVkYLgEvADroSldbk7I=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdnjs.cloudflare.com/ajax/libs/xlsx/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="lgx-build" content="dfb5eac4ab0c"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png"><meta name="theme-color" content="#e8692e">
 <meta name="robots" content="noindex"><title>Nani Logistics</title>
 <style>#fuScanBox{display:none!important}</style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.js" integrity="sha384-rwykjmWNwVxboyFmvK9OXN0wj9hnMHA2aAHtits54DuACyCq0M2PrSNxhRb+hvXT" crossorigin="anonymous"></script>
@@ -11,6 +11,8 @@ const SB_URL='https://sfwsedtxdlummiqblufq.supabase.co', SB_KEY='sb_publishable_
 const sb=window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true}});
 // ແອັດມິນຂົນສົ່ງ / ການເງິນ: ໃຊ້ໜ້າຈໍແບບແອັດມິນ ແຕ່ຂຽນໄດ້ສະເພາະສ່ວນງານ (ຕົງກັບ RLS ໃນຖານຂໍ້ມູນ)
 const SCOPED={txadmin:new Set(['meta','products','drivers','trips','stock','fleet','board','exps','log','mv','fac','km','ord','fuel','plan']),finadmin:new Set(['meta','branches','drivers','trips','fleet','board','ar','exps','payments','log','brd','sd','prm','fdoc','dfl','fuel','plan','ord'])};
+SCOPED.txmgr=SCOPED.txadmin; // ຜູ້ຈັດການຂົນສົ່ງ: ຂຽນເທົ່າແອັດມິນຂົນສົ່ງ (ໜ້າລົດຮ່ວມ ເບິ່ງຢ່າງດຽວ ໃນ addon)
+SCOPED.director=new Set(['meta','products','branches','drivers','trips','stock','fleet','board','ar','exps','payments','log','brd','mv','fac','km','ord','dfl','fuel','prm','fdoc','plan','sd']); // ຜູ້ອຳນວຍການ: ທຸກສ່ວນ ຍົກເວັ້ນ roles (ສິດພະນັກງານ)
 const NEVER=new Promise(()=>{}), esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const toEmail=u=>{ u=u.trim().toLowerCase(); return u.includes('@')?u:u+'@'+STAFF_DOMAIN; };
 
@@ -692,7 +694,7 @@ body.factory-only nav a:not([data-page="factory"]),body.factory-only #sampleBann
 
 <div id="page-plan" data-pg hidden>
   <header class="top"><div><h1>ແຜນຂົນສົ່ງປະຈຳວັນ</h1><p class="sub">ຕົວເລກສຳຄັນ ແລະ ພາບລວມທຸກຄັນຢູ່ດ້ານເທິງ (ກົດແຖວລົດເພື່ອໄປການ໌ດຂອງຄັນນັ້ນ) · ຈັດແຜນຄັ້ງດຽວ → ລະບົບແຍກເປັນການ໌ດສັ້ນຂອງແຕ່ລະຄັນ (ບໍ່ສະແດງລາຄາ ສະແດງແຕ່ເງິນທີ່ຕ້ອງເກັບ) → ສົ່ງທາງ WhatsApp / Telegram</p></div>
-    <div class="actions"><input type="date" id="plDate" aria-label="ວັນທີ"><button class="btn" type="button" id="plCopyY">ຄັດລອກແຜນມື້ວານ</button><button class="btn" type="button" id="plCopyW"></button><button class="btn primary" type="button" id="plImpBtn">📥 ນຳເຂົ້າຈາກຂໍ້ຄວາມ</button></div></header>
+    <div class="actions"><input type="date" id="plDate" aria-label="ວັນທີ"><button class="btn" type="button" id="plPrint">🖨 ພິມແຜນ / ເຊັນ</button><button class="btn" type="button" id="plCopyY">ຄັດລອກແຜນມື້ວານ</button><button class="btn" type="button" id="plCopyW"></button><button class="btn primary" type="button" id="plImpBtn">📥 ນຳເຂົ້າຈາກຂໍ້ຄວາມ</button></div></header>
   <div class="kpis" id="planKpis"></div>
   <div id="planAlerts" style="margin:-4px 0 12px"></div>
   <div class="panel" style="margin-bottom:14px"><h3>🚛 ພາບລວມລົດມື້ນີ້ <small class="sub" id="planOverSub"></small></h3><div class="tbl-wrap"><table class="tbl" id="planOver"></table></div></div>
@@ -1566,7 +1568,7 @@ function sanitizeFin(o){
   c.hqSet=vArr(o.hqSet,x=>({period:/^\d{4}-\d{2}$/.test(x.period)?x.period:'2000-01',status:x.status==='paid'?'paid':'confirmed',snap:x.snap&&typeof x.snap==='object'?JSON.parse(JSON.stringify(x.snap,(k,v)=>typeof v==='string'?v.slice(0,200):v)):{},at:vStr(x.at,'',40),by:vStr(x.by,'',64),paidAt:vStr(x.paidAt,'',40)}),200);
   if(o.coInfo&&typeof o.coInfo==='object') c.coInfo={phone:vStr(o.coInfo.phone,'',60),taxId:vStr(o.coInfo.taxId,'',40),bank:vStr(o.coInfo.bank,'',120)};
   c.plan=vArr(o.plan,x=>{ const date=vDate(x.date,null)||bd, A=x.att&&typeof x.att==='object'?x.att:{}, arr=(v,n)=>(Array.isArray(v)?v:[]).filter(y=>y&&typeof y==='object').slice(0,n);
-    return {id:+date.replace(/-/g,''),date,note:vStr(x.note,'',200),att:Object.fromEntries(['absent','leave','sick','personal','standby'].map(k=>[k,vStr(A[k],'',120)])),
+    return {id:+date.replace(/-/g,''),date,note:vStr(x.note,'',200),...(vSigs(x.sigs)?{sigs:vSigs(x.sigs)}:{}),att:Object.fromEntries(['absent','leave','sick','personal','standby'].map(k=>[k,vStr(A[k],'',120)])),
       trucks:arr(x.trucks,40).map(t=>({truck:vStr(t.truck,'',60),crew:vStr(t.crew,'',120),route:vStr(t.route,'',80),status:['work','off','standby'].includes(t.status)?t.status:'work',note:vStr(t.note,'',200),sent:vStr(t.sent,'',20),
         rounds:arr(t.rounds,6).map(r=>({name:vStr(r.name,'',30),stops:arr(r.stops,40).map(p=>({c:vStr(p.c,'',100),...(p.cid?{cid:vStr(p.cid,'',40)}:{}),...(p.oid?{oid:vInt(p.oid,0,1)}:{}),...(pmOk(p.pm)?{pm:p.pm}:{}),...(p.vil?{vil:vStr(p.vil,'',60)}:{}),...(p.dist?{dist:vStr(p.dist,'',60)}:{}),...(p.tel?{tel:vStr(p.tel,'',30)}:{}),collect:vNum(p.collect,0,0,1e11),note:vStr(p.note,'',120),items:arr(p.items,10).map(i=>({pid:vStr(i.pid,'',12),q:vNum(i.q,0,0,1e6),free:vNum(i.free,0,0,1e6)}))}))}))}))}; });
   c.fdoc=vArr(o.fdoc,x=>({id:vInt(x.id,0,1),type:['inv','pv','po'].includes(x.type)?x.type:'inv',no:vStr(x.no,'',30),date:vDate(x.date,bd),due:x.due?vDate(x.due,''):'',party:vStr(x.party,'',120),info:vStr(x.info,'',200),ref:vStr(x.ref,'',60),
@@ -2399,7 +2401,7 @@ const ptOf=id=>(partners||[]).find(P=>P.id===id);
 const monthPer=k=>{ const [y,m]=k.split('-').map(Number); return {id:k.slice(0,7),start:k.slice(0,7)+'-01',end:dateToKey(new Date(y,m,0))}; };
 const ptPerOf=(P,k)=>P&&P.cut==='month'?monthPer(k):ptPeriodOf(k), ptPerById=(P,id)=>P&&P.cut==='month'?monthPer(id+'-01'):ptPeriodOf(id+'-'+PT_CUT);
 const JD='ຈອມດອຍ';
-function seedJomDoi(){ if(!isAdminUser||!partners||partners.some(P=>P.truck===JD)) return; const rates={}; tankPids().forEach(p=>rates[p]=3000);
+function seedJomDoi(){ if(!isAdminUser||window.LGX.scoped==='txmgr'||!partners||partners.some(P=>P.truck===JD)) return; const rates={}; tankPids().forEach(p=>rates[p]=3000);
   partners.push({id:'P'+(Math.max(0,...partners.map(P=>+String(P.id).replace(/\D/g,'')||0))+1),truck:JD,owner:'',phone:'',since:'2026-10-01',rates,pct:0,perDay:0,holdDebt:false,payDays:10,active:true,mode:'haul',cut:'month',sharePct:50,staff:0,loanInc:false,cost:{}});
   if(!fleetOf(JD)){ veAddVehicle(JD); const f=fleetOf(JD); if(f){ f.type='ລົດຮ່ວມ (ຂົນນ້ຳຈາກໂຮງງານ)'; f.cap=products.map(()=>0); } } save(); }
 // ແຖວຖ້ຽວ (ວັນ · ຈຸດລົງ · ຖັງ · ຄ່າຂົນ) — ໃຊ້ທັງຕອນຄິດໄລ່ ແລະ ຕອນສະແດງຮອບທີ່ລັອກແລ້ວ
@@ -3221,8 +3223,9 @@ const SLIP_KIND={
   'in':{t:'ໃບຮັບສິນຄ້າເຂົ້າສາງ',c:'RCV',sig:['ຜູ້ສົ່ງ','ຜູ້ຮັບ (ນາຍສາງ)']},
   'count':{t:'ໃບກວດນັບສະຕັອກ',c:'CNT',sig:['ຜູ້ນັບ','ນາຍສາງ','ຜູ້ກວດ']}};
 const slipNo=(M,k)=>'NL-'+(SLIP_KIND[k]||{c:'DOC'}).c+'-'+M[0].date.replace(/-/g,'').slice(2)+'-'+String(M[0].ref).replace(/\D/g,'').slice(-5);
-function slipLabel(ref){ if(String(ref).startsWith('fdoc:')){ const d=fdocs.find(x=>x.id===+String(ref).slice(5)); return d?d.no:''; } const M=stockMoves.filter(m=>m.ref===ref); return M.length?slipNo(M,M[0].reason):''; }
+function slipLabel(ref){ if(String(ref).startsWith('plan:')) return planNo(String(ref).slice(5)); if(String(ref).startsWith('fdoc:')){ const d=fdocs.find(x=>x.id===+String(ref).slice(5)); return d?d.no:''; } const M=stockMoves.filter(m=>m.ref===ref); return M.length?slipNo(M,M[0].reason):''; }
 function slipHTML(ref,paper){
+  if(String(ref).startsWith('plan:')) return planHTML(String(ref).slice(5));
   if(String(ref).startsWith('fdoc:')) return fdocHTML(+String(ref).slice(5),paper);
   const M=stockMoves.filter(m=>m.ref===ref); if(!M.length) return '';
   const k=M.some(m=>m.reason==='truck_out')?'truck_out':M[0].reason, K=SLIP_KIND[k]||{t:'ເອກະສານເຄື່ອນໄຫວສິນຄ້າ',sig:['ຜູ້ສົ່ງ','ຜູ້ຮັບ']}, f=M[0].truck?fleetOf(M[0].truck):null;
@@ -3242,9 +3245,27 @@ function slipHTML(ref,paper){
     <div class="foot">ພິມ ${esc(fmtStamp(stamp()))} · ${no}</div></div>`;
   return paper==='a4'?`<div class="slp-a4">${one('ສຳເນົາສາງ')}<div class="slp-cut">✂ - - - - - - - - - - - - - - - - - - - - - - - - - - - -</div>${one('ສຳເນົາຄົນຂັບ / ຜູ້ຮັບ')}</div>`:one('');
 }
+// ໃບແຜນຂົນສົ່ງປະຈຳວັນ (A4): ລົດ · ຮອບ · ຮ້ານ · ສິນຄ້າ · ໜ້າສຸດທ້າຍມີລາຍເຊັນ ຜູ້ຈັດແຜນ / ຜຈກ.ຂົນສົ່ງ / ຜູ້ອຳນວຍການ
+const PLAN_SIG=['ຜູ້ຈັດແຜນ','ຜູ້ຈັດການທີມຂົນສົ່ງ','ຜູ້ອຳນວຍການ'];
+const planNo=d=>'NL-PLN-'+String(d).replace(/-/g,'').slice(2);
+function planHTML(date){ const P=planDays.find(p=>p.date===date); if(!P) return '';
+  const logo=($('.brand .logo')||{}).src||'', T=(P.trucks||[]).filter(t=>t.status!=='off'), no=planNo(date);
+  const itemTxt=it=>(it||[]).filter(x=>x.q>0).map(x=>esc(pName(x.pid))+' <b>'+fmt(x.q)+'</b>'+(x.free?' (ແຖມ '+fmt(x.free)+')':'')).join(', ');
+  const body=T.map(t=>{ const S=(t.rounds||[]).flatMap(r=>(r.stops||[]).map(s=>[r,s])); const tot=S.reduce((a,[,s])=>a+(s.items||[]).reduce((b,x)=>b+(+x.q||0),0),0);
+    return `<tr><th colspan="5" style="text-align:left">🚚 ${esc(t.truck)}${t.route?' · '+esc(t.route):''}${t.crew?' · '+esc(t.crew):''}${t.note?' · '+esc(t.note):''}</th></tr>`+
+      (S.length?S.map(([r,s],i)=>`<tr><td class="r">${i+1}</td><td>${esc(r.name||'')}</td><td>${esc(s.c||'')}${s.note?' <small>('+esc(s.note)+')</small>':''}</td><td>${itemTxt(s.items)}</td><td class="r">${s.collect?fmt(s.collect):''}</td></tr>`).join(''):'<tr><td colspan="5"><small>ຍັງບໍ່ມີຈຸດສົ່ງ</small></td></tr>')+
+      `<tr><td colspan="3" class="r"><b>ລວມ ${esc(t.truck)}</b></td><td><b>${fmt(tot)}</b> ໜ່ວຍ · ${S.length} ຈຸດ</td><td></td></tr>`; }).join('');
+  const sig=PLAN_SIG.map(l=>{ const g=P.sigs&&P.sigs[l]; return `<div><div class="ln">${g?sigSvg(g.path):''}</div>${esc(l)}${g?'<br><b>'+esc(g.nm||who(g.by))+'</b>':''}<br>${g?'ວັນທີ '+esc(fmtStamp(g.at)):'ວັນທີ ...../...../.......'}</div>`; }).join('');
+  return `<div class="slp">
+    <div class="hd">${logo?`<img src="${logo}" alt="">`:''}<div class="co"><b>${CO.lo}</b><small>${CO.en}</small><small>${CO.addr}</small></div></div>
+    <div class="ttl"><h2>ໃບແຜນຂົນສົ່ງປະຈຳວັນ</h2><div class="no">ເລກທີ <b>${no}</b></div></div>
+    <div class="meta"><div>ວັນທີສົ່ງ: <b>${esc(fmtKey(date))}</b></div><div>ລົດ: <b>${T.length} ຄັນ</b></div>${P.note?`<div>ໝາຍເຫດ: <b>${esc(P.note)}</b></div>`:''}</div>
+    <table><tr><th class="r" style="width:6%">#</th><th style="width:12%">ຮອບ</th><th>ລູກຄ້າ / ປາຍທາງ</th><th>ສິນຄ້າ</th><th class="r" style="width:13%">ເກັບເງິນ</th></tr>${body}</table>
+    <div style="break-inside:avoid;page-break-inside:avoid"><div class="sig" style="grid-template-columns:repeat(${PLAN_SIG.length},1fr)">${sig}</div></div>
+    <div class="foot">ພິມ ${esc(fmtStamp(stamp()))} · ${no}</div></div>`; }
 let slipRef=null;
 const slipPage=p=>p==='r80'?'@page{size:80mm auto;margin:2mm}':p==='a5'?'@page{size:A5;margin:8mm}':'@page{size:A4;margin:8mm}';
-function openSlip(ref){ slipRef=ref; $('#slipTitle').textContent=String(ref).startsWith('fdoc:')?'ພິມເອກະສານການເງິນ':'ພິມເອກະສານເຊັນຮັບ'; $('#slipPaper').options[0].textContent=String(ref).startsWith('fdoc:')?'A4':'A4 · 2 ສຳເນົາ (ສາງ + ຄົນຂັບ)'; $('#slipPaper').value=uiPref('slipPaper','a4'); $('#slipAuto').checked=uiPref('slipAuto',true); renderSlip(); $('#slipModal').hidden=false; $('#slipPrint').focus(); }
+function openSlip(ref){ slipRef=ref; const pl=String(ref).startsWith('plan:'); $('#slipTitle').textContent=pl?'ພິມໃບແຜນຂົນສົ່ງ':String(ref).startsWith('fdoc:')?'ພິມເອກະສານການເງິນ':'ພິມເອກະສານເຊັນຮັບ'; $('#slipPaper').options[0].textContent=pl||String(ref).startsWith('fdoc:')?'A4':'A4 · 2 ສຳເນົາ (ສາງ + ຄົນຂັບ)'; $('#slipPaper').value=pl?'a4':uiPref('slipPaper','a4'); $('#slipAuto').checked=uiPref('slipAuto',true); renderSlip(); $('#slipModal').hidden=false; $('#slipPrint').focus(); }
 function renderSlip(){ $('#slipPrev').innerHTML=slipHTML(slipRef,$('#slipPaper').value); }
 $('#slipPaper').addEventListener('change',()=>{ uiSave('slipPaper',$('#slipPaper').value); renderSlip(); });
 $('#slipAuto').addEventListener('change',()=>uiSave('slipAuto',$('#slipAuto').checked));
@@ -3254,7 +3275,7 @@ $('#slipPrint').onclick=()=>{ const p=$('#slipPaper').value, html=slipHTML(slipR
   let ps=document.getElementById('slipPageCss'); if(!ps){ ps=document.createElement('style'); ps.id='slipPageCss'; document.head.appendChild(ps); } ps.textContent='@media print{'+slipPage(p)+'}';
   $('#printArea').innerHTML=html; const t=Date.now(); try{ window.print(); }catch(_){}
   if(Date.now()-t<250) $('#slipHint').innerHTML='<span class="tag wait">ໜ້ານີ້ອາດບໍ່ອະນຸຍາດໃຫ້ເປີດໜ້າຕ່າງພິມ</span> ລອງກົດ <b>ເປີດໜ້າພິມໃນແຖບໃໝ່</b> ຫຼື ກົດ <b>Ctrl+P</b> (Mac: <b>⌘+P</b>) ໃນຂະນະທີ່ໜ້ານີ້ເປີດຢູ່';
-  logAct(String(slipRef).startsWith('fdoc:')?'fin':'stock','ພິມ '+slipLabel(slipRef)); save(); };
+  logAct(String(slipRef).startsWith('fdoc:')?'fin':String(slipRef).startsWith('plan:')?'trip':'stock','ພິມ '+slipLabel(slipRef)); save(); };
 $('#slipWin').onclick=()=>{ const p=$('#slipPaper').value, html=slipHTML(slipRef,p); if(!html) return; const css=[...document.querySelectorAll('style')].map(x=>x.textContent).join('\n').match(/\/\* ໃບເບີກ[\s\S]*?#slipPrev/); 
   const w=window.open('','_blank'); if(!w){ $('#slipHint').innerHTML='<span class="tag wait">ບຣາວເຊີບລັອກແຖບໃໝ່</span> ກົດ <b>Ctrl+P</b> (Mac: <b>⌘+P</b>) ເພື່ອພິມຈາກໜ້ານີ້'; return; }
   w.document.write('<!doctype html><html lang="lo"><head><meta charset="utf-8"><title>'+esc(slipLabel(slipRef))+'</title><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@400;700&display=swap" rel="stylesheet"><style>body{margin:0;background:#fff}'+(css?css[0].replace('#slipPrev',''):'')+'\n'+slipPage(p)+'</style></head><body>'+html+'<script>window.onload=function(){setTimeout(function(){window.print()},400)}<\/script></body></html>'); w.document.close(); };
@@ -3262,8 +3283,8 @@ document.addEventListener('click',e=>{ const b=e.target.closest('[data-slip]'); 
 
 /* ===== ເອກະສານການເງິນ: ອິນວອຍ · ໃບສັ່ງຈ່າຍ · ໃບຂໍສັ່ງຊື້ ===== */
 const FD={inv:{n:'ອິນວອຍ (ໃບເກັບເງິນ)',t:'ໃບເກັບເງິນ',e:'INVOICE',pre:'INV',party:'ລູກຄ້າ (ເກັບເງິນຈາກ)',flow:['draft','issued','paid'],go:'ອອກອິນວອຍ',sig:['ຜູ້ອອກໃບ','ຜູ້ຮັບໃບ (ລູກຄ້າ)']},
-  pv:{n:'ໃບສັ່ງຈ່າຍ',t:'ໃບສັ່ງຈ່າຍ',e:'PAYMENT VOUCHER',pre:'PV',party:'ຈ່າຍໃຫ້',flow:['draft','approved','paid'],go:'ບັນທຶກ ແລະ ສົ່ງອະນຸມັດ',sig:['ຜູ້ຂໍ / ຜູ້ກະກຽມ','ຜູ້ກວດ (ບັນຊີ)','ຜູ້ອະນຸມັດ','ຜູ້ຮັບເງິນ']},
-  po:{n:'ໃບຂໍສັ່ງຊື້',t:'ໃບຂໍສັ່ງຊື້',e:'PURCHASE REQUEST / ORDER',pre:'PO',party:'ຜູ້ສະໜອງ',flow:['draft','approved','ordered','received'],go:'ບັນທຶກ ແລະ ສົ່ງອະນຸມັດ',sig:['ຜູ້ຂໍສັ່ງຊື້','ຜູ້ອະນຸມັດ','ຜູ້ສະໜອງ / ຜູ້ຮັບຄຳສັ່ງ']}};
+  pv:{n:'ໃບສັ່ງຈ່າຍ',t:'ໃບສັ່ງຈ່າຍ',e:'PAYMENT VOUCHER',pre:'PV',party:'ຈ່າຍໃຫ້',flow:['draft','approved','paid'],go:'ບັນທຶກ ແລະ ສົ່ງອະນຸມັດ',sig:['ຜູ້ຂໍ / ຜູ້ກະກຽມ','ຜູ້ກວດ (ບັນຊີ)','ຜູ້ອະນຸມັດ','ຜູ້ອຳນວຍການ','ຜູ້ຮັບເງິນ']},
+  po:{n:'ໃບຂໍສັ່ງຊື້',t:'ໃບຂໍສັ່ງຊື້',e:'PURCHASE REQUEST / ORDER',pre:'PO',party:'ຜູ້ສະໜອງ',flow:['draft','approved','ordered','received'],go:'ບັນທຶກ ແລະ ສົ່ງອະນຸມັດ',sig:['ຜູ້ຂໍສັ່ງຊື້','ຜູ້ອະນຸມັດ','ຜູ້ອຳນວຍການ','ຜູ້ສະໜອງ / ຜູ້ຮັບຄຳສັ່ງ']}};
 const FD_ST={draft:['ຮ່າງ',''],issued:['ອອກແລ້ວ · ລໍຖ້າຊຳລະ','wait'],approved:['ອະນຸມັດແລ້ວ','mid'],ordered:['ສັ່ງແລ້ວ · ລໍຖ້າຂອງ','wait'],received:['ຮັບຂອງແລ້ວ','done'],paid:['ຊຳລະແລ້ວ','done'],cancelled:['ຍົກເລີກ','high']};
 const fdTot=d=>{ const sub=d.lines.reduce((a,l)=>a+l.q*l.p,0), disc=Math.min(d.disc||0,sub), vat=Math.round((sub-disc)*(d.vat||0)/100); return {sub,disc,vat,total:sub-disc+vat}; };
 function fdNextNo(type,date){ const ym=date.slice(2,4)+date.slice(5,7), pre=FD[type].pre+'-'+ym+'-'; const n=Math.max(0,...fdocs.filter(d=>d.no.startsWith(pre)).map(d=>+d.no.slice(pre.length)||0))+1; return pre+String(n).padStart(3,'0'); }
@@ -3351,7 +3372,7 @@ function renderDocs(){
       st==='issued'?b('paid',d.id,'ຮັບເງິນແລ້ວ','primary'):'', d.type==='pv'&&st==='approved'?b('paid',d.id,'ຈ່າຍແລ້ວ','primary'):'',
       d.type==='po'&&st==='approved'?b('ordered',d.id,'ສັ່ງຊື້ແລ້ວ'):'', d.type==='po'&&st==='ordered'?b('received',d.id,'ຮັບຂອງແລ້ວ','primary'):'',
       d.type==='po'&&(st==='received'||st==='ordered')&&!fdocs.some(x=>x.fromPo===d.no&&x.status!=='cancelled')?`<button class="btn sm" type="button" data-fda="topv" data-fid="${d.id}">→ ໃບສັ່ງຈ່າຍ</button>`:'',
-      `<button class="btn sm" type="button" data-fda="dup" data-fid="${d.id}">ສຳເນົາ</button>`, st==='draft'?b('del',d.id,'ລົບ'):(st!=='cancelled'&&st!=='paid'&&st!=='received'?b('cancelled',d.id,'ຍົກເລີກ'):'')].filter(Boolean).join(' ');
+      `<button class="btn sm" type="button" data-fda="dup" data-fid="${d.id}">ສຳເນົາ</button>`, st!=='cancelled'&&!(d.type==='pv'&&st==='paid')&&(myRole==='admin'||(st!=='paid'&&st!=='received'))?b('cancelled',d.id,'ຍົກເລີກ'):''].filter(Boolean).join(' ');
     return `<tr${st==='cancelled'?' style="opacity:.55"':''}><td><b>${esc(d.no)}</b>${d.fromPo?'<br><small>ຈາກ '+esc(d.fromPo)+'</small>':''}</td><td>${fmtKey(d.date)}${d.type==='inv'&&d.due?`<br><small${late?' style="color:var(--danger)"':''}>ຄົບ ${fmtKey(d.due)}</small>`:''}</td><td>${esc(d.party)}<br><small>${esc(d.lines.map(l=>l.d).filter(Boolean).join(', ').slice(0,60))}</small></td><td class="r"><b>${fmt(Math.round(fdTot(d).total))}</b></td><td><span class="tag ${late?'high':FD_ST[st][1]}">${late?'ເກີນກຳນົດ':FD_ST[st][0]}</span></td><td style="white-space:normal">${acts}</td></tr>`; }).join('')
     :`<tr><td colspan="6" class="sub">ຍັງບໍ່ມີ${esc(FD[fdType].n)} — ກົດ "+ ສ້າງໃໝ່"</td></tr>`);
   if(!document.querySelector('#page-docs .optbox input:focus')) document.querySelectorAll('[data-co]').forEach(i=>{ i.value=coInfo[i.dataset.co]||''; });
@@ -3363,21 +3384,25 @@ $('#fdNewBtn').onclick=()=>{ if(!isAdminUser) return; fdOpenForm(fdBlank(fdType)
 $('#page-docs').addEventListener('change',e=>{ const i=e.target.closest('[data-co]'); if(!i||!isAdminUser) return; coInfo[i.dataset.co]=i.value.trim(); renderFin(); note('setting','ແກ້ຂໍ້ມູນບໍລິສັດ ('+i.dataset.co+')'); });
 $('#fdList').addEventListener('click',e=>{ const b=e.target.closest('[data-fda]'); if(!b||!isAdminUser) return; const k=b.dataset.fda, d=fdocs.find(x=>x.id===+b.dataset.fid); if(!d) return;
   if(k==='edit') return fdOpenForm(d);
-  if(k==='dup'){ const c=JSON.parse(JSON.stringify(d)); Object.assign(c,{id:0,no:'',date:bizDate,status:'draft',arId:0,expId:0,fromPo:'',due:d.type==='inv'?addDays(bizDate,15):''}); return fdOpenForm(c); }
+  if(k==='dup'){ const c=JSON.parse(JSON.stringify(d)); Object.assign(c,{id:0,no:'',date:bizDate,status:'draft',arId:0,expId:0,topId:0,fromKey:'',fromPo:'',sigs:undefined,hist:[],due:d.type==='inv'?addDays(bizDate,15):''}); return fdOpenForm(c); }
   if(k==='topv'){ const c=fdBlank('pv'); Object.assign(c,{party:d.party,info:d.info,ref:d.no,lines:JSON.parse(JSON.stringify(d.lines)),disc:d.disc,vat:d.vat,note:d.note,fromPo:d.no}); fdType='pv'; uiSave('fdType','pv'); renderDocs(); return fdOpenForm(c); }
   if(fdArm!==k+d.id){ fdArm=k+d.id; renderDocs(); setTimeout(()=>{ if(fdArm===k+d.id){ fdArm=null; renderDocs(); } },4000); return; }
-  fdArm=null; if(k==='del'){ fdocs=fdocs.filter(x=>x.id!==d.id); renderFin(); note('fin','ລົບຮ່າງ '+d.no); return; } fdSet(d,k); });
+  fdArm=null; if(k==='cancelled'&&!fdCancelOk(d)) return; fdSet(d,k); });
+// ຍົກເລີກ: ໃບທີ່ຈ່າຍເງິນແລ້ວ ຫຼື ມີໃບສັ່ງຈ່າຍສ້າງຕໍ່ ຍົກເລີກບໍ່ໄດ້ (ອິນວອຍທີ່ຮັບເງິນແລ້ວ fdSet ກັນໄວ້)
+function fdCancelOk(d){ if(d.type==='pv'&&d.status==='paid'){ toast('ໃບສັ່ງຈ່າຍນີ້ຈ່າຍເງິນແລ້ວ — ຍົກເລີກບໍ່ໄດ້'); return false; }
+  if(d.type==='po'&&fdocs.some(x=>x.fromPo===d.no&&x.status!=='cancelled')){ toast('ມີໃບສັ່ງຈ່າຍທີ່ສ້າງຈາກໃບນີ້ — ຍົກເລີກໃບສັ່ງຈ່າຍກ່ອນ'); return false; } return true; }
 
 /* ===== ລາຍເຊັນອອນລາຍ ===== */
 // ລາຍເຊັນເກັບເປັນເສັ້ນ (SVG path ໃນກອບ 600×200) ຂະໜາດນ້ອຍ · ຕິດກັບເອກະສານພ້ອມຊື່ຜູ້ເຊັນ ແລະ ເວລາ
 const sigSvg=p=>`<svg viewBox="0 0 600 200" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><path d="${p}" fill="none" stroke="#0b2a6b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 function sigTarget(t){ if(t.kind==='batch'){ const D=t.ids.map(i=>fdocs.find(x=>x.id===i)).filter(d=>d&&d.status==='draft'); t.obj=t.obj||{}; return D.length?{obj:t.obj,labels:['ຜູ້ອະນຸມັດ'],title:'ອະນຸມັດ '+D.length+' ໃບ',sub:D.map(d=>d.no).join(', ')+' · ລວມ '+fmt(D.reduce((a,d)=>a+Math.round(fdTot(d).total),0))+' ກີບ',batch:D}:null; }
+  if(t.kind==='plan'){ const P=planDays.find(p=>p.date===t.date); return P?{obj:P,labels:PLAN_SIG,title:'ໃບແຜນຂົນສົ່ງ '+planNo(t.date),sub:fmtKey(t.date)+' · '+(P.trucks||[]).filter(x=>x.status!=='off').length+' ຄັນ'}:null; }
   if(t.kind==='fdoc'){ const d=fdocs.find(x=>x.id===t.id); return d?{obj:d,labels:FD[d.type].sig,title:FD[d.type].n+' '+d.no,sub:(d.party||'')+' · '+fmt(Math.round(fdTot(d).total))+' ກີບ'}:null; }
   const M=stockMoves.filter(m=>m.ref===t.ref); if(!M.length) return null; const host=M.reduce((a,m)=>m.id<a.id?m:a,M[0]), k=M.some(m=>m.reason==='truck_out')?'truck_out':M[0].reason, K=SLIP_KIND[k]||{t:'ເອກະສານ',sig:['ຜູ້ສົ່ງ','ຜູ້ຮັບ']};
   return {obj:host,labels:K.sig,title:K.t+' '+slipNo(M,k),sub:(M[0].truck?'ລົດ '+M[0].truck+' · ':'')+M.map(m=>pName(m.pid)+' '+fmt(Math.abs(m.qty))).join(', ')}; }
 function sigOf(t,l){ const x=sigTarget(t); return x&&x.obj.sigs?x.obj.sigs[l]:null; }
 let sigT=null, sigLabel=null, sigPts=[], sigDraw=false, mySig=null;
-const parseT=s=>String(s).startsWith('fdoc:')?{kind:'fdoc',id:+String(s).slice(5)}:{kind:'mv',ref:String(s)};
+const parseT=s=>String(s).startsWith('plan:')?{kind:'plan',date:String(s).slice(5)}:String(s).startsWith('fdoc:')?{kind:'fdoc',id:+String(s).slice(5)}:{kind:'mv',ref:String(s)};
 function openSign(t){ sigT=t; const x=sigTarget(t); if(!x) return; $('#sigTitle').textContent='ລົງລາຍເຊັນ · '+x.title; $('#sigDoc').textContent=x.sub; sigLabel=null; $('#sigDrawBox').hidden=true; renderSigSlots(); $('#sigModal').hidden=false; loadMySig(); }
 function renderSigSlots(){ const x=sigTarget(sigT); if(!x) return; const S=x.obj.sigs||{};
   $('#sigSlots').innerHTML=x.labels.map(l=>{ const g=S[l]; return `<div class="sigslot"><div><b>${esc(l)}</b><br><small class="sub">${g?'ເຊັນໂດຍ '+esc(g.nm||who(g.by))+' · '+esc(fmtStamp(g.at)):'ຍັງບໍ່ໄດ້ເຊັນ'}</small></div>${g?sigSvg(g.path):''}<div>${g?(isAdminUser||g.by===me.id?`<button class="btn sm" type="button" data-sigdel="${esc(l)}">ລຶບ</button>`:''):`<button class="btn sm primary" type="button" data-sigat="${esc(l)}">✍ ເຊັນຢູ່ນີ້</button>`}</div></div>`; }).join(''); }
@@ -3392,8 +3417,8 @@ function drawPath(p){ padReset(); const g=$('#sigPad').getContext('2d'); g.strok
   (p.match(/[ML][^ML]+/g)||[]).forEach(t=>{ const [x,y]=t.slice(1).trim().split(/\s+/).map(Number); sigPts.push([t[0],x,y]); if(t[0]==='M') g.moveTo(x,y); else g.lineTo(x,y); }); g.stroke(); }
 async function loadMySig(){ mySig=null; $('#sigUseMine').hidden=true; try{ if(sync.db&&me.id){ const sn=await sync.db.doc('data/users/'+me.id+'/sig').get(); if(sn.exists){ const p=String((sn.data()||{}).path||''); if(/^[ML0-9 .-]{1,8000}$/.test(p)){ mySig=p; $('#sigUseMine').hidden=!sigLabel; } } } else { const p=uiPref('mySig',''); if(p){ mySig=p; $('#sigUseMine').hidden=!sigLabel; } } }catch(_){} }
 $('#sigSlots').addEventListener('click',e=>{ const a=e.target.closest('[data-sigat]'), d=e.target.closest('[data-sigdel]'); const x=sigTarget(sigT); if(!x) return;
-  if(a){ if(!isAdminUser&&sigT.kind==='fdoc'){ toast('ສະເພາະແອັດມິນ'); return; } sigLabel=a.dataset.sigat; $('#sigFor').textContent='ເຊັນເປັນ: '+sigLabel; $('#sigDrawBox').hidden=false; padReset(); $('#sigUseMine').hidden=!mySig; $('#sigSaveMine').checked=!mySig; $('#sigPad').scrollIntoView({block:'nearest'}); }
-  if(d){ const l=d.dataset.sigdel; if(x.obj.sigs){ delete x.obj.sigs[l]; if(!Object.keys(x.obj.sigs).length) delete x.obj.sigs; } renderFin(); note(sigT.kind==='fdoc'?'fin':'stock','ລຶບລາຍເຊັນ "'+l+'" · '+x.title); renderSigSlots(); } });
+  if(a){ if(!isAdminUser&&sigT.kind==='fdoc'){ toast('ສະເພາະແອັດມິນ'); return; } if(a.dataset.sigat==='ຜູ້ອຳນວຍການ'&&!['admin','director'].includes(myRole)){ toast('ສະເພາະຜູ້ອຳນວຍການ'); return; } if(sigT.kind==='fdoc'&&myRole==='txmgr'){ toast('ເອກະສານການເງິນ: ເບິ່ງຢ່າງດຽວ'); return; } sigLabel=a.dataset.sigat; $('#sigFor').textContent='ເຊັນເປັນ: '+sigLabel; $('#sigDrawBox').hidden=false; padReset(); $('#sigUseMine').hidden=!mySig; $('#sigSaveMine').checked=!mySig; $('#sigPad').scrollIntoView({block:'nearest'}); }
+  if(d){ const l=d.dataset.sigdel; if(l==='ຜູ້ອຳນວຍການ'&&!['admin','director'].includes(myRole)){ toast('ສະເພາະຜູ້ອຳນວຍການ'); return; } if(sigT.kind==='fdoc'&&myRole==='txmgr'){ toast('ເອກະສານການເງິນ: ເບິ່ງຢ່າງດຽວ'); return; } if(x.obj.sigs){ delete x.obj.sigs[l]; if(!Object.keys(x.obj.sigs).length) delete x.obj.sigs; } renderFin(); note(sigT.kind==='fdoc'?'fin':sigT.kind==='plan'?'trip':'stock','ລຶບລາຍເຊັນ "'+l+'" · '+x.title); renderSigSlots(); } });
 $('#sigClear').onclick=padReset; $('#sigUseMine').onclick=()=>{ if(mySig) drawPath(mySig); };
 $('#sigOk').onclick=async()=>{ const x=sigTarget(sigT); if(!x||!sigLabel) return; const path=padPath(); if(sigPts.length<3){ toast('ກະລຸນາຂຽນລາຍເຊັນໃນກອບ'); return; }
   const nm=(names[me.id]||'').slice(0,80); x.obj.sigs=Object.assign({},x.obj.sigs||{},{[sigLabel]:{path,by:me.id||'',nm,at:stamp()}});
@@ -3401,10 +3426,11 @@ $('#sigOk').onclick=async()=>{ const x=sigTarget(sigT); if(!x||!sigLabel) return
   const l=sigLabel; sigLabel=null; $('#sigDrawBox').hidden=true;
   if(x.batch){ const g=x.obj.sigs[l]; x.batch.forEach(d=>{ d.sigs=Object.assign({},d.sigs||{},{[F_APPR(d)]:g}); d.status='approved'; (d.hist=d.hist||[]).push({s:'approved',at:stamp(),by:me.id||''}); fdAutoPv(d); }); $('#sigModal').hidden=true; renderFin(); note('fin','ອະນຸມັດ '+x.batch.length+' ໃບ: '+x.batch.map(d=>d.no).join(', ')); return; }
   if(sigT.kind==='fdoc'&&/ອະນຸມັດ/.test(l)&&x.obj.status==='draft'&&(x.obj.type==='pv'||x.obj.type==='po')){ x.obj.status='approved'; (x.obj.hist=x.obj.hist||[]).push({s:'approved',at:stamp(),by:me.id||''}); fdAutoPv(x.obj); }
-  renderFin(); note(sigT.kind==='fdoc'?'fin':'stock','ລົງລາຍເຊັນ "'+l+'" · '+x.title); renderSigSlots(); if(!$('#slipModal').hidden) renderSlip(); };
+  renderFin(); note(sigT.kind==='fdoc'?'fin':sigT.kind==='plan'?'trip':'stock','ລົງລາຍເຊັນ "'+l+'" · '+x.title); renderSigSlots(); if(!$('#slipModal').hidden) renderSlip(); };
 $('#sigModal').addEventListener('click',e=>{ if(e.target.closest('[data-sigclose]')||e.target===$('#sigModal')) $('#sigModal').hidden=true; });
 document.addEventListener('click',e=>{ const b=e.target.closest('[data-sign]'); if(!b) return; openSign(parseT(b.dataset.sign)); });
 $('#slipSign').onclick=()=>{ if(slipRef) openSign(parseT(slipRef)); };
+$('#plPrint').onclick=()=>{ if(!planDays.some(p=>p.date===plDate)){ toast('ຍັງບໍ່ມີແຜນຂອງມື້ນີ້'); return; } openSlip('plan:'+plDate); };
 
 /* ===== ໜ້າການເງິນ: ສັ່ງຈ່າຍລາຍຈ່າຍທີ່ຄົບກຳນົດ ===== */
 const finKey=r=>r.src+'|'+r.id+'|'+r.due; // 1 ງວດ = 1 ໃບສັ່ງຈ່າຍ
@@ -3562,7 +3588,7 @@ document.querySelectorAll('[data-att]').forEach(i=>i.addEventListener('input',()
 $('#plNoteAll').addEventListener('input',e=>planEdit(P=>{ P.note=e.target.value.slice(0,200); }));
 $('#plDate').addEventListener('change',e=>{ plDate=e.target.value||bizDate; renderPlan(true); });
 function planCopyFrom(src){ const S=planOf(src); if(!S||!isAdminUser) return; const P=planGet(plDate), C=JSON.parse(JSON.stringify(S));
-  P.trucks=C.trucks.map(t=>Object.assign(t,{sent:''})); P.note=C.note; save(); renderPlan(true); note('trip','ຄັດລອກແຜນຂົນສົ່ງ '+dmOf(src)+' → '+dmOf(plDate)); }
+  P.trucks=C.trucks.map(t=>Object.assign(t,{sent:''})); P.note=C.note; delete P.sigs; save(); renderPlan(true); note('trip','ຄັດລອກແຜນຂົນສົ່ງ '+dmOf(src)+' → '+dmOf(plDate)); }
 $('#plCopyY').onclick=()=>planCopyFrom(addDays(plDate,-1)); $('#plCopyW').onclick=()=>planCopyFrom(addDays(plDate,-7));
 
 /* ===== ນຳເຂົ້າແຜນຈາກຂໍ້ຄວາມ + ເພີ່ມລົດ ===== */
@@ -3799,7 +3825,7 @@ function renderFiles(){ const ro=$('#dfRef'), rv=ro.value; ro.innerHTML=dfRefOpt
   $('#dfTbl').innerHTML='<tr><th>ວັນທີ</th><th>ເອກະສານ</th><th>ປະເພດ</th><th>ຜູກກັບ</th><th>ໝົດອາຍຸ</th><th></th></tr>'+(L.length?L.map(f=>{ const d=f.exp?Math.round((keyToDate(f.exp)-keyToDate(bizDate))/864e5):null;
     return `<tr><td>${f.date?fmtKey(f.date):'–'}</td><td>${f.url?`<a href="${esc(f.url)}" target="_blank" rel="noopener noreferrer"><b>${esc(f.title)}</b></a>`:`<b>${esc(f.title)}</b>`}${f.note?`<br><small class="sub">${esc(f.note)}</small>`:''}<br><small class="sub">${f.size?Math.max(1,Math.round(f.size/1024))+' KB · ':''}${esc(who(f.by))}</small></td><td><small>${esc((DF_KINDS.find(k=>k[0]===f.kind)||DF_KINDS[5])[1])}</small></td><td><small>${esc(dfRefLabel(f.ref))}</small></td>
       <td>${f.exp?`${fmtKey(f.exp)}${d<0?' <span class="tag high">ໝົດອາຍຸແລ້ວ</span>':d<=30?` <span class="tag wait">ອີກ ${d} ວັນ</span>`:''}`:'–'}</td>
-      <td style="white-space:nowrap">${f.url?`<a class="btn sm" href="${esc(f.url)}" target="_blank" rel="noopener noreferrer">🔗 ເປີດ</a> `:''}${isAdminUser?`<button class="btn sm" type="button" data-dfdel="${f.id}">${dfDelArm===f.id?'ກົດອີກຄັ້ງ':'🗑'}</button>`:''}</td></tr>`; }).join(''):'<tr><td colspan="6" class="sub">ຍັງບໍ່ມີເອກະສານ</td></tr>');
+      <td style="white-space:nowrap">${f.url?`<a class="btn sm" href="${esc(f.url)}" target="_blank" rel="noopener noreferrer">🔗 ເປີດ</a> `:''}${myRole==='admin'?`<button class="btn sm" type="button" data-dfdel="${f.id}">${dfDelArm===f.id?'ກົດອີກຄັ້ງ':'🗑'}</button>`:''}</td></tr>`; }).join(''):'<tr><td colspan="6" class="sub">ຍັງບໍ່ມີເອກະສານ</td></tr>');
 }
 let dfDelArm=null;
 function dfMeta(){ return {kind:$('#dfKind').value||'other',ref:$('#dfRef').value,date:$('#dfDate').value||'',exp:$('#dfExp').value||'',note:$('#dfNote').value.trim().slice(0,160)}; }
@@ -3823,7 +3849,7 @@ $('#dfLinkAdd').onclick=()=>{ if(!isAdminUser) return; const u=$('#dfLink').valu
   dfAdd({...dfMeta(),title:(t||'ເອກະສານ '+fmtKey($('#dfDate').value||bizDate)).slice(0,120),driveId:dfDriveId(u),url:u.slice(0,300),mime:'',size:0}); ['#dfLink','#dfTitle','#dfNote','#dfExp'].forEach(x=>$(x).value=''); renderFin(); note('fin','ເພີ່ມລິ້ງເອກະສານ Drive'); };
 $('#dfFolderSave').onclick=()=>{ if(!isAdminUser) return; const v=$('#dfFolder').value.trim(), id=v?dfDriveId(v)||(/^[A-Za-z0-9_-]{10,80}$/.test(v)?v:''):''; if(v&&!id){ toast('ລິ້ງໂຟນເດີບໍ່ຖືກ'); return; } driveFolder=id; $('#dfFolder').value=''; renderFin(); note('setting','ຕັ້ງໂຟນເດີ Google Drive ສຳລັບເອກະສານ'); };
 ['#dfFilter','#dfSearch'].forEach(x=>$(x).addEventListener(x==='#dfSearch'?'input':'change',renderFiles));
-$('#dfTbl').addEventListener('click',e=>{ const b=e.target.closest('[data-dfdel]'); if(!b||!isAdminUser) return; const id=+b.dataset.dfdel;
+$('#dfTbl').addEventListener('click',e=>{ const b=e.target.closest('[data-dfdel]'); if(!b||myRole!=='admin') return; const id=+b.dataset.dfdel;
   if(dfDelArm!==id){ dfDelArm=id; renderFiles(); setTimeout(()=>{ if(dfDelArm===id){ dfDelArm=null; renderFiles(); } },4000); return; }
   dfDelArm=null; const f=dfiles.find(x=>x.id===id); dfiles=dfiles.filter(x=>x.id!==id); renderFin(); if(f) note('fin','ເອົາເອກະສານອອກຈາກລາຍການ: '+f.title+' (ໄຟລ໌ຍັງຢູ່ໃນ Drive)'); });
 
@@ -3855,15 +3881,15 @@ function renderOrders(){ const d=odDate(), H=odHist(), pOpt=products.filter(p=>p
     .map(([l,v,h,f,c])=>`<${f?`button type="button" data-odf="${f}" style="text-align:left;cursor:pointer;font:inherit;color:inherit${odFilter===f?';outline:2px solid var(--accent)':''}"`:'div'} class="kpi ${c}"><div class="label">${l}</div><div class="val">${v}</div><div class="hint">${esc(h)}</div></${f?'button':'div'}>`).join('');
   $('#odFilt').innerHTML=[['all','ທັງໝົດ',LA.length],['new','⏳ ລໍຖ້າເລືອກລົດ',N.length],['ok','🚛 ລໍຖ້າສົ່ງ',LA.filter(o=>o.status==='ok').length],['done','✅ ສຳເລັດ',LA.filter(o=>o.status==='done').length]].map(([k,l,n])=>`<button class="chip" type="button" data-odf="${k}" aria-pressed="${odFilter===k}">${l} <span>${n}</span></button>`).join('');
   { const al=[...(()=>{ const n=N.filter(o=>!o.truck&&!odHit(H,o)).length; return n?[`<li><a href="#" data-odf="new">${n} ອໍເດີ ບໍ່ມີລົດແນະນຳ (ລູກຄ້າໃໝ່) — ຕ້ອງເລືອກລົດເອງ</a></li>`]:[]; })(),...OD.map(([k,n])=>`<li><a href="#" data-oddate="${k}">ມີ ${n} ອໍເດີລໍຖ້າ ວັນສົ່ງ ${fmtKey(k)}</a></li>`),
-    ...orders.filter(o=>o.date>=addDays(todayKey,-7)).map(o=>[o,odShort(o)]).filter(([o,x],i,A)=>x&&!x.next&&A.findIndex(([p])=>p.cid===o.cid&&p.date===o.date)===i).map(([o,x])=>`<li><a href="#" data-oddate="${o.date}">⚠ ${esc(o.c)} ສົ່ງບໍ່ຄົບ ${fmtKey(o.date)}: ຂາດ ${fmt(x.miss)} ຈາກ ${fmt(x.want)}</a></li>`)];
+    ...orders.filter(o=>o.date>=addDays(todayKey,-7)).map(o=>[o,odShort(o)]).filter(([o,x],i,A)=>x&&!x.next&&A.findIndex(([p])=>p.cid===o.cid&&p.date===o.date)===i).map(([o,x])=>`<li><a href="#" data-oddate="${esc(o.date)}">⚠ ${esc(o.c)} ສົ່ງບໍ່ຄົບ ${fmtKey(o.date)}: ຂາດ ${fmt(x.miss)} ຈາກ ${fmt(x.want)}</a></li>`)];
     window.__odAlerts=al; }
   $('#odSub').textContent=fmtKey(d);
   $('#odTbl').innerHTML='<tr><th>ຮ້ານ / ລູກຄ້າ</th><th>ສິນຄ້າ</th><th>ຊຳລະ</th><th>ລົດ</th><th>ສະຖານະ</th><th></th></tr>'+(L.length?L.map(o=>{ const h=odHit(H,o), sug=o.truck||(h&&fleetOf(h.truck)?h.truck:'');
     return `<tr><td>${o.cid?`<small class="tag">🆔 ${esc(o.cid)}</small> `:''}<b>${esc(o.c)}</b>${o.vil||o.dist?`<br><small>📍 ${esc([o.vil&&'ບ້ານ '+o.vil,o.dist&&'ເມືອງ '+o.dist].filter(Boolean).join(' · '))}</small>`:''}${o.tel?`<br><small>📞 <a href="tel:${esc(o.tel.replace(/[^\d+]/g,''))}">${esc(o.tel)}</a></small>`:''}${o.note?`<br><small class="sub">${esc(o.note)}</small>`:''}<br><small class="sub">${o.src==='tg'?'📥 Telegram':'✍ ຟອມ'} · ${esc(who(o.by))}</small></td><td>${esc(odItemsTxt(o.items))}</td>
       <td>${o.pm?PM[o.pm][0]+' '+PM[o.pm][1]+(o.pm==='debt'&&o.collect?'<br><small>'+fmt(o.collect)+'</small>':''):'💵 '+(o.collect?fmt(o.collect):'–')}</td>
-      <td>${A&&o.status!=='done'?`<select data-odtruck="${o.id}"><option value="">— ເລືອກລົດ —</option>${tOpt.replace(`value="${esc(sug)}"`,`value="${esc(sug)}" selected`)}</select>${!o.truck&&sug?`<br><small class="sub">ແນະນຳ: ເຄີຍສົ່ງ ${fmtKey(h.date)}</small>`:''}`:esc(sug||'–')}</td>
+      <td>${A&&o.status!=='done'?`<select data-odtruck="${esc(o.id)}"><option value="">— ເລືອກລົດ —</option>${tOpt.replace(`value="${esc(sug)}"`,`value="${esc(sug)}" selected`)}</select>${!o.truck&&sug?`<br><small class="sub">ແນະນຳ: ເຄີຍສົ່ງ ${fmtKey(h.date)}</small>`:''}`:esc(sug||'–')}</td>
       <td>${o.status==='done'?odDoneTag(o):o.status==='ok'?(odInPlan(o)?`<span class="tag done">✓ ຢູ່ໃນແຜນ ${esc(o.truck)}</span>`:'<span class="tag high">ຖືກລຶບອອກຈາກແຜນ — ເລືອກລົດໃໝ່</span>'):'<span class="tag wait">ລໍຖ້າເລືອກລົດ</span>'}</td>
-      <td style="white-space:nowrap">${o.status==='new'&&A&&sug?`<button class="btn sm primary" type="button" data-odok="${o.id}">✓ ຢືນຢັນ ${esc(sug)}</button> `:''}${o.status==='ok'?odBillBox(o)+'<br>':''}${o.status==='ok'||o.status==='done'?`<button class="btn sm" type="button" data-odplan="${esc(o.date)}">📋 ເບິ່ງແຜນ</button> `:''}${o.status==='done'&&A?`<button class="btn sm" type="button" data-odundone="${o.id}">↩ ຍົກເລີກສຳເລັດ</button>`:''}${(o.status==='new'&&(A||o.by===me.id))||(o.status==='ok'&&A)?`<button class="btn sm" type="button" data-odmove="${o.id}">➡ ຍ້າຍໄປ ${esc(dmOf(addDays(o.date,1)))}</button> <button class="btn sm" type="button" data-odcancel="${o.id}">ຍົກເລີກ</button>`:''}</td></tr>`; }).join('')
+      <td style="white-space:nowrap">${o.status==='new'&&A&&sug?`<button class="btn sm primary" type="button" data-odok="${esc(o.id)}">✓ ຢືນຢັນ ${esc(sug)}</button> `:''}${o.status==='ok'?odBillBox(o)+'<br>':''}${o.status==='ok'||o.status==='done'?`<button class="btn sm" type="button" data-odplan="${esc(o.date)}">📋 ເບິ່ງແຜນ</button> `:''}${o.status==='done'&&A?`<button class="btn sm" type="button" data-odundone="${esc(o.id)}">↩ ຍົກເລີກສຳເລັດ</button>`:''}${(o.status==='new'&&(A||o.by===me.id))||(o.status==='ok'&&A)?`<button class="btn sm" type="button" data-odmove="${esc(o.id)}">➡ ຍ້າຍໄປ ${esc(dmOf(addDays(o.date,1)))}</button> <button class="btn sm" type="button" data-odcancel="${esc(o.id)}">ຍົກເລີກ</button>`:''}</td></tr>`; }).join('')
     :'<tr><td colspan="6" class="sub">ບໍ່ມີອໍເດີສຳລັບວັນສົ່ງນີ້</td></tr>');
   $('#odConfirmAll').hidden=!A||!N.some(o=>o.truck||odHit(H,o));
   $('#odMoveAll').hidden=!A||!LA.some(o=>o.status==='new'||o.status==='ok');
@@ -3916,7 +3942,7 @@ function odDone(id,raw){ const o=orders.find(x=>x.id===+id), b=odBillNorm(raw); 
   const r=slBills().byBill[b]; if(r&&o.cid&&r.cid&&r.cid!==o.cid) return 'ເລກບິນນີ້ເປັນຂອງລູກຄ້າລະຫັດ '+r.cid+' (ອໍເດີນີ້ '+o.cid+')';
   Object.assign(o,{status:'done',bill:b,doneAt:stamp(),doneBy:me.id||''}); renderFin(); note('trip','ສົ່ງສຳເລັດ '+o.c+' · ບິນ '+b+(o.truck?' · ລົດ '+o.truck:'')); return ''; }
 function odUndone(id){ const o=orders.find(x=>x.id===+id); if(!o||o.status!=='done'||!isAdminUser) return; const b=o.bill; o.status='ok'; delete o.bill; delete o.doneAt; delete o.doneBy; renderFin(); note('trip','ຍົກເລີກສົ່ງສຳເລັດ '+o.c+' (ບິນ '+b+')'); }
-const odBillBox=o=>`<span style="display:inline-flex;gap:4px;align-items:center;flex-wrap:wrap"><input data-odbill="${o.id}" placeholder="ORD-${o.date.replace(/-/g,'')}-XXXXXX" autocomplete="off" autocapitalize="characters" style="width:200px;font-family:ui-monospace,monospace;text-transform:uppercase"><button class="btn sm primary" type="button" data-oddone="${o.id}">✓ ສົ່ງສຳເລັດ</button></span>`;
+const odBillBox=o=>`<span style="display:inline-flex;gap:4px;align-items:center;flex-wrap:wrap"><input data-odbill="${esc(o.id)}" placeholder="ORD-${esc(o.date.replace(/-/g,''))}-XXXXXX" autocomplete="off" autocapitalize="characters" style="width:200px;font-family:ui-monospace,monospace;text-transform:uppercase"><button class="btn sm primary" type="button" data-oddone="${esc(o.id)}">✓ ສົ່ງສຳເລັດ</button></span>`;
 const odDoneTag=o=>`<span class="tag done" style="font-size:13px">✅ ສົ່ງສຳເລັດ</span><br><small style="font-family:ui-monospace,monospace">${esc(o.bill)}</small><br><small class="sub">${fmtStamp(o.doneAt)} · ${o.doneBy==='auto'?'🤖 ຈັບຄູ່ອັດຕະໂນມັດ':esc(who(o.doneBy))}</small>${odBillCheck(o)}${odShortTag(o)}`;
 function odDoneClick(e,after){ const b=e.target.closest('[data-oddone]'); if(!b) return false; const box=b.parentElement.querySelector('[data-odbill]'), err=odDone(b.dataset.oddone,box&&box.value);
   if(err){ toast(err); if(box){ box.style.borderColor='var(--danger)'; box.focus(); } } else { toast('✅ ສົ່ງສຳເລັດ'); if(after) after(); } return true; }
@@ -3973,10 +3999,10 @@ $('#odMoveAll').onclick=()=>{ const d=odDate(), L=orders.filter(o=>o.date===d&&(
 $('#odConfirmAll').onclick=()=>{ const d=odDate(), L=orders.filter(o=>o.date===d&&o.status==='new'); let n=0; L.forEach(o=>{ if(odConfirm(o)) n++; });
   renderFin(); note('trip','ຢືນຢັນອໍເດີເຂົ້າແຜນ '+n+'/'+L.length+' ລາຍການ ('+fmtKey(d)+')'); if(n<L.length) toast((L.length-n)+' ອໍເດີຍັງບໍ່ໄດ້ເລືອກລົດ'); };
 
-const ROLES=[['txadmin','ແອັດມິນຂົນສົ່ງ'],['finadmin','ແອັດມິນການເງິນ'],['warehouse','ນາຍສາງ'],['factory','ໂຮງງານ'],['transport','ທີມຂົນສົ່ງ'],['marketing','ທີມການຕະຫຼາດ']];
+const ROLES=[['txadmin','ແອັດມິນຂົນສົ່ງ'],['finadmin','ແອັດມິນການເງິນ'],['txmgr','ຜູ້ຈັດການທີມຂົນສົ່ງ'],['director','ຜູ້ອຳນວຍການ'],['warehouse','ນາຍສາງ'],['factory','ໂຮງງານ'],['transport','ທີມຂົນສົ່ງ'],['marketing','ທີມການຕະຫຼາດ']];
 const roleBase=v=>String(v||'').split('|')[0], roleTruck=v=>String(v||'').split('|')[1]||'';
 let myTruck='';
-const ROLE_PAGES={txadmin:['plan','orders','trips','mytruck','perf','fleet','vexp','fuel','stock','tanks','factory','products','log'],finadmin:['tasks','overview','fin','hq','docs','files','pay','pnl','sales','loans','partner','branches','vexp','fuel','fleet','reports','close','log','perf'],warehouse:['stock','factory','products'],factory:['factory'],transport:['mytruck'],marketing:['orders']};
+const ROLE_PAGES={txadmin:['plan','orders','trips','mytruck','perf','fleet','vexp','fuel','stock','tanks','factory','products','log'],finadmin:['tasks','overview','fin','hq','docs','files','pay','pnl','sales','loans','partner','branches','vexp','fuel','fleet','reports','close','log','perf'],txmgr:['tasks','overview','plan','orders','trips','mytruck','perf','fleet','vexp','fuel','stock','tanks','factory','products','log','fin','hq','docs','files','pay','pnl','sales','loans','partner','branches','reports','close'],director:['tasks','overview','plan','orders','trips','mytruck','perf','fleet','vexp','fuel','stock','tanks','factory','products','log','fin','hq','docs','files','pay','pnl','sales','loans','partner','branches','reports','close'],warehouse:['stock','factory','products'],factory:['factory'],transport:['mytruck'],marketing:['orders']};
 const roleLabel=r=>r==='admin'?'ແອັດມິນ':((ROLES.find(x=>x[0]===roleBase(r))||['','ຍັງບໍ່ກຳນົດ'])[1]+(roleTruck(r)?' · ລົດ '+roleTruck(r):''));
 let roles={}, isAdminUser=true, myRole='admin', roleReady=!window.claude;
 const allowedPages=()=>myRole==='admin'?null:(ROLE_PAGES[myRole]||[]);
@@ -4068,7 +4094,7 @@ function renderFactory(){
     $('#fcFromWh').innerHTML=Object.keys(agg).length&&!fcEditId?`<span class="tag mid">ສາງບັນທຶກແລ້ວ: ${Object.entries(agg).map(([p,n])=>esc(pName(p))+' '+fmt(n)).join(', ')}</span> ${done?'<span class="tag done">ໂຮງງານບັນທຶກລົດຄັນນີ້ແລ້ວ</span>':`<button class="btn sm" type="button" id="fcFill">ໃຊ້ຕາມສາງ</button>`}`:''; window.__whAgg=agg; }
   { const isOut=$('#fcKind').value==='load_full', box=$('#fcOrdList'), keep=new Set([...box.querySelectorAll('input:checked')].map(i=>+i.value));
     const taken=new Set(facLog.filter(x=>x.oids&&x.id!==fcEditId).flatMap(x=>x.oids)), L=isOut?fcOrders(day).filter(o=>!taken.has(o.id)||keep.has(o.id)):[];
-    $('#fcOrd').hidden=!L.length; box.innerHTML=L.map(o=>`<label style="display:flex;gap:8px;align-items:flex-start;font-size:14px;cursor:pointer"><input type="checkbox" value="${o.id}"${keep.has(o.id)?' checked':''} style="margin-top:4px"><span><b>${esc(o.c)}</b>${o.date!==day?` <span class="tag wait">ຄ້າງ ${esc(dmOf(o.date))}</span>`:''}${o.truck?` <small class="sub">🚛 ${esc(o.truck)}</small>`:''}<br><small>${esc(odItemsTxt(o.items))}</small></span></label>`).join(''); }
+    $('#fcOrd').hidden=!L.length; box.innerHTML=L.map(o=>`<label style="display:flex;gap:8px;align-items:flex-start;font-size:14px;cursor:pointer"><input type="checkbox" value="${esc(o.id)}"${keep.has(o.id)?' checked':''} style="margin-top:4px"><span><b>${esc(o.c)}</b>${o.date!==day?` <span class="tag wait">ຄ້າງ ${esc(dmOf(o.date))}</span>`:''}${o.truck?` <small class="sub">🚛 ${esc(o.truck)}</small>`:''}<br><small>${esc(odItemsTxt(o.items))}</small></span></label>`).join(''); }
   fcCheck(); renderFacRecon(); renderFacTrack(); renderFacHist();
 }
 const fcOrders=day=>orders.filter(o=>(o.status==='new'||o.status==='ok')&&o.date<=day&&o.date>=addDays(day,-7)).sort((a,b)=>b.date.localeCompare(a.date)||String(a.c).localeCompare(String(b.c)));
@@ -5351,7 +5377,7 @@ function buildMobileMenu(u){
     document.querySelectorAll('nav .ngrp').forEach(g=>{ const links=[...g.querySelectorAll('a[data-page]')].filter(a=>!a.hasAttribute('data-role-off')&&a.style.display!=='none'); if(!links.length) return;
       const h=document.createElement('div'); h.className='lgx-menu-group'; h.textContent=g.querySelector('.nhead span').textContent; dlg.append(h);
       links.forEach(a=>{ const b=document.createElement('button'); b.type='button'; b.className='lgx-menu-item'; const t=document.createElement('span'); t.textContent=a.querySelector('span').textContent; b.append(t); const bd=a.querySelector('.badge'); if(bd&&!bd.hidden&&+bd.textContent>0){ const c=document.createElement('span'); c.className='badge'; c.textContent=bd.textContent; b.append(c); } if(a.getAttribute('aria-current')==='page') b.setAttribute('aria-current','page'); b.onclick=()=>{ dlg.close(); a.click(); window.scrollTo(0,0); }; dlg.append(b); }); });
-    const f=document.createElement('div'); f.className='lgx-menu-foot'; const o=document.createElement('button'); o.type='button'; o.className='btn'; o.textContent='🚪 ອອກຈາກລະບົບ'; o.onclick=logout; if(u.is_admin) f.append(pushBtn()); if(u.is_admin||u.scoped) f.append(tgBtn()); f.append(o); dlg.append(f); };
+    const f=document.createElement('div'); f.className='lgx-menu-foot'; const o=document.createElement('button'); o.type='button'; o.className='btn'; o.textContent='🚪 ອອກຈາກລະບົບ'; o.onclick=logout; if(u.is_admin) f.append(pushBtn()); if(u.is_admin||TG_ROLES.has(u.scoped)) f.append(tgBtn()); f.append(o); dlg.append(f); };
   fab.onclick=()=>{ fill(); dlg.showModal(); }; dlg.addEventListener('click',e=>{ if(e.target===dlg) dlg.close(); });
   document.body.append(fab,dlg);
 }
@@ -5421,10 +5447,19 @@ const BUILD=(document.querySelector('meta[name=lgx-build]')||{}).content||'';
 async function checkBuild(){ if(!BUILD||document.getElementById('lgxNewVer')) return; try{ const t=await (await fetch(location.pathname,{cache:'no-store'})).text(), m=t.match(/name="lgx-build" content="([0-9a-f]+)"/);
   if(m&&m[1]!==BUILD){ const b=mk('div','lgx-newver'); b.id='lgxNewVer'; b.setAttribute('role','alert'); b.append(mk('span',null,'🔄 ມີເວີຊັນໃໝ່ ກະລຸນາໂຫຼດໜ້າໃໝ່ ເພື່ອບໍ່ໃຫ້ຂໍ້ມູນຖືກບັນທຶກດ້ວຍລະບົບເກົ່າ ')); const r=mk('button','btn primary','ໂຫຼດໃໝ່'); r.type='button'; r.onclick=()=>location.reload(); b.append(r); document.body.append(b); } }catch(_){} }
 setInterval(checkBuild,300000); document.addEventListener('visibilitychange',()=>{ if(!document.hidden) checkBuild(); });
+const TG_ROLES=new Set(['txadmin','finadmin']); // ບອທ Telegram (lgx-tg) ຮັບສະເພາະເຈົ້າຂອງ + ສອງຕຳແໜ່ງນີ້
+// ຜູ້ຈັດການຂົນສົ່ງ: ໜ້າການເງິນທັງໝົດ ເບິ່ງຢ່າງດຽວ (ເລືອກເດືອນ/ຮອບ/ລົດ/ແທັບ ໄດ້)
+// shortcut: ກັນສະເພາະໜ້າຈໍ — ເງິນກູ້/ລົດຮ່ວມ/ຕັດຍອດ ຢູ່ໃນ app/meta ທີ່ຕຳແໜ່ງນີ້ຂຽນໄດ້; ຖ້າຕ້ອງກັນເຂັ້ມ ໃຫ້ແຍກອອກຈາກ meta
+const VIEW_ONLY_PAGES=['overview','fin','hq','docs','files','pay','pnl','sales','loans','partner','branches','reports','close'];
+const VIEW_OK='[data-sb],#page-reports button,#fpRange,#profView,#hqPer,#fdMonth,#fdStatus,#dfFilter,#dfSearch,#pyRange,#plMonth,#plFr,#plBill,#plHq,#cpView,#slMonth,#slDay,#lnPick,#lnSchedPick,#ptPick,#ptPer,#bdDate,#bmMonth,#repType,[data-go],[data-fingo],[data-slip],[data-fdt],[data-cpp],[data-bdday],#btnExport,#plCopy,#cpCopy,#slHqCopy,#slHqXlsx,#pyCopy,#pyRegen,#pyShare,#fdExport,#fdExportX,#bmCopy,[data-ptact="copy"],[data-hqa="copy"],[data-hqa="xlsx"],#btnDaily2'; // ນຳທາງ/ແທັບ/ພິມ/ຄັດລອກ/ສົ່ງອອກ (ບໍ່ຂຽນຂໍ້ມູນ)
+function viewOnlyPages(){ VIEW_ONLY_PAGES.forEach(k=>{ const pg=document.getElementById('page-'+k); if(!pg) return;
+  const lock=()=>pg.querySelectorAll('input,select,textarea,button').forEach(el=>{ if(!el.matches(VIEW_OK)&&!el.disabled) el.disabled=true; });
+  lock(); new MutationObserver(lock).observe(pg,{childList:true,subtree:true,attributes:true,attributeFilter:['disabled']}); }); } // render ເປີດປຸ່ມຄືນ → ລັອກຊ້ຳ
 session.then(u=>{
+  if(u.scoped==='txmgr') viewOnlyPages();
   const out=document.createElement('button'); out.type='button'; out.textContent='🚪 ອອກ'; out.setAttribute('aria-label','ອອກຈາກລະບົບ '+(u.name||u.username||'')); out.className='btn sm lgx-out'; out.onclick=logout; document.body.appendChild(out);
   buildMobileMenu(u);
-  if(u.is_admin||u.scoped){ const tb=tgBtn(); tb.classList.add('sm','lgx-tgb'); document.body.appendChild(tb); } // ຈໍຄອມ (ມືຖືໃຊ້ໃນເມນູ)
+  if(u.is_admin||TG_ROLES.has(u.scoped)){ const tb=tgBtn(); tb.classList.add('sm','lgx-tgb'); document.body.appendChild(tb); } // ຈໍຄອມ (ມືຖືໃຊ້ໃນເມນູ)
   if(u.is_admin){ const pb=pushBtn(); pb.classList.add('sm','lgx-push'); document.body.appendChild(pb);
     const tick=()=>{ if(document.hidden) return; tgSnap(u.id); tgImport(); }; setTimeout(tick,8000); setInterval(tick,60000); document.addEventListener('visibilitychange',tick); }
   if(!u.is_admin) return;
