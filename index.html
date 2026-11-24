@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-bVYeGjerdUx9SJg6BKvjWlDQW5Tc9h88/XqiSMkWnic=' 'sha256-itqeL8loPU6z830OUfh5fueq/9Xx2M6G6B2r4Ztp1hQ=' 'sha256-I5DX+zqlfgxxtVKiSlINoJahpPqXbzZpXbQ5bUbqG00=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdn.sheetjs.com/xlsx-0.20.3/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="lgx-build" content="cce700299d3f"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-180.png"><link rel="icon" href="icon-192.png"><meta name="theme-color" content="#e8692e">
+<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-RsyVj9Ozn0SFW8N7iJ8P4qJOPaXfbS4auTU21oEg9O4=' 'sha256-itqeL8loPU6z830OUfh5fueq/9Xx2M6G6B2r4Ztp1hQ=' 'sha256-gPa3/+xGPuMaixdfo010CRqVe6sn7QKEYW+ayY78Y4s=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdn.sheetjs.com/xlsx-0.20.3/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="lgx-build" content="11172c48d172"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-180.png"><link rel="icon" href="icon-192.png"><meta name="theme-color" content="#e8692e">
 <meta name="robots" content="noindex"><title>Nani Logistics</title>
 <style>#fuScanBox{display:none!important}</style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.js" integrity="sha384-rwykjmWNwVxboyFmvK9OXN0wj9hnMHA2aAHtits54DuACyCq0M2PrSNxhRb+hvXT" crossorigin="anonymous"></script>
@@ -23,10 +23,8 @@ const BTN='width:100%;padding:12px;border:0;border-radius:8px;min-height:48px;ba
 function showLogin(){ const o=overlay(`<h2 style="margin:0 0 4px"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-3px;margin-right:6px;color:var(--brand,#ea580c)"><path d="M14 18V6H2v12h3M15 18H9M19 18h3v-5l-4-4h-4"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>Nani Logistics</h2><p style="margin:0 0 16px;color:var(--muted,#475569);font-size:14px">ເຂົ້າສູ່ລະບົບ</p>
   <form id="lgxLogin"><label for="lgxU" style="font-size:14px">ຊື່ຜູ້ໃຊ້ ຫຼື ອີເມວ</label><input id="lgxU" autocomplete="username" autocapitalize="none" required style="${FIELD}">
   <label for="lgxP" style="font-size:14px">ລະຫັດຜ່ານ</label><input id="lgxP" type="password" autocomplete="current-password" required style="${FIELD}">
-  <button style="${BTN}">ເຂົ້າສູ່ລະບົບ</button></form><p id="lgxMsg" role="alert" style="min-height:20px;font-size:14px;color:var(--danger,#b42318);margin:10px 0 0"></p>
-  <button id="lgxSignup" type="button" style="background:none;border:0;color:var(--muted,#475569);font:inherit;font-size:13px;text-decoration:underline;cursor:pointer;padding:6px 0">ເຈົ້າຂອງລະບົບ: ສ້າງບັນຊີຄັ້ງທຳອິດ</button>`), msg=o.querySelector('#lgxMsg');
+  <button style="${BTN}">ເຂົ້າສູ່ລະບົບ</button></form><p id="lgxMsg" role="alert" style="min-height:20px;font-size:14px;color:var(--danger,#b42318);margin:10px 0 0"></p>`), msg=o.querySelector('#lgxMsg');
   o.querySelector('#lgxLogin').onsubmit=async e=>{ e.preventDefault(); msg.textContent='ກຳລັງເຂົ້າ…'; const {error}=await sb.auth.signInWithPassword({email:toEmail(o.querySelector('#lgxU').value),password:o.querySelector('#lgxP').value}); if(error){ msg.textContent=/confirm/i.test(error.message)?'ຍັງບໍ່ໄດ້ຢືນຢັນອີເມວ — ກົດລິ້ງໃນອີເມວກ່ອນ':'ຊື່ຜູ້ໃຊ້ ຫຼື ລະຫັດຜ່ານບໍ່ຖືກ'; return; } location.reload(); };
-  o.querySelector('#lgxSignup').onclick=async()=>{ const em=o.querySelector('#lgxU').value.trim(), pw=o.querySelector('#lgxP').value; if(!em.includes('@')||pw.length<8){ msg.textContent='ໃສ່ອີເມວ ແລະ ລະຫັດຜ່ານ (ຢ່າງໜ້ອຍ 8 ຕົວ) ກ່ອນ'; return; } const {error}=await sb.auth.signUp({email:em.toLowerCase(),password:pw,options:{emailRedirectTo:location.origin+location.pathname}}); msg.textContent=error?'ສ້າງບັນຊີບໍ່ສຳເລັດ: '+error.message:'ສົ່ງອີເມວຢືນຢັນແລ້ວ — ກົດລິ້ງໃນອີເມວ ແລ້ວກັບມາເຂົ້າສູ່ລະບົບ'; };
 }
 function showNoAccess(email){ const o=overlay(`<h2 style="margin:0 0 8px"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-3px;margin-right:6px;color:var(--brand,#ea580c)"><circle cx="12" cy="12" r="10"/><path d="M12 7v5l3 2"/></svg>ລໍຖ້າສິດ</h2><p style="color:var(--muted,#475569)">ບັນຊີ ${esc(email)} ຍັງບໍ່ໄດ້ຮັບສິດເຂົ້າລະບົບ ກະລຸນາແຈ້ງແອັດມິນ</p><button id="lgxOut" style="${BTN}">ອອກຈາກລະບົບ</button>`); o.querySelector('#lgxOut').onclick=logout; }
 function showError(){ const o=overlay(`<h2 style="margin:0 0 8px"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-3px;margin-right:6px;color:var(--brand,#ea580c)"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg>ເຊື່ອມຕໍ່ບໍ່ໄດ້</h2><p style="color:var(--muted,#475569)">ກວດອິນເຕີເນັດ ແລ້ວລອງໃໝ່</p><button id="lgxRe" style="${BTN}">ລອງໃໝ່</button>`); o.querySelector('#lgxRe').onclick=()=>location.reload(); }
@@ -719,7 +717,7 @@ body.factory-only nav a:not([data-page="factory"]),body.factory-only #sampleBann
       <div id="odMsg" class="sub" style="font-size:13px" aria-live="polite"></div>
     </div>
     <div id="odTabPaste" hidden><p class="sub" style="margin:0 0 6px;font-size:13px">ຫຼາຍອໍເດີກໍໄດ້ · ແຍກແຕ່ລະອໍເດີດ້ວຍແຖວວ່າງ · ລະບົບອ່ານ ລະຫັດ / ບ້ານ / ເມືອງ / ເບີໂທ ໃຫ້</p>
-      <textarea id="odPaste" rows="7" style="width:100%;font:13px/1.5 inherit" placeholder="ຮ້ານ ເຈມາດ ສົມຫວັງ 500ມລ:20ລັງ ລາຄາ:130,000 ❌ຍັງບໍ່ຊຳລະ&#10;&#10;ອາມາລີ 18L:30ຖັງ ໂອນ ລະຫັດ: V01VTE001-0001-0002 ບ້ານ ໂພນທັນ ເມືອງ ໄຊເສດຖາ 020 5555 1234"></textarea>
+      <textarea id="odPaste" rows="7" style="width:100%;font:13px/1.5 inherit" placeholder="ຮ້ານ A 500ມລ:20ລັງ ລາຄາ:130,000 ❌ຍັງບໍ່ຊຳລະ&#10;&#10;ລູກຄ້າ B 18L:30ຖັງ ໂອນ ລະຫັດ: V01VTE001-0001-0002 ບ້ານ … ເມືອງ … ເບີໂທ …"></textarea>
       <div class="form" style="margin-top:6px"><button class="btn primary" type="button" id="odRead">ອ່ານ → ເຂົ້າກ່ອງອໍເດີ</button></div>
       <div id="odPasteMsg" class="sub" style="font-size:13px" aria-live="polite"></div>
     </div></div>
@@ -733,7 +731,7 @@ body.factory-only nav a:not([data-page="factory"]),body.factory-only #sampleBann
   <div id="planAlerts" style="margin:-4px 0 12px"></div>
   <div class="panel" style="margin-bottom:14px"><h3>🚛 ພາບລວມລົດມື້ນີ້ <small class="sub" id="planOverSub"></small></h3><div class="tbl-wrap"><table class="tbl" id="planOver"></table></div></div>
   <div class="panel" id="plImpBox" hidden style="margin-bottom:14px"><h3>ນຳເຂົ້າແຜນຈາກຂໍ້ຄວາມ <small class="sub">ວາງຂໍ້ຄວາມແຜນທີ່ເຄີຍສົ່ງໃນ WhatsApp / Telegram ໄດ້ເລີຍ</small></h3>
-    <textarea id="plImpText" rows="10" style="width:100%;font:13px/1.5 inherit" placeholder="ແຜນທີມຂົນສົ່ງ ວັນທີ 21/10/2026&#10;🚛 9041 = ທ່ຽງ + ໜຶ່ງ&#10;ຮອບເເລກ&#10;- ສີສະຫວາດ 420&#10;🚛 ລົດ 5968 : ບຸນມາ + ອອຍ&#10;1) ອາມາລີ 500ມລ:31ລັງ ລາຄາ:130,000ກີບ ..."></textarea>
+    <textarea id="plImpText" rows="10" style="width:100%;font:13px/1.5 inherit" placeholder="ແຜນທີມຂົນສົ່ງ ວັນທີ 21/10/2026&#10;🚛 ລົດ 1 = ຄົນຂັບ + ຜູ້ຊ່ວຍ&#10;ຮອບເຊົ້າ&#10;- ລູກຄ້າ A 420&#10;1) ລູກຄ້າ B 500ມລ:31ລັງ ລາຄາ:130,000ກີບ ..."></textarea>
     <div class="form" style="margin-top:6px"><button class="btn primary" type="button" id="plImpRead">ອ່ານຂໍ້ຄວາມ</button><button class="btn" type="button" id="plImpClose">ປິດ</button></div>
     <div id="plImpOut"></div></div>
   <div class="secbar" id="plSecBar" role="group" aria-label="ເລືອກສ່ວນທີ່ສະແດງ"></div>
@@ -1510,13 +1508,7 @@ const SET_FIELDS=[
   ['tankPrice','ລາຄາຖັງ 18L ຕໍ່ໃບ — ໃຊ້ຄິດມູນຄ່າຖັງເສຍຫາຍ (ກີບ)'],
   ['loanWarn','ເຕືອນຄ່າງວດລົດກ່ອນຄົບກຳນົດ (ວັນ)']
 ];
-let ar=[
-  {id:1,cust:'ໂຮງແຮມຮິມຂອງ',inv:'INV-2569-0412',due:addDays(todayKey,-21),amt:3200000,paid:0},
-  {id:2,cust:'ໂຮງຮຽນເມືອງ',inv:'INV-2569-0420',due:addDays(todayKey,-12),amt:1800000,paid:0},
-  {id:3,cust:'ຮ້ານບຸນມາ',inv:'INV-2569-0431',due:addDays(todayKey,-7),amt:1100000,paid:400000},
-  {id:4,cust:'ຕະຫຼາດເຊົ້າ',inv:'INV-2569-0438',due:addDays(todayKey,-3),amt:2400000,paid:0},
-  {id:5,cust:'ຮ້ານສົມໃຈ',inv:'INV-2569-0445',due:addDays(todayKey,5),amt:900000,paid:0}
-];
+let ar=[];
 let exps=[
   {id:1,truck:'5968',type:'ນ້ຳມັນ',amt:350000,date:todayKey},
   {id:2,truck:'6097',type:'ນ້ຳມັນ',amt:500000,date:todayKey},
@@ -3085,12 +3077,7 @@ $('#veFile').addEventListener('change',async ev=>{
     veImport(items);
   }catch(err){ toast('ອ່ານໄຟລ໌ບໍ່ໄດ້: '+err.message); }
 });
-const VE_SEP={fuel:{'5311':[[1,1800000],[4,1800000],[8,1800000],[11,1800000],[15,1800000],[18,1800000],[22,1800000],[24,2000000],[29,2000000]],
-  '9041':[[3,2500000],[7,2500000],[11,2500000],[15,2500000],[19,1500000],[22,2500000],[24,2500000],[28,2500000]],
-  '5968':[[1,1800000],[7,1800000],[11,1800000],[17,1900000],[23,1600000],[28,2000000]],
-  '6097':[[2,1800000],[7,1700000],[11,1600000],[16,1700000],[23,1900000],[28,1900000]],
-  '6096':[[5,1800000],[11,1910000],[17,2000000],[23,2200000],[30,2000000]]},
-  repair:{'5311':[[15,100000],[25,2085000]],'9041':[[1,8300000],[13,420000],[18,420000]],'5968':[[3,3822500],[23,6394000]]}};
+const VE_SEP={fuel:{},repair:{}};
 $('#veSeed').addEventListener('click',()=>{
   const items=[]; Object.entries(VE_SEP).forEach(([ty,byV])=>Object.entries(byV).forEach(([v,a])=>a.forEach(([d,amt])=>items.push({date:'2026-09-'+String(d).padStart(2,'0'),vehicle:v,type:ty,amount:amt}))));
   const n=veImport(items); $('#veMonth').value='2026-09'; renderVexp(); if(!n) toast('ຂໍ້ມູນ ກ.ຍ. 2026 ມີຄົບແລ້ວ (ຂ້າມລາຍການຊ້ຳທັງໝົດ)');
