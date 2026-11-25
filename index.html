@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-RsyVj9Ozn0SFW8N7iJ8P4qJOPaXfbS4auTU21oEg9O4=' 'sha256-itqeL8loPU6z830OUfh5fueq/9Xx2M6G6B2r4Ztp1hQ=' 'sha256-gPa3/+xGPuMaixdfo010CRqVe6sn7QKEYW+ayY78Y4s=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdn.sheetjs.com/xlsx-0.20.3/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="lgx-build" content="11172c48d172"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-180.png"><link rel="icon" href="icon-192.png"><meta name="theme-color" content="#e8692e">
+<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-RsyVj9Ozn0SFW8N7iJ8P4qJOPaXfbS4auTU21oEg9O4=' 'sha256-DDhrTRZEzWfoioocCxzzgiCm1zocTExGZWHsI/Yxc3k=' 'sha256-LoCoycsv0Dlm+k+JaaIxHUJqWc0X30SVouVIQW0Wryk=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdn.sheetjs.com/xlsx-0.20.3/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="lgx-build" content="5b669fd2a0fd"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-180.png"><link rel="icon" href="icon-192.png"><meta name="theme-color" content="#e8692e">
 <meta name="robots" content="noindex"><title>Nani Logistics</title>
 <style>#fuScanBox{display:none!important}</style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.js" integrity="sha384-rwykjmWNwVxboyFmvK9OXN0wj9hnMHA2aAHtits54DuACyCq0M2PrSNxhRb+hvXT" crossorigin="anonymous"></script>
@@ -5139,9 +5139,18 @@ function addIcons(root){ if(!root) return; root.querySelectorAll('h1,.panel > h3
   const hit=ICONS.find(([re])=>re.test(t1)); if(!hit) return; const tn=[...el.childNodes].find(n=>n.nodeType===3&&n.textContent.trim()); // ໃສ່ໃນຂໍ້ຄວາມເລີຍ ເພື່ອບໍ່ໃຫ້ແຍກອອກໃນຫົວຂໍ້ແບບ flex
   if(tn&&tn===[...el.childNodes].find(n=>n.nodeType!==3||n.textContent.trim())) tn.textContent=tn.textContent.replace(/^(\s*✓?\s*)/,'$1'+hit[1]+' '); else el.insertAdjacentHTML('afterbegin',`<span class="ic" aria-hidden="true">${hit[1]}</span>`); }); }
 { let icT=null; new MutationObserver(()=>{ if(icT) return; icT=setTimeout(()=>{ icT=null; try{ const pg=document.getElementById('page-'+curPage()); addIcons(pg); [pg,...document.querySelectorAll('.modal:not([hidden])')].forEach(r=>{ svgEmoji(r); optEmoji(r); cardTables(r); r.querySelectorAll('.chip > span:last-child').forEach(x=>x.classList.toggle('zero',x.textContent.trim()==='0')); }); }catch(_){} },30); }).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['hidden']}); }
+/* ວາດໜ້າໃໝ່ (ເຊັ່ນ ຂໍ້ມູນຈາກເຄື່ອງອື່ນມາ) ໂດຍບໍ່ໃຫ້ຫົວຂໍ້ທີ່ເປີດໄວ້ປິດເອງ, ບໍ່ເສຍຕຳແໜ່ງພິມ ແລະ ບໍ່ໃຫ້ໜ້າຈໍເລື່ອນ */
+function keepUi(root,draw){ if(!root){ draw(); return; }
+  const key=d=>{ const sm=d.querySelector(':scope>summary'); const own=d.closest('[data-pt]'); return (own?own.dataset.pt+'|':'')+(sm?sm.textContent.replace(/[\d,.\s]+/g,' ').trim():''); }; /* data-pt = ລົດຄັນໃດ (ລຳດັບລົດປ່ຽນໄດ້) */ /* ຕົວເລກໃນຫົວຂໍ້ປ່ຽນໄດ້ */
+  const walk=f=>{ const n={}; root.querySelectorAll('details').forEach(d=>{ const k=key(d); n[k]=(n[k]||0)+1; f(d,k+'#'+n[k]); }); };
+  const open=new Set(); walk((d,k)=>{ if(d.open) open.add(k); });
+  const ae=document.activeElement, fid=ae&&ae!==document.body&&root.contains(ae)&&ae.id?ae.id:'', sel=fid&&typeof ae.selectionStart==='number'?[ae.selectionStart,ae.selectionEnd]:null;
+  draw();
+  if(open.size) walk((d,k)=>{ if(!d.open&&open.has(k)) d.open=true; });
+  if(fid){ const e=document.getElementById(fid); if(e&&e!==document.activeElement){ try{ e.focus({preventScroll:true}); if(sel) e.setSelectionRange(sel[0],sel[1]); }catch(_){} } } } /* ຕຳແໜ່ງເລື່ອນ: ໃຫ້ browser ຮັກສາເອງ (scroll anchoring) — ຕັ້ງເອງແລ້ວຂັດກັນ */
 function doRefresh(){
   ensureVdues(); ensurePartners();
-  const fn=PAGE_RENDER[curPage()]; if(fn) fn(); try{ autoOrganize(curPage()); }catch(e){ console.error(e); } try{ addIcons(document.getElementById('page-'+curPage())); }catch(_){}
+  keepUi(document.getElementById('page-'+curPage()),()=>{ const fn=PAGE_RENDER[curPage()]; if(fn) fn(); try{ autoOrganize(curPage()); }catch(e){ console.error(e); } try{ addIcons(document.getElementById('page-'+curPage())); }catch(_){} });
   try{ const od=payables(0).filter(r=>r.due<bizDate).length, b=$('#payBadge'); b.textContent=od; b.hidden=!od; }catch(_){}
   try{ const n=fdocs.filter(d=>fdApprType(d.type)&&d.status==='draft').length, b=$('#fdBadge'); b.textContent=n; b.hidden=!n; }catch(_){}
   try{ navGroupsSync(); }catch(_){}
@@ -5429,7 +5438,7 @@ css.textContent=`
   #fcDest{min-width:0;width:100%;flex:1 1 100%}
   .lgx-out,.lgx-push,.lgx-tgb,.lgx-dock{display:none}
   .lgx-fab{display:block;position:fixed;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:9000;min-height:48px;padding:0 18px;border:0;border-radius:24px;background:var(--brand);color:#fff;font:inherit;font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,.35);cursor:pointer}
-  main{padding:12px 12px calc(84px + env(safe-area-inset-bottom))!important}
+  main{padding:10px 8px calc(84px + env(safe-area-inset-bottom))!important}
   /* ແຖບໄອຄອນເທິງຊ້ຳກັບປຸ່ມເມນູ → ເຫຼືອແຕ່ໂລໂກ້ ໃຫ້ເນື້ອຫາຂຶ້ນມາສູງ */
   .sidebar{padding:8px 12px!important;gap:8px}
   .sidebar nav{display:none}
@@ -5437,14 +5446,16 @@ css.textContent=`
   header.top h1{font-size:22px;line-height:1.35}
   header.top .sub{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;cursor:pointer;font-size:14px}
   header.top .sub.lgx-open{display:block}
-  .panel{padding:12px}
+  .panel{padding:10px}
+  .col{padding:6px}
+  .card{padding:10px}
   .kpis{grid-template-columns:1fr 1fr!important;gap:8px}
   .kpi{padding:10px 12px;min-width:0}
   .kpi .label{font-size:12px;line-height:1.4}
   .kpi .val{font-size:20px;line-height:1.3;overflow-wrap:anywhere}
   .kpi .sub,.kpi small{font-size:11.5px}
   /* ແຖບເລືອກສ່ວນ / ຕົວກັ່ນຕອງ: ແຖວດຽວ ເລື່ອນຂ້າງ ແທນທີ່ຈະຊ້ອນ 3-4 ແຖວ */
-  .filters{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:4px;margin-inline:-12px;padding-inline:12px;-webkit-mask-image:linear-gradient(90deg,#000 88%,transparent);mask-image:linear-gradient(90deg,#000 88%,transparent)}
+  .filters{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:4px;margin-inline:-8px;padding-inline:8px;-webkit-mask-image:linear-gradient(90deg,#000 88%,transparent);mask-image:linear-gradient(90deg,#000 88%,transparent)}
   .secbar::-webkit-scrollbar,.filters::-webkit-scrollbar{display:none}
   .filters>*{flex:none;white-space:nowrap}
   .cards{max-height:none!important;overflow:visible!important}
@@ -5487,7 +5498,7 @@ body.lgx-m #page-mytruck > .form{order:3}
 .lgx-fab{background:var(--surface)!important;color:var(--brand)!important;border:1.5px solid var(--brand)!important}
 body.lgx-m table.lgx-cards,body.lgx-m table.lgx-cards tbody,body.lgx-m table.lgx-cards tr,body.lgx-m table.lgx-cards td{display:block;width:100%;box-sizing:border-box}
 body.lgx-m table.lgx-cards tr.lgx-head{display:none}
-body.lgx-m table.lgx-cards tr{border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:0 0 10px;background:var(--surface)}
+body.lgx-m table.lgx-cards tr{border:1px solid var(--line);border-radius:12px;padding:10px;margin:0 0 10px;background:var(--surface)}
 body.lgx-m table.lgx-cards td{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:4px 0!important;border:0!important;text-align:right!important;position:static!important;min-width:0!important;white-space:normal!important}
 body.lgx-m table.lgx-cards td::before{content:attr(data-label);color:var(--muted);font-size:12.5px;text-align:left;flex:0 1 auto;max-width:45%}
 body.lgx-m table.lgx-cards td[data-label=""]::before{display:none}
