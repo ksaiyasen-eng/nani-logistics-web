@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-RsyVj9Ozn0SFW8N7iJ8P4qJOPaXfbS4auTU21oEg9O4=' 'sha256-zLWEU7BjJ5uQy6YqitQ0bxylJFvrEEgqQg9x2/AUzxo=' 'sha256-F8dgknwEAHYqj2t/8h4gMaYsQej/QDY7PBuwOlE3p9Y=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdn.sheetjs.com/xlsx-0.20.3/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="lgx-build" content="98d29d777c5d"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-180.png"><link rel="icon" href="icon-192.png"><meta name="theme-color" content="#e8692e">
+<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-RsyVj9Ozn0SFW8N7iJ8P4qJOPaXfbS4auTU21oEg9O4=' 'sha256-zLWEU7BjJ5uQy6YqitQ0bxylJFvrEEgqQg9x2/AUzxo=' 'sha256-xWRpmxQ/IZ/eZ29OQqpl/y7HgfMDGIT/XU4Mk78pj0A=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdn.sheetjs.com/xlsx-0.20.3/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="lgx-build" content="057fb4ffd173"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-180.png"><link rel="icon" href="icon-192.png"><meta name="theme-color" content="#e8692e">
 <meta name="robots" content="noindex"><title>Nani Logistics</title>
 <style>#fuScanBox{display:none!important}</style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.js" integrity="sha384-rwykjmWNwVxboyFmvK9OXN0wj9hnMHA2aAHtits54DuACyCq0M2PrSNxhRb+hvXT" crossorigin="anonymous"></script>
@@ -415,6 +415,7 @@ body.factory-only nav a:not([data-page="factory"]),body.factory-only #sampleBann
 #sigModal{z-index:120}
 #sigPad{width:100%;max-width:600px;aspect-ratio:3/1;background:#fff;border:2px dashed #b8bcc6;border-radius:10px;touch-action:none;display:block;cursor:crosshair}
 .sigslot{display:flex;justify-content:space-between;align-items:center;gap:10px;border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin:6px 0}
+#mvForm>.fl,#rvWhoBox>.fl{flex:1 1 150px;flex-wrap:nowrap!important} #mvForm>.fl>input,#rvWhoBox>.fl>input{font-size:15px}
 :is(#mvPlate,#mvSrc,#rvPlate,#rvSrc)[aria-invalid=true]{border-color:var(--danger)!important;box-shadow:0 0 0 2px color-mix(in srgb,var(--danger) 35%,transparent)}
 :is(#mvPlate,#mvSrc,#rvPlate,#rvSrc)[aria-invalid=true]::placeholder{color:var(--danger);opacity:1}
 .sigslot>svg{height:44px;width:132px;background:#fff;border-radius:6px}
@@ -1088,9 +1089,9 @@ body.factory-only nav a:not([data-page="factory"]),body.factory-only #sampleBann
     <p class="sub" style="margin:0 0 8px;font-size:13px" id="rvHint"></p>
     <form id="rvForm" novalidate>
       <div class="fields" id="rvGrid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px"></div>
-      <div class="form" style="margin-top:10px;align-items:center">
+      <div class="form" style="margin-top:10px;align-items:flex-end">
         <span id="rvDmgBox" style="display:contents"><label style="display:flex;gap:6px;align-items:center;font-size:14px;flex:0 0 auto"><input type="checkbox" id="rvDmg" style="width:auto;min-height:0"> ⚠ ມີສິນຄ້າເສຍຫາຍ</label><select id="rvDmgCause" class="dmgx" aria-label="ສາເຫດເສຍຫາຍ" style="flex:0 1 auto"></select></span>
-        <span id="rvWhoBox" style="display:contents"><input id="rvPlate" list="plateL" maxlength="30" placeholder="ທະບຽນລົດ *" aria-label="ທະບຽນລົດ (ຈຳເປັນ)" style="flex:1 1 140px"><input id="rvSrc" list="srcL" maxlength="80" placeholder="ມາຈາກໃສ *" aria-label="ມາຈາກໃສ (ຈຳເປັນ)" style="flex:1 1 160px"></span>
+        <span id="rvWhoBox" style="display:contents"><label class="fl">ທະບຽນລົດ *<input id="rvPlate" list="plateL" maxlength="30" placeholder="ເຊັ່ນ 5968"></label><label class="fl">ມາຈາກໃສ *<input id="rvSrc" list="srcL" maxlength="80" placeholder="ເຊັ່ນ ໂຮງງານ"></label></span>
         <input id="rvNote" maxlength="200" placeholder="ໝາຍເຫດ ເຊັ່ນ ຮັບຈາກໂຮງງານ, ເລກໃບຮັບ" aria-label="ໝາຍເຫດ" style="flex:1 1 220px">
         <button class="btn primary" type="submit" id="rvSave">ບັນທຶກ</button>
         <button class="btn" type="button" id="rvClear">ລ້າງຊ່ອງ</button>
@@ -1104,7 +1105,7 @@ body.factory-only nav a:not([data-page="factory"]),body.factory-only #sampleBann
       <select id="mvItem" aria-label="ສິນຄ້າ"></select>
       <input id="mvQty" type="number" min="0" step="1" placeholder="ຈຳນວນ" aria-label="ຈຳນວນ" style="width:120px">
       <input id="mvDmg" type="number" min="0" step="1" placeholder="⚠ ເສຍຫາຍ" aria-label="ຈຳນວນເສຍຫາຍ" style="width:110px;border-color:var(--danger)"><select id="mvDmgCause" aria-label="ສາເຫດເສຍຫາຍ" style="flex:0 1 auto"></select>
-      <input id="mvPlate" list="plateL" maxlength="30" placeholder="ທະບຽນລົດ *" aria-label="ທະບຽນລົດ (ຈຳເປັນ)" style="flex:1 1 140px"><input id="mvSrc" list="srcL" maxlength="80" placeholder="ມາຈາກໃສ *" aria-label="ມາຈາກໃສ (ຈຳເປັນ)" style="flex:1 1 160px">
+      <label class="fl">ທະບຽນລົດ *<input id="mvPlate" list="plateL" maxlength="30" placeholder="ເຊັ່ນ 5968"></label><label class="fl"><span id="mvSrcL">ມາຈາກໃສ *</span><input id="mvSrc" list="srcL" maxlength="80" placeholder="ເຊັ່ນ ໂຮງງານ"></label>
       <datalist id="plateL"></datalist><datalist id="srcL"></datalist>
       <input id="mvNote" maxlength="200" placeholder="ໝາຍເຫດ ເຊັ່ນ ຮັບຈາກໂຮງງານ, ເສຍຫາຍ" aria-label="ໝາຍເຫດ" style="flex:1 1 200px">
       <button class="btn primary" type="submit">ບັນທຶກ</button>
@@ -3260,6 +3261,7 @@ function whoFill(){ $('#plateL').innerHTML=fleet.map(f=>`<option value="${esc(f.
 function whoGet(p,s,out){ const plate=$(p).value.trim().slice(0,30), src=$(s).value.trim().slice(0,80);
   [[p,plate],[s,src]].forEach(([q,v])=>{ const el=$(q); if(v) return; el.setAttribute('aria-invalid','true'); el.addEventListener('input',()=>el.removeAttribute('aria-invalid'),{once:true}); }); // ຂອບແດງຄ້າງໄວ້ຈົນກວ່າຈະພິມ
   if(!plate||!src){ toast('ກະລຸນາໃສ່ ທະບຽນລົດ ແລະ '+(out?'ສົ່ງໄປໃສ':'ມາຈາກໃສ')+' (ຊ່ອງຂອບແດງ)'); (plate?$(s):$(p)).focus(); return null; } return {plate,src}; }
+let mvBack=null; // pid ຂອງກາດສະຕັອກທີ່ກົດ ຮັບເຂົ້າ/ເບີກອອກ ມາ
 const whoOut=m=>m.reason==='out'||m.stg==='out', whoTxt=m=>m.plate?'🚚 '+m.plate+(m.src?(whoOut(m)?' → ':' · ຈາກ ')+m.src:''):'';
 /* ===== ຮັບສິນຄ້າເຂົ້າສາງ (ຫຼາຍລາຍການພ້ອມກັນ) ===== */
 function renderReceive(){
@@ -4578,8 +4580,8 @@ function renderTanks(){
     (list.length?list.map((m,i)=>`<tr><td>${fmtTime(m.at)}</td><td>${esc(pName(m.pid))}</td><td><span class="tag">${esc(mvLabel(m.reason))}</span></td><td class="r" style="font-weight:700;color:${m.qty<0?'var(--danger)':'var(--ok)'}">${m.qty>0?'+':''}${fmt(m.qty)}</td><td>${esc([m.truck,m.dest].filter(Boolean).join(' → ')||whoTxt(m))}</td><td>${m.cause?'<span class="tag wait">'+esc(causeLabel(m.cause))+'</span> ':''}${m.onTruck?'<small>(ຢູ່ລົດ)</small> ':''}${esc(m.note)}</td><td>${esc(who(m.by))}</td><td>${m.ref&&SLIP_KIND[m.reason]&&(i===0||list[i-1].ref!==m.ref)?`<button class="btn sm" type="button" data-slip="${esc(m.ref)}" title="ພິມເອກະສານເຊັນຮັບ">🖨 ພິມ</button>`:''}</td></tr>`).join('')
       :'<tr><td colspan="8" class="sub">ບໍ່ມີການເຄື່ອນໄຫວໃນວັນນີ້</td></tr>');
 }
-$('#mvReason').addEventListener('change',()=>{ const r=$('#mvReason').value, on=r==='in'||r==='out'; $('#mvPlate').hidden=$('#mvSrc').hidden=!on; $('#mvSrc').placeholder=r==='out'?'ສົ່ງໄປໃສ *':'ມາຈາກໃສ *'; $('#mvSrc').setAttribute('aria-label',r==='out'?'ສົ່ງໄປໃສ (ຈຳເປັນ)':'ມາຈາກໃສ (ຈຳເປັນ)'); $('#mvDmg').hidden=!on; $('#mvDmgCause').hidden=!on; dmgCauseOpts('#mvDmgCause',r); renderTanks(); });
-dmgCauseOpts('#mvDmgCause','in'); $('#mvItem').addEventListener('change',renderTanks);
+$('#mvReason').addEventListener('change',()=>{ const r=$('#mvReason').value, on=r==='in'||r==='out'; $('#mvPlate').closest('label').hidden=$('#mvSrc').closest('label').hidden=!on; $('#mvSrcL').textContent=r==='out'?'ສົ່ງໄປໃສ *':'ມາຈາກໃສ *'; $('#mvSrc').placeholder=r==='out'?'ເຊັ່ນ ສາຂາ, ລູກຄ້າ':'ເຊັ່ນ ໂຮງງານ'; $('#mvDmg').hidden=!on; $('#mvDmgCause').hidden=!on; dmgCauseOpts('#mvDmgCause',r); renderTanks(); });
+dmgCauseOpts('#mvDmgCause','in'); $('#mvItem').addEventListener('change',renderTanks); ['#mvItem','#mvReason'].forEach(q=>$(q).addEventListener('change',e=>{ if(e.isTrusted) mvBack=null; })); // ປ່ຽນເອງ = ບໍ່ເລື່ອນກັບກາດ
 $('#mvDate').addEventListener('change',renderTanks); $('#mvFilter').addEventListener('change',renderTanks); $('#mvTruckF').addEventListener('change',renderTanks);
 $('#mvForm').addEventListener('submit',e=>{
   e.preventDefault(); const reason=$('#mvReason').value, pid=$('#mvItem').value, n=Math.floor(+$('#mvQty').value), noteTxt=$('#mvNote').value.trim().slice(0,200), st=stockOf(pid);
@@ -4596,6 +4598,7 @@ $('#mvForm').addEventListener('submit',e=>{
     moveStock(em.pid,-n,'fill',{note:noteTxt,ref}); moveStock(pid,n,'fill',{note:noteTxt,ref}); msg='ບັນຈຸນ້ຳ '+fmt(n)+' '+(st.unit||'')+' → '+st.name; }
   else { const d=n-st.qty; if(!d){toast('ຍອດກົງກັບລະບົບແລ້ວ');return;} moveStock(pid,d,'count',{note:noteTxt||('ນັບໄດ້ '+fmt(n))}); msg='ປັບຍອດ '+st.name+' ຕາມນັບຈິງ '+fmt(n)+' ('+(d>0?'+':'')+fmt(d)+')'; }
   $('#mvQty').value=''; $('#mvNote').value=$('#mvPlate').value=$('#mvSrc').value=''; $('#mvDmg').value=''; delete $('#mvDmgCause').dataset.touched; renderFin(); note('stock',msg);
+  if(mvBack===pid){ const si=stock.findIndex(x=>x.pid===pid), r=si>=0&&document.querySelector('[data-sq="'+si+'"]'); if(r) r.closest('tr').scrollIntoView({block:'center'}); } mvBack=null;
 });
 $('#mvCopy').addEventListener('click',()=>{const day=$('#mvDate').value;
   copyText(csvOf([['ວັນທີ','ເວລາ','ລາຍການ','ປະເພດ','ຈຳນວນ','ລົດ','ປາຍທາງ','ໝາຍເຫດ'],...stockMoves.filter(m=>m.date===day).sort((a,b)=>String(a.at).localeCompare(String(b.at))).map(m=>[m.date,fmtTime(m.at),pName(m.pid),mvLabel(m.reason),m.qty,m.truck,m.dest,m.note])]),'ຄັດລອກປະຫວັດ '+fmtKey(day)+' ແລ້ວ');});
@@ -4670,7 +4673,7 @@ function renderStock(){
       <td class="r"><input type="number" min="0" value="${s.reorder}" data-sr="${i}" aria-label="ຈຸດສັ່ງຊື້ ${esc(s.name)}" style="width:90px;text-align:right"></td>
       <td>${s.qty<s.reorder?'<span class="tag high">ຕ່ຳກວ່າຈຸດສັ່ງຊື້</span>':'<span class="tag done">ພໍ</span>'}</td>
       <td><small>${fmtStamp(s.at)||'—'}</small></td>
-      <td><div class="pay"><input type="number" min="1" value="10" data-sq="${i}" aria-label="ຈຳນວນ ${esc(s.name)}"><button class="btn sm" data-sin="${i}">ຮັບເຂົ້າ</button><button class="btn sm" data-sout="${i}">ເບີກອອກ</button><button class="btn sm" data-sset="${i}" title="ຕັ້ງຍອດໃນສາງໃຫ້ເທົ່າກັບຈຳນວນທີ່ໃສ່ (ນັບຈິງ)">ຕັ້ງເປັນ</button></div></td></tr>`).join('');
+      <td><div class="pay"><input type="number" min="0" placeholder="ຈຳນວນ" data-sq="${i}" aria-label="ຈຳນວນ ${esc(s.name)}"><button class="btn sm" data-sin="${i}">ຮັບເຂົ້າ</button><button class="btn sm" data-sout="${i}">ເບີກອອກ</button><button class="btn sm" data-sset="${i}" title="ຕັ້ງຍອດໃນສາງໃຫ້ເທົ່າກັບຈຳນວນທີ່ໃສ່ (ນັບຈິງ)">ຕັ້ງເປັນ</button></div></td></tr>`).join('');
 }
 $('#stockTbl').addEventListener('click',e=>{
   const ss=e.target.closest('[data-sset]');
@@ -4680,13 +4683,13 @@ $('#stockTbl').addEventListener('click',e=>{
     if(!st.pid) st.pid='X'+i; moveStock(st.pid,d,'count',{note:'ນັບໄດ້ '+fmt(n)}); renderFin();
     note('stock','ປັບຍອດ '+st.name+' ເປັນ '+fmt(n)+' ('+(d>0?'+':'')+fmt(d)+')'); return; }
   const bi=e.target.closest('[data-sin]'), bo=e.target.closest('[data-sout]'); const b=bi||bo; if(!b) return;
-  const i=+(bi?bi.dataset.sin:bo.dataset.sout), n=Math.floor(+$('[data-sq="'+i+'"]').value);
-  if(!(n>0)){toast('ກະລຸນາໃສ່ຈຳນວນໃຫ້ຖືກຕ້ອງ');return;}
+  const i=+(bi?bi.dataset.sin:bo.dataset.sout), raw=$('[data-sq="'+i+'"]').value, n=Math.floor(+raw);
+  if(raw!==''&&!(n>0)){toast('ກະລຸນາໃສ່ຈຳນວນໃຫ້ຖືກຕ້ອງ');return;}
   if(bo&&n>stock[i].qty){toast('ເບີກເກີນຈຳນວນທີ່ມີ (ເຫຼືອ '+fmt(stock[i].qty)+')');return;}
-  // ຮັບເຂົ້າ/ເບີກອອກ ຕ້ອງມີທະບຽນລົດ → ສົ່ງໄປຟອມ "ທີລະລາຍການ" ທີ່ກອກໃຫ້ແລ້ວ ແທນການບັນທຶກທັນທີ
+  // ຮັບເຂົ້າ/ເບີກອອກ ຕ້ອງມີທະບຽນລົດ → ສົ່ງໄປຟອມ "ທີລະລາຍການ" ທີ່ກອກໃຫ້ແລ້ວ ແທນການບັນທຶກທັນທີ · ບັນທຶກແລ້ວກັບມາກາດເດີມ (mvBack)
   if(!stock[i].pid) stock[i].pid='X'+i; $('#mvReason').value=bi?'in':'out'; $('#mvReason').dispatchEvent(new Event('change'));
-  $('#mvItem').value=stock[i].pid; $('#mvItem').dispatchEvent(new Event('change')); $('#mvQty').value=n; applyStSecs.show('io'); $('#mvPlate').focus();
-  toast('ໃສ່ທະບຽນລົດ ແລະ '+(bi?'ມາຈາກໃສ':'ສົ່ງໄປໃສ')+' ແລ້ວກົດ ບັນທຶກ');
+  $('#mvItem').value=stock[i].pid; $('#mvItem').dispatchEvent(new Event('change')); $('#mvQty').value=raw===''?'':n; mvBack=stock[i].pid; applyStSecs.show('io'); (raw===''?$('#mvQty'):$('#mvPlate')).focus();
+  toast((raw===''?'ໃສ່ຈຳນວນ, ':'')+'ທະບຽນລົດ ແລະ '+(bi?'ມາຈາກໃສ':'ສົ່ງໄປໃສ')+' ແລ້ວກົດ ບັນທຶກ');
 });
 $('#stockTbl').addEventListener('change',e=>{
   const r=e.target.closest('[data-sr]'); if(!r) return;
