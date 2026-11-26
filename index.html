@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-RsyVj9Ozn0SFW8N7iJ8P4qJOPaXfbS4auTU21oEg9O4=' 'sha256-DDhrTRZEzWfoioocCxzzgiCm1zocTExGZWHsI/Yxc3k=' 'sha256-3X2GmwhqN+nqviV9gdQBGBLButKYpFQXDZxXhRctfM0=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdn.sheetjs.com/xlsx-0.20.3/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="lgx-build" content="2665287e121d"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-180.png"><link rel="icon" href="icon-192.png"><meta name="theme-color" content="#e8692e">
+<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-RsyVj9Ozn0SFW8N7iJ8P4qJOPaXfbS4auTU21oEg9O4=' 'sha256-DDhrTRZEzWfoioocCxzzgiCm1zocTExGZWHsI/Yxc3k=' 'sha256-W7kH2uRu1CXxINO8hHSDkAawM/tPNpVYbahbRs0RX98=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdn.sheetjs.com/xlsx-0.20.3/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="lgx-build" content="2bbd4ec67515"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-180.png"><link rel="icon" href="icon-192.png"><meta name="theme-color" content="#e8692e">
 <meta name="robots" content="noindex"><title>Nani Logistics</title>
 <style>#fuScanBox{display:none!important}</style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.js" integrity="sha384-rwykjmWNwVxboyFmvK9OXN0wj9hnMHA2aAHtits54DuACyCq0M2PrSNxhRb+hvXT" crossorigin="anonymous"></script>
@@ -300,6 +300,7 @@ a.btn{text-decoration:none;color:inherit;display:inline-flex;align-items:center}
 .paidtag{color:var(--ok);font-weight:700}
 .bar{height:8px;background:var(--chip);border-radius:99px;overflow:hidden;margin-top:4px}
 .bar>div{height:100%}
+#page-plans tr.grp td{background:var(--chip);font-weight:700} #page-plans .miss{color:var(--danger);font-weight:700} #page-plans .tag{margin:1px} @media (max-width:700px),(pointer:coarse){#page-plans .btn{min-height:44px}}
 .list-row{margin-bottom:12px}
 .list-row .hd{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
 .links{display:flex;flex-wrap:wrap;gap:8px}
@@ -435,6 +436,7 @@ body.factory-only nav a:not([data-page="factory"]),body.factory-only #sampleBann
     <a href="#loans" data-page="loans"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4M15 15h3"/></svg><span>ເງິນກູ້ລົດ</span></a>
     <a href="#vexp" data-page="vexp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21V5a2 2 0 012-2h7a2 2 0 012 2v16M3 21h11M6 8h5M14 9h2.5a1.5 1.5 0 011.5 1.5V17a1.5 1.5 0 003 0V8l-3-3"/></svg><span>ຄ່າໃຊ້ຈ່າຍລົດ</span></a>
     <a href="#plan" data-page="plan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4M7 13h3M7 17h3M13 13l2 2 3-3"/></svg><span>ແຜນຂົນສົ່ງປະຈຳວັນ</span></a>
+    <a href="#plans" data-page="plans"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/><path d="M3 6l4-3 4 3"/></svg><span>ແຜນສົ່ງ ທຽບຍອດຂາຍ</span></a>
     <a href="#orders" data-page="orders"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v12H5.2L4 17.5z"/><path d="M8 8h8M8 12h5"/></svg><span>ກ່ອງອໍເດີ</span></a>
     <a href="#trips" data-page="trips"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/><path d="M8 19h8a3 3 0 000-6H8a3 3 0 010-6h8"/></svg><span>ເສັ້ນທາງ ແລະ ຖ້ຽວລົດ</span></a>
     <a href="#mytruck" data-page="mytruck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 3h15v13H1zM16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2"/><circle cx="18.5" cy="18.5" r="2"/></svg><span>ລົດຂອງຂ້ອຍ</span></a>
@@ -722,6 +724,20 @@ body.factory-only nav a:not([data-page="factory"]),body.factory-only #sampleBann
       <div id="odPasteMsg" class="sub" style="font-size:13px" aria-live="polite"></div>
     </div></div>
   <div class="panel" data-sec="load" style="margin-bottom:14px"><h3>🚛 ໂຫຼດຂອງແຕ່ລະຄັນ (ວັນສົ່ງນີ້) <small class="sub">ອໍເດີທີ່ເລືອກລົດ + ທີ່ຢືນຢັນແລ້ວ ທຽບກັບຄວາມຈຸ/ຖ້ຽວ</small></h3><div class="tbl-wrap"><table class="tbl" id="odLoad"></table></div></div>
+</div>
+
+<div id="page-plans" data-pg hidden>
+  <header class="top"><div><h1>ແຜນສົ່ງ ທຽບຍອດຂາຍ</h1><p class="sub" id="psSub" aria-live="polite">ສະຫຼຸບຕົວເລກຈາກແອັບແຜນຈັດສົ່ງ (CRM) · ເບິ່ງຢ່າງດຽວ</p></div>
+    <div class="actions"><button class="btn" type="button" id="psRefresh">↻ ໂຫຼດໃໝ່</button><a class="btn" href="../vari-transport-crm/" target="_blank" rel="noopener noreferrer">ເປີດແອັບແຜນຈັດສົ່ງ</a></div></header>
+  <div id="psMsg" aria-live="polite"></div>
+  <div class="kpis" id="psKpis"></div>
+  <div class="panel" id="psDayBox" style="margin-bottom:14px" hidden><h3>📅 ແຕ່ລະມື້</h3><div class="tbl-wrap"><table class="tbl" id="psDays"></table></div></div>
+  <div class="panel" id="psPlanBox" style="margin-bottom:14px" hidden><h3>🗂 ແຜນສົ່ງ <small class="sub" id="psCount"></small></h3>
+    <div class="form"><input type="search" id="psQ" placeholder="ຄົ້ນຫາ ແຜນ / ສາຂາ / ລົດ" aria-label="ຄົ້ນຫາແຜນ" style="flex:1 1 220px">
+      <select id="psGrp" aria-label="ຈັດກຸ່ມ"><option value="br">ຈັດກຸ່ມຕາມສາຂາ</option><option value="veh">ຈັດກຸ່ມຕາມລົດ</option><option value="">ບໍ່ຈັດກຸ່ມ</option></select>
+      <select id="psSort" aria-label="ລຽງ"><option value="miss">ຫຼຸດແຜນຫຼາຍສຸດກ່ອນ</option><option value="cust">ລູກຄ້າຫຼາຍສຸດກ່ອນ</option><option value="name">ຊື່ແຜນ ກ-ຮ</option></select></div>
+    <div class="tbl-wrap"><table class="tbl" id="psPlans"></table></div>
+    <p class="sub" style="font-size:12px;margin-top:10px" id="psNote"></p></div>
 </div>
 
 <div id="page-plan" data-pg hidden>
@@ -4144,7 +4160,7 @@ $('#odConfirmAll').onclick=()=>{ const d=odDate(), L=orders.filter(o=>o.date===d
 const ROLES=[['txadmin','ແອັດມິນຂົນສົ່ງ'],['finadmin','ແອັດມິນການເງິນ'],['txmgr','ຜູ້ຈັດການທີມຂົນສົ່ງ'],['director','ຜູ້ອຳນວຍການ'],['warehouse','ນາຍສາງ'],['factory','ໂຮງງານ'],['transport','ທີມຂົນສົ່ງ'],['marketing','ທີມການຕະຫຼາດ']];
 const roleBase=v=>String(v||'').split('|')[0], roleTruck=v=>String(v||'').split('|')[1]||'';
 let myTruck='';
-const ROLE_PAGES={txadmin:['plan','orders','trips','mytruck','perf','fleet','vexp','fuel','stock','tanks','factory','products','log'],finadmin:['tasks','overview','fin','hq','docs','files','pay','pnl','sales','loans','partner','branches','vexp','fuel','fleet','reports','close','log','perf'],txmgr:['tasks','overview','plan','orders','trips','mytruck','perf','fleet','vexp','fuel','stock','tanks','factory','products','log','fin','hq','docs','files','pay','pnl','sales','loans','partner','branches','reports','close'],director:['tasks','overview','plan','orders','trips','mytruck','perf','fleet','vexp','fuel','stock','tanks','factory','products','log','fin','hq','docs','files','pay','pnl','sales','loans','partner','branches','reports','close'],warehouse:['stock','factory','products'],factory:['factory'],transport:['mytruck'],marketing:['orders']};
+const ROLE_PAGES={txadmin:['plan','plans','orders','trips','mytruck','perf','fleet','vexp','fuel','stock','tanks','factory','products','log'],finadmin:['tasks','overview','fin','hq','docs','files','pay','pnl','sales','loans','partner','branches','vexp','fuel','fleet','reports','close','log','perf'],txmgr:['tasks','overview','plan','plans','orders','trips','mytruck','perf','fleet','vexp','fuel','stock','tanks','factory','products','log','fin','hq','docs','files','pay','pnl','sales','loans','partner','branches','reports','close'],director:['tasks','overview','plan','plans','orders','trips','mytruck','perf','fleet','vexp','fuel','stock','tanks','factory','products','log','fin','hq','docs','files','pay','pnl','sales','loans','partner','branches','reports','close'],warehouse:['stock','factory','products'],factory:['factory'],transport:['mytruck'],marketing:['orders']};
 const roleLabel=r=>r==='admin'?'ແອັດມິນ':((ROLES.find(x=>x[0]===roleBase(r))||['','ຍັງບໍ່ກຳນົດ'])[1]+(roleTruck(r)?' · ລົດ '+roleTruck(r):''));
 let roles={}, isAdminUser=true, myRole='admin', roleReady=!window.claude;
 const allowedPages=()=>myRole==='admin'?null:(ROLE_PAGES[myRole]||[]);
@@ -5085,7 +5101,7 @@ $('#roleResults').addEventListener('click',e=>{const b=e.target.closest('[data-r
 
 /* ===== ຮັບ/ສະແດງທຸກໜ້າ ===== */
 // ວາດສະເພາະໜ້າທີ່ເປີດຢູ່ (ເມື່ອປ່ຽນໜ້າ ຈະວາດໜ້ານັ້ນໃໝ່) ແລະ ລວມການເອີ້ນຫຼາຍຄັ້ງໃນຮອບດຽວ → ໄວຂຶ້ນຫຼາຍ
-const PAGE_RENDER={fin:()=>finTop(),overview:()=>{renderOverview(); renderSettings();},perf:()=>renderPerf(),vexp:()=>renderVexp(),pnl:()=>renderPnl(),sales:()=>renderSales(),loans:()=>renderLoans(),fuel:()=>renderFuel(),
+const PAGE_RENDER={plans:()=>renderPlans(),fin:()=>finTop(),overview:()=>{renderOverview(); renderSettings();},perf:()=>renderPerf(),vexp:()=>renderVexp(),pnl:()=>renderPnl(),sales:()=>renderSales(),loans:()=>renderLoans(),fuel:()=>renderFuel(),
   fleet:()=>{renderVdues(); renderFleet(); renderCap(); renderDep();},pay:()=>renderPay(),hq:()=>renderHq(),docs:()=>{ renderDocs(); renderDocsQ(); },plan:()=>renderPlan(),orders:()=>renderOrders(),files:()=>renderFiles(),tanks:()=>renderTankLedger(),partner:()=>renderPartners(),factory:()=>renderFactory(),mytruck:()=>renderMyTruck(),settings:()=>{renderRoles(); renderSettings();},
   log:()=>renderLog(),branches:()=>renderBranches(),products:()=>renderProducts(),trips:()=>renderTrips(),stock:()=>{ applyStSecs(); renderStock(); },reports:()=>renderReport(),close:()=>renderClose()};
 let rvTimer=null;
@@ -5205,10 +5221,58 @@ $('#modalRun').onclick=()=>{closeReport();runChecks();};
 $('#btnRescan').onclick=runChecks;
 $('#btnDaily').onclick=openReport; $('#btnDaily2').onclick=openReport;
 
+/* ===== ແຜນສົ່ງ ທຽບຍອດຂາຍ: ອ່ານສະຫຼຸບ (ຕົວເລກລ້ວນ) ທີ່ແອັບ CRM ສົ່ງຂຶ້ນ fn api — ເບິ່ງຢ່າງດຽວ ===== */
+const PS_API='https://sfwsedtxdlummiqblufq.supabase.co/functions/v1/api', PS_CRM='../vari-transport-crm/';
+const PS_WD=['ອາທິດ','ຈັນ','ອັງຄານ','ພຸດ','ພະຫັດ','ສຸກ','ເສົາ'];
+let psData, psLoaded=false, psLoading=false, psErr='';
+const psN=v=>Number.isFinite(+v)?+v:0, psF=v=>fmt(psN(v)), psPct=(a,b)=>psN(b)?Math.max(0,Math.min(100,Math.round(psN(a)/psN(b)*100))):0;
+const psD=d=>/^\d{4}-\d{2}-\d{2}$/.test(d)?d.slice(8,10)+'/'+d.slice(5,7):esc(d||'');
+const psWd=d=>{ const x=/^\d{4}-\d{2}-\d{2}$/.test(d)?new Date(d+'T00:00:00'):null; return x&&!isNaN(x)?PS_WD[x.getDay()]+' ':''; };
+const psAt=s=>{ const d=new Date(s); return isNaN(d)?'':d.toLocaleString('en-GB',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}); };
+const psBar=(done,due)=>{ if(!psN(due)) return '<small>–</small>'; const p=psPct(done,due); return `${p}%<div class="bar" role="img" aria-label="ສົ່ງຕາມແຜນ ${p}%"><div style="width:${p}%;background:var(--info)"></div></div>`; };
+const psVeh=v=>v?(v==='ສົ່ງເອງ'?'ສາຂາສົ່ງເອງ':'ລົດ '+v):'';
+async function loadPlans(){ if(psLoading) return; psLoading=true; psErr=''; renderPlans();
+  try{ const r=await fetch(PS_API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'getPlans'})}); const j=await r.json();
+    if(!r.ok||!j||!j.ok) throw new Error((j&&j.error)||r.status); psData=j.data&&typeof j.data==='object'?j.data:null; psLoaded=true; }
+  catch(e){ psErr='ໂຫຼດຂໍ້ມູນແຜນສົ່ງບໍ່ໄດ້ — ກວດອິນເຕີເນັດແລ້ວກົດລອງໃໝ່'; }
+  psLoading=false; if(curPage()==='plans') refreshViews(); }
+function renderPlans(){ const P=psData, msg=$('#psMsg'), retry=' <button class="btn sm" type="button" data-psretry>ລອງໃໝ່</button>';
+  msg.innerHTML=psErr?`<div class="banner" role="alert"><span>⚠ ${esc(psErr)}${P?' · ສະແດງຂໍ້ມູນທີ່ໂຫຼດໄວ້ກ່ອນໜ້າ':''}</span>${retry}</div>`
+    :psLoading&&!psLoaded?'<div class="empty">ກຳລັງໂຫຼດ...</div>'
+    :psLoaded&&!P?`<div class="empty"><p style="margin:0 0 10px">ຍັງບໍ່ມີຂໍ້ມູນແຜນສົ່ງ. ເປີດແອັບແຜນຈັດສົ່ງ (CRM) → ຕັ້ງຄ່າ → ຂໍ້ມູນ → ສົ່ງຂຶ້ນ Nani (ໃຊ້ PIN ຂອງພະແນກຂົນສົ່ງ)</p><a class="btn primary" href="${PS_CRM}" target="_blank" rel="noopener noreferrer">ເປີດແອັບແຜນຈັດສົ່ງ</a></div>`:'';
+  $('#psRefresh').disabled=psLoading; $('#psRefresh').textContent=psLoading?'ກຳລັງໂຫຼດ...':'↻ ໂຫຼດໃໝ່';
+  const show=!!P; $('#psKpis').hidden=!show; $('#psPlanBox').hidden=!show; if(!show){ $('#psDayBox').hidden=true; $('#psKpis').innerHTML=''; if(psLoaded) $('#psSub').textContent='ສະຫຼຸບຕົວເລກຈາກແອັບແຜນຈັດສົ່ງ (CRM) · ເບິ່ງຢ່າງດຽວ'; return; }
+  const BD=Array.isArray(P.byDate)?P.byDate:[], PL=Array.isArray(P.plans)?P.plans:[], hasSales=!!P.to, sum=(L,k)=>L.reduce((a,x)=>a+psN(x[k]),0);
+  const due=sum(BD,'due'), done=sum(BD,'done'), off=sum(BD,'off');
+  $('#psSub').innerHTML=`ອັບເດດລ່າສຸດ <b>${esc(psAt(P.at))}</b>`+(hasSales?` · ຍອດຂາຍ <b>${psD(P.from)} – ${psD(P.to)}</b>`:' · ຍັງບໍ່ມີຍອດຂາຍ')+' · ເບິ່ງຢ່າງດຽວ';
+  const kpi=(v,l,w)=>`<div class="kpi"><div class="label">${l}</div><div class="val"${w?' style="color:var(--danger)"':''}>${v}</div></div>`;
+  $('#psKpis').innerHTML=kpi(psF(PL.length),'ແຜນທັງໝົດ')+kpi(psF(P.inPlan),'ລູກຄ້າໃນແຜນ')+kpi(psF(P.noPlan),'ລູກຄ້າຍັງບໍ່ເຂົ້າແຜນ',psN(P.noPlan)>0)
+    +(hasSales?kpi(psPct(done,due)+'%',`ສົ່ງຕາມແຜນ (${psF(done)}/${psF(due)})`)+kpi(psF(due-done),'ຫຼຸດແຜນ',due-done>0)+kpi(psF(off+psN(P.offNoPlan)),'ຊື້ນອກແຜນ / ບໍ່ມີແຜນ'):'');
+  $('#psDayBox').hidden=!(hasSales&&BD.length);
+  if(hasSales&&BD.length) $('#psDays').innerHTML='<tr><th>ວັນທີ</th><th class="r">ຮອດວັນສົ່ງ</th><th class="r">ສົ່ງແລ້ວ</th><th>% ຕາມແຜນ</th><th class="r">ຫຼຸດແຜນ</th><th class="r">ຊື້ນອກແຜນ</th><th class="r">ລູກຄ້າຊື້ທັງໝົດ</th></tr>'
+    +BD.map(x=>{ const m=psN(x.due)-psN(x.done); return `<tr><td>${psWd(x.d)}${psD(x.d)}</td><td class="r">${psF(x.due)}</td><td class="r">${psF(x.done)}</td><td>${psBar(x.done,x.due)}</td><td class="r${m?' miss':''}">${psF(m)}</td><td class="r">${psF(x.off)}</td><td class="r">${psF(x.sold)}</td></tr>`; }).join('');
+  const q=$('#psQ').value.trim().toLowerCase(), g=$('#psGrp').value, so=$('#psSort').value, miss=x=>psN(x.due)-psN(x.done), str=v=>String(v??'');
+  const rows=PL.filter(x=>!q||(str(x.z)+' '+str(x.br)+' '+str(x.veh)+' '+psVeh(str(x.veh))).toLowerCase().includes(q))
+    .sort(so==='miss'?(a,b)=>miss(b)-miss(a)||psN(b.cust)-psN(a.cust):so==='cust'?(a,b)=>psN(b.cust)-psN(a.cust):(a,b)=>str(a.z).localeCompare(str(b.z),'lo'));
+  const gk=x=>g==='br'?(str(x.br)||'ບໍ່ລະບຸສາຂາ'):g==='veh'?(psVeh(str(x.veh))||'ຍັງບໍ່ມີລົດ'):'', G=new Map();
+  rows.forEach(x=>{ const k=gk(x); if(!G.has(k)) G.set(k,[]); G.get(k).push(x); });
+  $('#psCount').textContent=fmt(rows.length)+' ແຜນ'; const nc=hasSales?9:4;
+  $('#psPlans').innerHTML=!rows.length?`<tr><td><div class="empty">${PL.length?'ບໍ່ພົບແຜນທີ່ຄົ້ນຫາ — ລອງຄຳອື່ນ ຫຼື ລ້າງຊ່ອງຄົ້ນຫາ':'ຍັງບໍ່ມີແຜນໃນ CRM'}</div></td></tr>`
+    :'<tr><th>ແຜນ</th><th>ສາຂາ · ລົດ</th><th>ວັນສົ່ງ</th><th class="r">ລູກຄ້າ</th>'+(hasSales?'<th class="r">ຮອດວັນ</th><th class="r">ສົ່ງແລ້ວ</th><th>% ຕາມແຜນ</th><th class="r">ຫຼຸດແຜນ</th><th class="r">ຊື້ນອກແຜນ</th>':'')+'</tr>'
+    +[...G].map(([k,L])=>{ const gd=sum(L,'due'), gn=sum(L,'done');
+      return (k?`<tr class="grp"><td colspan="${nc}">${esc(k)} · ${fmt(L.length)} ແຜນ · ${psF(sum(L,'cust'))} ລູກຄ້າ${hasSales&&gd?` · ຕາມແຜນ ${psPct(gn,gd)}% · ຫຼຸດແຜນ ${psF(gd-gn)}`:''}</td></tr>`:'')
+      +L.map(x=>{ const v=psVeh(str(x.veh)), days=x.days&&typeof x.days==='object'?Object.entries(x.days):[];
+        return `<tr><td><b>${esc(x.z)}</b></td><td>${esc(x.br||'–')} · ${v?esc(v):'<span class="miss">ຍັງບໍ່ມີລົດ</span>'}</td><td>${days.map(([d,n])=>`<span class="tag">${esc(d)} ${psF(n)}</span>`).join(' ')||'–'}</td><td class="r">${psF(x.cust)}</td>`
+          +(hasSales?`<td class="r">${psF(x.due)}</td><td class="r">${psF(x.done)}</td><td>${psBar(x.done,x.due)}</td><td class="r${miss(x)?' miss':''}">${psF(miss(x))}</td><td class="r">${psF(x.off)}</td>`:'')+'</tr>'; }).join(''); }).join('');
+  $('#psNote').textContent='ຮອດວັນສົ່ງ = ລູກຄ້າທີ່ວັນແຜນຢູ່ໃນຊ່ວງວັນທີຍອດຂາຍ · ສົ່ງແລ້ວ = ມີບິນຂາຍ ຫຼື ໝາຍສົ່ງແລ້ວໃນມື້ນັ້ນ · ຫຼຸດແຜນ = ຮອດວັນ − ສົ່ງແລ້ວ · ຊື້ນອກແຜນ = ຊື້ໃນມື້ທີ່ບໍ່ແມ່ນວັນແຜນ · ບໍ່ມີແຜນ = ຊື້ແຕ່ບໍ່ຢູ່ໃນແຜນໃດ · ຍັງບໍ່ເຂົ້າແຜນ = ລູກຄ້າທີ່ຍັງບໍ່ຖືກໃສ່ແຜນ'; }
+$('#psRefresh').onclick=loadPlans;
+$('#psMsg').addEventListener('click',e=>{ if(e.target.closest('[data-psretry]')) loadPlans(); });
+$('#psQ').addEventListener('input',renderPlans); $('#psGrp').addEventListener('change',renderPlans); $('#psSort').addEventListener('change',renderPlans);
+
 /* ===== ຈັດເມນູເປັນໝວດໝູ່ ===== */
 const NAV_GROUPS=[['home','ພາບລວມ',['overview','tasks']],
   ['fin','ການເງິນ ແລະ ບັນຊີ',['fin','hq','docs','files','pay','pnl','sales']],
-  ['fleet','ລົດ ແລະ ການຂົນສົ່ງ',['orders','plan','trips','mytruck','perf','fleet','vexp','fuel','loans']],
+  ['fleet','ລົດ ແລະ ການຂົນສົ່ງ',['orders','plan','plans','trips','mytruck','perf','fleet','vexp','fuel','loans']],
   ['part','ຄູ່ຮ່ວມທຸລະກິດ',['partner','branches']],
   ['wh','ສາງ ແລະ ສິນຄ້າ',['stock','tanks','factory','products']],
   ['sys','ລາຍງານ ແລະ ລະບົບ',['log','reports','close','settings']]];
@@ -5239,6 +5303,7 @@ function showPage(p){
   if(typeof facMode!=='undefined'&&facMode&&isAdminUser) p='factory';
   if(typeof allowedPages==='function'){ const al=allowedPages(); if(al&&!al.includes(p)) p=al.length?al[0]:'noaccess'; if(!al&&p==='noaccess') p='tasks'; }
   PAGES.forEach(k=>{$('#page-'+k).hidden=k!==p;});
+  if(p==='plans') loadPlans(); // ເປີດໜ້າ = ດຶງໃໝ່ (ບໍ່ poll)
   if(typeof refreshViews==='function') refreshViews();
   document.querySelectorAll('nav a[data-page]').forEach(a=>{ if(a.dataset.page===p) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
   if(typeof navGroupsSync==='function') navGroupsSync(p);
