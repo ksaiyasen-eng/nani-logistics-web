@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-RsyVj9Ozn0SFW8N7iJ8P4qJOPaXfbS4auTU21oEg9O4=' 'sha256-zLWEU7BjJ5uQy6YqitQ0bxylJFvrEEgqQg9x2/AUzxo=' 'sha256-xWRpmxQ/IZ/eZ29OQqpl/y7HgfMDGIT/XU4Mk78pj0A=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdn.sheetjs.com/xlsx-0.20.3/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="lgx-build" content="057fb4ffd173"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-180.png"><link rel="icon" href="icon-192.png"><meta name="theme-color" content="#e8692e">
+<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-RsyVj9Ozn0SFW8N7iJ8P4qJOPaXfbS4auTU21oEg9O4=' 'sha256-zLWEU7BjJ5uQy6YqitQ0bxylJFvrEEgqQg9x2/AUzxo=' 'sha256-8/Z2AFVv3zRtcZQ0yJafnTwr2uxsqpiyC3PGh3t2kfE=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdn.sheetjs.com/xlsx-0.20.3/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="lgx-build" content="8ba9253fbab6"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-180.png"><link rel="icon" href="icon-192.png"><meta name="theme-color" content="#e8692e">
 <meta name="robots" content="noindex"><title>Nani Logistics</title>
 <style>#fuScanBox{display:none!important}</style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.js" integrity="sha384-rwykjmWNwVxboyFmvK9OXN0wj9hnMHA2aAHtits54DuACyCq0M2PrSNxhRb+hvXT" crossorigin="anonymous"></script>
@@ -1353,6 +1353,7 @@ const newId=()=>Date.now()*1000+Math.floor(Math.random()*1000); // ID ບໍ່�
 const stamp=()=>new Date().toISOString();
 const fmtStamp=iso=>{const d=new Date(iso); if(!iso||isNaN(d)) return ''; return d.getDate()+' '+LAO_MONTHS[d.getMonth()]+' '+(d.getFullYear()+543)+' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');};
 const fmtTime=iso=>{const d=new Date(iso); return !iso||isNaN(d)?'':String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');};
+const LOG_OPS=new Set(['factory','trip','stock','fleet','task']);
 const LOG_KINDS=[['factory','ໂຮງງານ'],['fin','ການເງິນ'],['trip','ຖ້ຽວລົດ'],['stock','ສະຕັອກ'],['fleet','ລົດ ແລະ ທີມ'],['product','ສິນຄ້າ'],['branch','ແຟຣນໄຊ'],['task','ງານ'],['close','ປິດຮອບ'],['setting','ຕັ້ງຄ່າ']];
 const kindLabel=k=>(LOG_KINDS.find(x=>x[0]===k)||['',k])[1];
 let actLog=[]; // 1 ລາຍການ = 1 ການບັນທຶກ: ວັນທຳການ + ເວລາຈິງ + ປະເພດ + ລາຍລະອຽດ
@@ -3189,7 +3190,7 @@ function lotEditor(ri,ti){
   const r=TRIPS[ri], l=lotOf(ri,ti)||{dest:'',q:{}}, f=fleetOf(r.truck)||{cap:[]}, c=lotCalc(r.truck,l);
   const dests=[...new Set(TRIPS.flatMap(t=>(t.lots||[]).map(x=>x&&x.dest)).filter(Boolean))];
   const pct=c.used===Infinity?'∞':Math.round(c.used*100)+'%';
-  return `<tr class="lotrow"><td colspan="9" style="background:var(--chip)">
+  return `<tr class="lotrow"><td colspan="${canPrice()?9:8}" style="background:var(--chip)">
     <div class="form" style="align-items:center">
       ${c.ch==='franchise'
         ?`<label style="display:flex;gap:6px;align-items:center">ສາຂາແຟຣນໄຊ
@@ -3207,23 +3208,24 @@ function lotEditor(ri,ti){
         <small>ເຕັມຄັນ ${fmt(f.cap[j]||0)}${!canPrice()?'':' · '+(pr==null?'<span style="color:var(--warn)">ຍັງບໍ່ມີລາຄາ</span>':fmt(pr)+' ກີບ')}</small></label>`;}).join('')+
     `</div>
     <p style="margin:10px 0 0">ໃຊ້ຄວາມຈຸລົດ <b style="color:${c.used>1?'var(--danger)':'inherit'}">${pct}</b>${c.used>1?' <span class="tag high">ເກີນຄວາມຈຸ</span>':''}
-      · ລາຍໄດ້ຖ້ຽວນີ້ <b>${fmt(c.rev)} ກີບ</b>${c.missing.length?` <span class="tag wait">ຍັງບໍ່ມີລາຄາ: ${esc(c.missing.join(', '))}</span>`:''}</p>
+      ${canPrice()?` · ລາຍໄດ້ຖ້ຽວນີ້ <b>${fmt(c.rev)} ກີບ</b>${c.missing.length?` <span class="tag wait">ຍັງບໍ່ມີລາຄາ: ${esc(c.missing.join(', '))}</span>`:''}`:''}</p>
     ${tankEditor(ri,ti,l)}
   </td></tr>`;
 }
 function renderTrips(){
   const all=TRIPS.flatMap((r,ri)=>r.rev.map((rev,ti)=>({ri,ti,route:r.route,truck:r.truck,rev,st:r.st[ti]})));
-  const n=s=>all.filter(x=>x.st===s).length;
-  $('#tripKpis').innerHTML=[['ຖ້ຽວທັງໝົດ',all.length,''],['ສຳເລັດ',n('done'),'pos'],['ກຳລັງສົ່ງ',n('go'),''],['ລໍຖ້າອອກ',n('wait'),''],['ລາຍໄດ້ລວມ',fmt(salesTotal())+' ກີບ','']]
+  const n=s=>all.filter(x=>x.st===s).length, cp=canPrice(); // ລາຍໄດ້ ເຫັນສະເພາະຜູ້ມີສິດເຫັນລາຄາ
+  $('#tripRev').closest('label').hidden=!cp; $('#tripRev').required=cp;
+  $('#tripKpis').innerHTML=[['ຖ້ຽວທັງໝົດ',all.length,''],['ສຳເລັດ',n('done'),'pos'],['ກຳລັງສົ່ງ',n('go'),''],['ລໍຖ້າອອກ',n('wait'),''],...(cp?[['ລາຍໄດ້ລວມ',fmt(salesTotal())+' ກີບ','']]:[])]
     .map(([l,v,c])=>`<div class="kpi ${c}"><div class="label">${l}</div><div class="val">${v}</div></div>`).join('');
   const cur=$('#tripRoute').value;
   $('#tripRoute').innerHTML=TRIPS.map((r,i)=>`<option value="${i}">ສາຍ ${esc(r.route||'–')} (${esc(r.truck)})</option>`).join(''); if(cur) $('#tripRoute').value=cur;
-  $('#tripTbl').innerHTML='<tr><th>ຖ້ຽວ</th><th>ສາຍ</th><th>ຄົນຂັບ</th><th>ຊ່ອງທາງ</th><th class="r">ຄວາມຈຸ (ຖັງ 18L)</th><th>ລາຍການສິນຄ້າ</th><th class="r">ລາຍໄດ້</th><th>ສະຖານະ</th><th></th></tr>'+
+  $('#tripTbl').innerHTML='<tr><th>ຖ້ຽວ</th><th>ສາຍ</th><th>ຄົນຂັບ</th><th>ຊ່ອງທາງ</th><th class="r">ຄວາມຈຸ (ຖັງ 18L)</th><th>ລາຍການສິນຄ້າ</th>'+(cp?'<th class="r">ລາຍໄດ້</th>':'')+'<th>ສະຖານະ</th><th></th></tr>'+
     all.map(x=>{const l=lotOf(x.ri,x.ti), hasLot=lotQty(l)>0, key=x.ri+':'+x.ti, ch=chOf(x.truck), c=hasLot?lotCalc(x.truck,l):null;
       return `<tr><td>${esc(x.truck)} #${x.ti+1}</td><td>${esc(x.route)}</td><td>${esc(driverOf(x.truck))}</td>
       <td><span class="tag ${ch==='franchise'?'wait':''}">${ch==='franchise'?'ແຟຣນໄຊ':'ລູກຄ້າທົ່ວໄປ'}</span></td><td class="r">${fmt(capOf(x.truck))}</td>
-      <td><button class="btn sm" data-lot="${key}" aria-expanded="${openLot===key}">${hasLot?fmt(lotQty(l))+' ຫົວໜ່ວຍ'+(l.dest?' · '+esc(l.dest):''):'+ ໃສ່ລາຍການ'}</button>${hasLot&&l.at?`<br><small>ບັນທຶກ ${fmtTime(l.at)}</small>`:''}${l&&l.tank?' <span class="tag done">ຖັງ ✓</span>':''}${c&&c.used>1?' <span class="tag high">ເກີນ</span>':''}${c&&c.missing.length?' <span class="tag wait">ລາຄາບໍ່ຄົບ</span>':''}</td>
-      <td class="r">${hasLot?`<b>${fmt(x.rev)}</b><br><small>ຄິດຈາກລາຍການ</small>`:`<input type="number" min="0" step="1000" value="${x.rev}" data-trev="${x.ri}:${x.ti}" aria-label="ລາຍໄດ້ຖ້ຽວ ${esc(x.truck)} #${x.ti+1}" style="width:120px;text-align:right">`}</td>
+      <td><button class="btn sm" data-lot="${key}" aria-expanded="${openLot===key}">${hasLot?fmt(lotQty(l))+' ຫົວໜ່ວຍ'+(l.dest?' · '+esc(l.dest):''):'+ ໃສ່ລາຍການ'}</button>${hasLot&&l.at?`<br><small>ບັນທຶກ ${fmtTime(l.at)}</small>`:''}${l&&l.tank?' <span class="tag done">ຖັງ ✓</span>':''}${c&&c.used>1?' <span class="tag high">ເກີນ</span>':''}${cp&&c&&c.missing.length?' <span class="tag wait">ລາຄາບໍ່ຄົບ</span>':''}</td>
+      ${!cp?'':`<td class="r">${hasLot?`<b>${fmt(x.rev)}</b><br><small>ຄິດຈາກລາຍການ</small>`:`<input type="number" min="0" step="1000" value="${x.rev}" data-trev="${x.ri}:${x.ti}" aria-label="ລາຍໄດ້ຖ້ຽວ ${esc(x.truck)} #${x.ti+1}" style="width:120px;text-align:right">${x.rev?'':'<br><span class="tag wait">ຍັງບໍ່ມີລາຍໄດ້</span>'}`}</td>`}
       <td><select data-ts="${x.ri}:${x.ti}" aria-label="ສະຖານະຖ້ຽວ">${TRIP_ST.map(([v,l])=>`<option value="${v}" ${v===x.st?'selected':''}>${l}</option>`).join('')}</select></td>
       <td class="r"><button class="btn sm" data-td="${x.ri}:${x.ti}" aria-label="ລົບຖ້ຽວ">ລົບ</button></td></tr>`+(openLot===key?lotEditor(x.ri,x.ti):'');}).join('');
 }
@@ -3236,7 +3238,7 @@ $('#tripTbl').addEventListener('change',e=>{
     else if(lb){const b=branchOf(lb.value); l.bid=b?b.id:undefined; l.dest=b?b.name:'';}
     else l.dest=ld.value.trim().slice(0,80);
     l.at=stamp(); if(lotQty(l)>0) r.rev[ti]=lotCalc(r.truck,l).rev;
-    renderFin(); const c=lotCalc(r.truck,l); if(lotQty(l)>0) note('trip','ບັນທຶກລາຍການຖ້ຽວ '+r.truck+' #'+(ti+1)+(l.dest?' → '+l.dest:'')+' · '+fmt(lotQty(l))+' ຫົວໜ່ວຍ · ລາຍໄດ້ '+fmt(r.rev[ti])+' ກີບ'+(c.used>1?' (ເກີນຄວາມຈຸ '+Math.round(c.used*100)+'%)':''),r.rev[ti]); else note('trip','ຕັ້ງປາຍທາງຖ້ຽວ '+r.truck+' #'+(ti+1)+(l.dest?' → '+l.dest:'')); return;
+    renderFin(); const c=lotCalc(r.truck,l); if(lotQty(l)>0) note('trip','ບັນທຶກລາຍການຖ້ຽວ '+r.truck+' #'+(ti+1)+(l.dest?' → '+l.dest:'')+' · '+fmt(lotQty(l))+' ຫົວໜ່ວຍ'+(canPrice()?' · ລາຍໄດ້ '+fmt(r.rev[ti])+' ກີບ':'')+(c.used>1?' (ເກີນຄວາມຈຸ '+Math.round(c.used*100)+'%)':''),canPrice()?r.rev[ti]:undefined); else note('trip','ຕັ້ງປາຍທາງຖ້ຽວ '+r.truck+' #'+(ti+1)+(l.dest?' → '+l.dest:'')); return;
   }
   const rv=e.target.closest('[data-trev]');
   if(rv){const [ri,ti]=rv.dataset.trev.split(':').map(Number), v=Math.max(0,Math.floor(+rv.value)||0); TRIPS[ri].rev[ti]=v; rv.blur(); renderFin(); note('trip','ບັນທຶກລາຍໄດ້ຖ້ຽວ '+TRIPS[ri].truck+' #'+(ti+1)+' = '+fmt(v)+' ກີບ'); return;}
@@ -3250,7 +3252,7 @@ $('#tripTbl').addEventListener('click',e=>{
 });
 $('#tripForm').addEventListener('submit',e=>{
   e.preventDefault();
-  const rev=Math.floor(+$('#tripRev').value), ri=+$('#tripRoute').value; if(!(rev>0)||!TRIPS[ri]) return;
+  const cp=canPrice(), rev=cp?Math.floor(+$('#tripRev').value):0, ri=+$('#tripRoute').value; if((cp&&!(rev>0))||!TRIPS[ri]) return; // ບໍ່ເຫັນລາຄາ: ລາຍໄດ້ 0 ຈົນກວ່າຈະໃສ່ລາຍການສິນຄ້າ
   TRIPS[ri].rev.push(rev); TRIPS[ri].st.push('wait'); (TRIPS[ri].lots=TRIPS[ri].lots||[]).push(null); $('#tripRev').value=''; renderFin(); note('trip','ເພີ່ມຖ້ຽວໃໝ່ໃນສາຍ '+TRIPS[ri].route+' ແລ້ວ');
 });
 
@@ -4188,7 +4190,7 @@ $('#odConfirmAll').onclick=()=>{ const d=odDate(), L=orders.filter(o=>o.date===d
 const ROLES=[['txadmin','ແອັດມິນຂົນສົ່ງ'],['finadmin','ແອັດມິນການເງິນ'],['txmgr','ຜູ້ຈັດການທີມຂົນສົ່ງ'],['director','ຜູ້ອຳນວຍການ'],['warehouse','ນາຍສາງ'],['factory','ໂຮງງານ'],['transport','ທີມຂົນສົ່ງ'],['marketing','ທີມການຕະຫຼາດ']];
 const roleBase=v=>String(v||'').split('|')[0], roleTruck=v=>String(v||'').split('|')[1]||'';
 let myTruck='';
-const ROLE_PAGES={txadmin:['plan','plans','orders','trips','mytruck','perf','fleet','vexp','fuel','stock','tanks','factory','products','log'],finadmin:['tasks','overview','fin','hq','docs','files','pay','pnl','sales','loans','partner','branches','vexp','fuel','fleet','reports','close','log','perf','plans'],txmgr:['tasks','overview','plan','plans','orders','trips','mytruck','perf','fleet','vexp','fuel','stock','tanks','factory','products','log','fin','hq','docs','files','pay','pnl','sales','loans','partner','branches','reports','close'],director:['tasks','overview','plan','plans','orders','trips','mytruck','perf','fleet','vexp','fuel','stock','tanks','factory','products','log','fin','hq','docs','files','pay','pnl','sales','loans','partner','branches','reports','close'],warehouse:['stock','factory','products','plans'],factory:['factory'],transport:['mytruck','plans'],marketing:['orders']};
+const ROLE_PAGES={txadmin:['plan','plans','orders','trips','mytruck','fleet','vexp','fuel','stock','tanks','factory','products','log'],finadmin:['tasks','overview','fin','hq','docs','files','pay','pnl','sales','loans','partner','branches','vexp','fuel','fleet','reports','close','log','perf','plans'],txmgr:['tasks','overview','plan','plans','orders','trips','mytruck','perf','fleet','vexp','fuel','stock','tanks','factory','products','log','fin','hq','docs','files','pay','pnl','sales','loans','partner','branches','reports','close'],director:['tasks','overview','plan','plans','orders','trips','mytruck','perf','fleet','vexp','fuel','stock','tanks','factory','products','log','fin','hq','docs','files','pay','pnl','sales','loans','partner','branches','reports','close'],warehouse:['stock','factory','products','plans'],factory:['factory'],transport:['mytruck','plans'],marketing:['orders']};
 const roleLabel=r=>r==='admin'?'ແອັດມິນ':((ROLES.find(x=>x[0]===roleBase(r))||['','ຍັງບໍ່ກຳນົດ'])[1]+(roleTruck(r)?' · ລົດ '+roleTruck(r):''));
 let roles={}, isAdminUser=true, myRole='admin', roleReady=!window.claude;
 const allowedPages=()=>myRole==='admin'?null:(ROLE_PAGES[myRole]||[]);
@@ -4520,15 +4522,15 @@ function rcData(){
 function renderRecon(){
   if(!$('#rcDate').value) $('#rcDate').value=bizDate;
   const R=rcData(), sg=v=>(v>0?'+':'')+fmt(v);
-  $('#rcTbl').innerHTML='<tr><th>ລົດ</th><th class="r">ຮອບເບີກ</th><th class="r">ຖັງເຕັມເບີກ</th><th class="r">ຄືນເຕັມ</th><th class="r">ສົ່ງຈິງ</th><th class="r">ສົ່ງໃນລະບົບ</th><th class="r">ເປົ່າຄວນຄືນ</th><th class="r">ເປົ່າຄືນຈິງ</th><th class="r">ຜົນຕ່າງເປົ່າ</th><th>ສະຖານະ</th>'+(isAdminUser?'<th class="r">ມູນຄ່າຂາຍຕາມການເບີກ</th><th class="r">ລາຍໄດ້ຖ້ຽວໃນລະບົບ</th><th></th>':'')+'</tr>'+
-    R.map(x=>{ if(!x.any) return `<tr style="opacity:.55"><td><b>${esc(x.truck)}</b><br><small>${esc(x.driver)}</small></td><td class="r" colspan="8">ບໍ່ມີການເບີກ/ຄືນ</td><td></td>${isAdminUser?'<td></td><td></td><td></td>':''}</tr>`;
+  $('#rcTbl').innerHTML='<tr><th>ລົດ</th><th class="r">ຮອບເບີກ</th><th class="r">ຖັງເຕັມເບີກ</th><th class="r">ຄືນເຕັມ</th><th class="r">ສົ່ງຈິງ</th><th class="r">ສົ່ງໃນລະບົບ</th><th class="r">ເປົ່າຄວນຄືນ</th><th class="r">ເປົ່າຄືນຈິງ</th><th class="r">ຜົນຕ່າງເປົ່າ</th><th>ສະຖານະ</th>'+(canPrice()?'<th class="r">ມູນຄ່າຂາຍຕາມການເບີກ</th><th class="r">ລາຍໄດ້ຖ້ຽວໃນລະບົບ</th><th></th>':'')+'</tr>'+
+    R.map(x=>{ if(!x.any) return `<tr style="opacity:.55"><td><b>${esc(x.truck)}</b><br><small>${esc(x.driver)}</small></td><td class="r" colspan="8">ບໍ່ມີການເບີກ/ຄືນ</td><td></td>${canPrice()?'<td></td><td></td><td></td>':''}</tr>`;
       const okE=x.types.every(t=>t.diff===0), okS=x.sysDiff==null||x.sysDiff===0;
       const st=okE&&okS?'<span class="tag done">ກົງ ✓</span>':[!okE?(x.types.filter(t=>t.diff).map(t=>`<span class="tag high">${esc(t.name)} ເປົ່າ${t.diff<0?'ຂາດ '+fmt(-t.diff):'ເກີນ '+fmt(t.diff)}</span>`).join(' ')):'',!okS?`<span class="tag wait">ບໍ່ກົງລະບົບ ${sg(x.sysDiff)}</span>`:''].join(' ');
       return `<tr><td><b>${esc(x.truck)}</b><br><small>${esc(x.driver)}</small></td><td class="r">${x.rounds}</td><td class="r">${fmt(x.out18)}</td><td class="r">${fmt(x.back18)}</td><td class="r"><b>${fmt(x.sent)}</b></td>
-        <td class="r">${x.sys==null?'<span class="sub">–</span>':fmt(x.sys)}</td><td class="r">${fmt(x.sent-x.dep18)}${x.dep18?`<br><small class="sub">ຫັກມັດຈຳ ${fmt(x.dep18)}</small>`:''}${x.types.length>1||x.types.some(t=>t.glass)?'<br><small>'+x.types.map(t=>esc(t.name)+' '+fmt(t.sent-t.dep)).join(' · ')+'</small>':''}</td><td class="r">${fmt(x.empty)}${x.dmg18?`<br><small style="color:var(--warn)">+ ເສຍຫາຍ ${fmt(x.dmg18)}</small>`:''}${x.types.length>1||x.types.some(t=>t.glass)?'<br><small>'+x.types.map(t=>esc(t.name)+' '+fmt(t.empty)).join(' · ')+'</small>':''}</td><td class="r" style="font-weight:700;color:${x.emptyDiff<0?'var(--danger)':x.emptyDiff>0?'var(--warn)':'var(--ok)'}">${sg(x.emptyDiff)}</td><td>${st}</td>${isAdminUser?`<td class="r"><b>${fmt(x.wval)}</b>${x.wmiss.length?`<br><small style="color:var(--warn)">ບໍ່ມີລາຄາ: ${esc(x.wmiss.join(', '))}</small>`:''}</td>
+        <td class="r">${x.sys==null?'<span class="sub">–</span>':fmt(x.sys)}</td><td class="r">${fmt(x.sent-x.dep18)}${x.dep18?`<br><small class="sub">ຫັກມັດຈຳ ${fmt(x.dep18)}</small>`:''}${x.types.length>1||x.types.some(t=>t.glass)?'<br><small>'+x.types.map(t=>esc(t.name)+' '+fmt(t.sent-t.dep)).join(' · ')+'</small>':''}</td><td class="r">${fmt(x.empty)}${x.dmg18?`<br><small style="color:var(--warn)">+ ເສຍຫາຍ ${fmt(x.dmg18)}</small>`:''}${x.types.length>1||x.types.some(t=>t.glass)?'<br><small>'+x.types.map(t=>esc(t.name)+' '+fmt(t.empty)).join(' · ')+'</small>':''}</td><td class="r" style="font-weight:700;color:${x.emptyDiff<0?'var(--danger)':x.emptyDiff>0?'var(--warn)':'var(--ok)'}">${sg(x.emptyDiff)}</td><td>${st}</td>${canPrice()?`<td class="r"><b>${fmt(x.wval)}</b>${x.wmiss.length?`<br><small style="color:var(--warn)">ບໍ່ມີລາຄາ: ${esc(x.wmiss.join(', '))}</small>`:''}</td>
         <td class="r">${x.tripRev==null?'<span class="sub">–</span>':fmt(x.tripRev)+(x.tripRev!==x.wval?`<br><small style="color:var(--warn)">ຕ່າງ ${sg(x.tripRev-x.wval)}</small>`:'')}</td>
         <td>${x.tripRev!=null&&x.tripRev!==x.wval?(x.hasLots?'<span class="tag" title="ມີລາຍການສິນຄ້າໃນຖ້ຽວແລ້ວ">ໃຊ້ລາຍການຖ້ຽວ</span>':`<button class="btn sm" data-usew="${esc(x.truck)}">ໃຊ້ເປັນລາຍໄດ້</button>`):''}</td>`:''}</tr>`;}).join('')+
-    (()=>{const A=R.filter(x=>x.any), t=k=>A.reduce((a,x)=>a+(x[k]||0),0); return `<tr style="font-weight:700"><td>ລວມ</td><td class="r">${t('rounds')}</td><td class="r">${fmt(t('out18'))}</td><td class="r">${fmt(t('back18'))}</td><td class="r">${fmt(t('sent'))}</td><td class="r">${A.some(x=>x.sys!=null)?fmt(t('sys')):'–'}</td><td class="r">${fmt(t('sent')-t('dep18'))}</td><td class="r">${fmt(t('empty'))}</td><td class="r">${sg(t('emptyDiff'))}</td><td></td>${isAdminUser?`<td class="r">${fmt(t('wval'))}</td><td class="r">${A.some(x=>x.tripRev!=null)?fmt(t('tripRev')):'–'}</td><td>${A.some(x=>x.tripRev!=null&&x.tripRev!==x.wval&&!x.hasLots)?'<button class="btn sm" data-usew="*">ໃຊ້ທຸກຄັນ</button>':''}</td>`:''}</tr>`;})();
+    (()=>{const A=R.filter(x=>x.any), t=k=>A.reduce((a,x)=>a+(x[k]||0),0); return `<tr style="font-weight:700"><td>ລວມ</td><td class="r">${t('rounds')}</td><td class="r">${fmt(t('out18'))}</td><td class="r">${fmt(t('back18'))}</td><td class="r">${fmt(t('sent'))}</td><td class="r">${A.some(x=>x.sys!=null)?fmt(t('sys')):'–'}</td><td class="r">${fmt(t('sent')-t('dep18'))}</td><td class="r">${fmt(t('empty'))}</td><td class="r">${sg(t('emptyDiff'))}</td><td></td>${canPrice()?`<td class="r">${fmt(t('wval'))}</td><td class="r">${A.some(x=>x.tripRev!=null)?fmt(t('tripRev')):'–'}</td><td>${A.some(x=>x.tripRev!=null&&x.tripRev!==x.wval&&!x.hasLots)?'<button class="btn sm" data-usew="*">ໃຊ້ທຸກຄັນ</button>':''}</td>`:''}</tr>`;})();
   const P=products.filter(p=>p.active||R.some(x=>x.by[p.id]&&(x.by[p.id].out||x.by[p.id].back)));
   $('#rcProd').innerHTML='<tr><th>ລົດ</th>'+P.map(p=>`<th class="r">${esc(p.name)}</th>`).join('')+'</tr>'+
     R.filter(x=>x.any).map(x=>`<tr><td><b>${esc(x.truck)}</b></td>`+P.map(p=>{const v=x.by[p.id]||{out:0,back:0}, n=v.out-v.back; return `<td class="r">${v.out||v.back?`${fmt(n)}<br><small>${fmt(v.out)} − ${fmt(v.back)}</small>`:'<span class="sub">–</span>'}</td>`;}).join('')+'</tr>').join('')+
@@ -4537,7 +4539,7 @@ function renderRecon(){
 ['#rcPeriod','#rcDate'].forEach(sel=>$(sel).addEventListener('change',renderRecon));
 // ນຳມູນຄ່າຕາມການເບີກ ໄປເປັນລາຍໄດ້ຖ້ຽວ (ແບ່ງຕາມສັດສ່ວນລາຍໄດ້ເດີມຂອງແຕ່ລະຖ້ຽວ)
 $('#rcTbl').addEventListener('click',e=>{
-  const b=e.target.closest('[data-usew]'); if(!b||!isAdminUser) return;
+  const b=e.target.closest('[data-usew]'); if(!b||!canPrice()) return;
   const R=rcData().filter(x=>x.tripRev!=null&&x.tripRev!==x.wval&&!x.hasLots&&(b.dataset.usew==='*'||x.truck===b.dataset.usew)); if(!R.length) return;
   R.forEach(x=>{ let T=TRIPS.filter(r=>r.truck===x.truck);
     if(!T.length){ TRIPS.push({route:'?',truck:x.truck,rev:[x.wval],st:['done'],lots:[null]}); return; }
@@ -4949,7 +4951,8 @@ $('#prodForm').addEventListener('submit',e=>{
 /* ===== ບັນທຶກປະຈຳວັນ ===== */
 const logKeyOf=x=>{const d=new Date(x.at); return isNaN(d)?x.date:dateToKey(d);}; // ວັນທີທີ່ກອກຈິງ
 function logRows(){ const day=$('#logDate').value||todayKey, k=$('#logKind').value;
-  return actLog.filter(x=>logKeyOf(x)===day&&(!k||x.kind===k)).sort((a,b)=>String(b.at).localeCompare(String(a.at))); }
+  const cp=canPrice(); // ບໍ່ມີສິດເຫັນລາຄາ: ເຫັນແຕ່ບັນທຶກງານຂົນສົ່ງ/ສາງ (ການເງິນ ຕັ້ງຄ່າ ແຟຣນໄຊ ສິນຄ້າ ປິດຮອບ ມີເລດ/ຍອດຂາຍ) ແລະ ຊ່ອນຂໍ້ຄວາມທີ່ມີລາຍໄດ້
+  return actLog.filter(x=>logKeyOf(x)===day&&(!k||x.kind===k)&&(cp||(LOG_OPS.has(x.kind)&&!/ລາຍໄດ້|ມູນຄ່າ|ຍອດຂາຍ|ລາຄາ/.test(x.text||'')))).sort((a,b)=>String(b.at).localeCompare(String(a.at))); }
 function renderLog(){
   if(!$('#logKind').options.length) $('#logKind').innerHTML='<option value="">ທຸກປະເພດ</option>'+LOG_KINDS.map(([v,l])=>`<option value="${v}">${l}</option>`).join('');
   if(!$('#logDate').value) $('#logDate').value=todayKey;
@@ -4958,7 +4961,7 @@ function renderLog(){
   const by=LOG_KINDS.map(([v,l])=>[l,all.filter(x=>x.kind===v).length]).filter(x=>x[1]);
   $('#logKpis').innerHTML=[['ທັງໝົດມື້ນີ້',all.length,''],...by.slice(0,5).map(([l,n])=>[l,n,''])].map(([l,v,c])=>`<div class="kpi ${c}"><div class="label">${l}</div><div class="val">${v}</div></div>`).join('');
   $('#logTbl').innerHTML='<tr><th>ເວລາ</th><th>ປະເພດ</th><th>ລາຍການ</th><th class="r">ຈຳນວນເງິນ</th><th>ຜູ້ບັນທຶກ</th><th>ວັນທຳການ</th></tr>'+
-    (rows.length?rows.map(x=>`<tr><td>${fmtTime(x.at)}</td><td><span class="tag">${kindLabel(x.kind)}</span></td><td>${esc(x.text)}</td><td class="r">${x.amt==null?'':fmt(x.amt)}</td><td>${esc(who(x.by))}</td><td><small>${fmtKey(x.date)}</small></td></tr>`).join('')
+    (rows.length?rows.map(x=>`<tr><td>${fmtTime(x.at)}</td><td><span class="tag">${kindLabel(x.kind)}</span></td><td>${esc(x.text)}</td><td class="r">${x.amt==null||!canPrice()?'':fmt(x.amt)}</td><td>${esc(who(x.by))}</td><td><small>${fmtKey(x.date)}</small></td></tr>`).join('')
       :'<tr><td colspan="6" class="sub">ບໍ່ມີການບັນທຶກໃນວັນນີ້</td></tr>');
   const days={}; actLog.forEach(x=>{const k=logKeyOf(x); days[k]=(days[k]||0)+1;});
   const ks=Object.keys(days).sort().reverse().slice(0,31);
@@ -4967,7 +4970,7 @@ function renderLog(){
 $('#logDate').addEventListener('change',renderLog);
 $('#logKind').addEventListener('change',renderLog);
 $('#logDays').addEventListener('click',e=>{const b=e.target.closest('[data-logday]'); if(b){$('#logDate').value=b.dataset.logday; renderLog();}});
-$('#logCopy').onclick=()=>copyText(csvOf([['ວັນທີ','ເວລາ','ປະເພດ','ລາຍການ','ຈຳນວນເງິນ (ກີບ)','ວັນທຳການ'],...logRows().reverse().map(x=>[logKeyOf(x),fmtTime(x.at),kindLabel(x.kind),x.text,x.amt==null?'':x.amt,x.date])]),'ຄັດລອກບັນທຶກປະຈຳວັນແລ້ວ');
+$('#logCopy').onclick=()=>copyText(csvOf([['ວັນທີ','ເວລາ','ປະເພດ','ລາຍການ','ຈຳນວນເງິນ (ກີບ)','ວັນທຳການ'],...logRows().reverse().map(x=>[logKeyOf(x),fmtTime(x.at),kindLabel(x.kind),x.text,x.amt==null||!canPrice()?'':x.amt,x.date])]),'ຄັດລອກບັນທຶກປະຈຳວັນແລ້ວ');
 
 /* ===== ເຄື່ອນໄຫວສະຕັອກ ແລະ ຕິດຕາມຖັງ ===== */
 const stockOf=pid=>stock.find(x=>x.pid===pid);
