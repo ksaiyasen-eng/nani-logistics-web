@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-RsyVj9Ozn0SFW8N7iJ8P4qJOPaXfbS4auTU21oEg9O4=' 'sha256-DDhrTRZEzWfoioocCxzzgiCm1zocTExGZWHsI/Yxc3k=' 'sha256-n2UFybYvq01DKvqqoKXEdriCWHD8WDFY+KXezTyzsuk=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdn.sheetjs.com/xlsx-0.20.3/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="lgx-build" content="9653a8993c1c"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-180.png"><link rel="icon" href="icon-192.png"><meta name="theme-color" content="#e8692e">
+<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-RsyVj9Ozn0SFW8N7iJ8P4qJOPaXfbS4auTU21oEg9O4=' 'sha256-zLWEU7BjJ5uQy6YqitQ0bxylJFvrEEgqQg9x2/AUzxo=' 'sha256-F8dgknwEAHYqj2t/8h4gMaYsQej/QDY7PBuwOlE3p9Y=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdn.sheetjs.com/xlsx-0.20.3/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="lgx-build" content="98d29d777c5d"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-180.png"><link rel="icon" href="icon-192.png"><meta name="theme-color" content="#e8692e">
 <meta name="robots" content="noindex"><title>Nani Logistics</title>
 <style>#fuScanBox{display:none!important}</style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.js" integrity="sha384-rwykjmWNwVxboyFmvK9OXN0wj9hnMHA2aAHtits54DuACyCq0M2PrSNxhRb+hvXT" crossorigin="anonymous"></script>
@@ -325,7 +325,7 @@ body.factory-only nav a:not([data-page="factory"]),body.factory-only #sampleBann
 
 /* Report dialog */
 .modal{position:fixed;inset:0;background:rgba(10,14,22,.55);display:grid;place-items:center;padding:16px;z-index:100}
-.dlg{background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:var(--radius);width:min(640px,100%);max-height:calc(100vh - 32px);overflow:auto;padding:18px 20px}
+.dlg{background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:var(--radius);width:min(640px,100%);max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px);overflow:auto;padding:18px 20px}
 .dlg header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:6px}
 .dlg h2{margin:0;font-size:18px}
 .chk{display:flex;flex-direction:column;gap:10px;margin:14px 0}
@@ -380,6 +380,18 @@ body.factory-only nav a:not([data-page="factory"]),body.factory-only #sampleBann
   .tbl.cardt td[data-label]::before{content:attr(data-label);float:left;max-width:45%;margin-right:12px;color:var(--muted);font-size:13px;font-weight:500;text-align:left}
   .tbl.cardt td[data-label=""]::before{content:none}
   .tbl.cardt tr.cspan td{text-align:left}
+  /* ຄັງ: ກາດສະຕັອກສັ້ນລົງເຄິ່ງໜຶ່ງ — ຊື່+ຍອດ ແຖວດຽວ, ເວລາ+ສະຖານະ ແຖວດຽວ, ປຸ່ມ ແຖວດຽວ */
+  #stockTbl.cardt tr:has(td){display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:center;padding:8px 12px}
+  #stockTbl.cardt td{border:0;padding:2px 0}
+  #stockTbl.cardt td:is(:nth-child(1),:nth-child(2),:nth-child(4),:nth-child(5),:nth-child(6))::before{content:none}
+  #stockTbl.cardt td:is(:nth-child(1),:nth-child(5)){text-align:left}
+  #stockTbl.cardt td:nth-child(2){grid-area:1/2;font-size:20px!important}
+  #stockTbl.cardt td:nth-child(5){grid-area:2/1;color:var(--muted)}
+  #stockTbl.cardt td:nth-child(4){grid-area:2/2}
+  #stockTbl.cardt td:is(:nth-child(3),:nth-child(6)){grid-column:1/-1}
+  #stockTbl.cardt td:nth-child(3){border-top:1px solid var(--chip);margin-top:4px;padding-top:6px}
+  #stockTbl .pay{flex-wrap:nowrap} #stockTbl .pay input{width:64px;flex:none} #stockTbl .pay .btn{flex:1 1 0;padding:4px 6px}
+  #tlGrid{grid-template-columns:1fr 1fr!important;gap:8px!important}
 }
 /* ໃບເບີກ/ໃບຮັບ ສຳລັບພິມ */
 #printArea{display:none}
@@ -403,7 +415,9 @@ body.factory-only nav a:not([data-page="factory"]),body.factory-only #sampleBann
 #sigModal{z-index:120}
 #sigPad{width:100%;max-width:600px;aspect-ratio:3/1;background:#fff;border:2px dashed #b8bcc6;border-radius:10px;touch-action:none;display:block;cursor:crosshair}
 .sigslot{display:flex;justify-content:space-between;align-items:center;gap:10px;border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin:6px 0}
-.sigslot svg{height:44px;width:132px;background:#fff;border-radius:6px}
+:is(#mvPlate,#mvSrc,#rvPlate,#rvSrc)[aria-invalid=true]{border-color:var(--danger)!important;box-shadow:0 0 0 2px color-mix(in srgb,var(--danger) 35%,transparent)}
+:is(#mvPlate,#mvSrc,#rvPlate,#rvSrc)[aria-invalid=true]::placeholder{color:var(--danger);opacity:1}
+.sigslot>svg{height:44px;width:132px;background:#fff;border-radius:6px}
 .slp .ln svg{height:34px;width:auto;max-width:100%}
 #slipPrev{background:#fff;border:1px solid var(--line);border-radius:8px;overflow:auto;max-height:60vh;margin:10px 0;color:#111}
 @media print{
@@ -1076,6 +1090,7 @@ body.factory-only nav a:not([data-page="factory"]),body.factory-only #sampleBann
       <div class="fields" id="rvGrid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px"></div>
       <div class="form" style="margin-top:10px;align-items:center">
         <span id="rvDmgBox" style="display:contents"><label style="display:flex;gap:6px;align-items:center;font-size:14px;flex:0 0 auto"><input type="checkbox" id="rvDmg" style="width:auto;min-height:0"> ⚠ ມີສິນຄ້າເສຍຫາຍ</label><select id="rvDmgCause" class="dmgx" aria-label="ສາເຫດເສຍຫາຍ" style="flex:0 1 auto"></select></span>
+        <span id="rvWhoBox" style="display:contents"><input id="rvPlate" list="plateL" maxlength="30" placeholder="ທະບຽນລົດ *" aria-label="ທະບຽນລົດ (ຈຳເປັນ)" style="flex:1 1 140px"><input id="rvSrc" list="srcL" maxlength="80" placeholder="ມາຈາກໃສ *" aria-label="ມາຈາກໃສ (ຈຳເປັນ)" style="flex:1 1 160px"></span>
         <input id="rvNote" maxlength="200" placeholder="ໝາຍເຫດ ເຊັ່ນ ຮັບຈາກໂຮງງານ, ເລກໃບຮັບ" aria-label="ໝາຍເຫດ" style="flex:1 1 220px">
         <button class="btn primary" type="submit" id="rvSave">ບັນທຶກ</button>
         <button class="btn" type="button" id="rvClear">ລ້າງຊ່ອງ</button>
@@ -1089,6 +1104,8 @@ body.factory-only nav a:not([data-page="factory"]),body.factory-only #sampleBann
       <select id="mvItem" aria-label="ສິນຄ້າ"></select>
       <input id="mvQty" type="number" min="0" step="1" placeholder="ຈຳນວນ" aria-label="ຈຳນວນ" style="width:120px">
       <input id="mvDmg" type="number" min="0" step="1" placeholder="⚠ ເສຍຫາຍ" aria-label="ຈຳນວນເສຍຫາຍ" style="width:110px;border-color:var(--danger)"><select id="mvDmgCause" aria-label="ສາເຫດເສຍຫາຍ" style="flex:0 1 auto"></select>
+      <input id="mvPlate" list="plateL" maxlength="30" placeholder="ທະບຽນລົດ *" aria-label="ທະບຽນລົດ (ຈຳເປັນ)" style="flex:1 1 140px"><input id="mvSrc" list="srcL" maxlength="80" placeholder="ມາຈາກໃສ *" aria-label="ມາຈາກໃສ (ຈຳເປັນ)" style="flex:1 1 160px">
+      <datalist id="plateL"></datalist><datalist id="srcL"></datalist>
       <input id="mvNote" maxlength="200" placeholder="ໝາຍເຫດ ເຊັ່ນ ຮັບຈາກໂຮງງານ, ເສຍຫາຍ" aria-label="ໝາຍເຫດ" style="flex:1 1 200px">
       <button class="btn primary" type="submit">ບັນທຶກ</button>
     </form>
@@ -1163,10 +1180,10 @@ body.factory-only nav a:not([data-page="factory"]),body.factory-only #sampleBann
 
 <!-- ລາຍການສິນຄ້າ -->
 <div id="page-products" data-pg hidden>
-  <header class="top"><div><h1>ລາຍການສິນຄ້າ</h1><p class="sub">ສິນຄ້າທັງໝົດ ພ້ອມລາຄາຂາຍ ສະຕັອກ ແລະ ຄວາມຈຸຂອງລົດ · ແກ້ຊື່ ຫົວໜ່ວຍ ລາຄາ ໄດ້ໃນຕາຕະລາງ</p></div></header>
+  <header class="top"><div><h1>ລາຍການສິນຄ້າ</h1><p class="sub" id="prodSub">ສິນຄ້າທັງໝົດ ພ້ອມລາຄາຂາຍ ສະຕັອກ ແລະ ຄວາມຈຸຂອງລົດ · ແກ້ຊື່ ຫົວໜ່ວຍ ລາຄາ ໄດ້ໃນຕາຕະລາງ</p></div></header>
   <div class="kpis" id="prodKpis"></div>
   <div class="panel">
-    <p class="sub" style="margin:0 0 10px">ຊ່ອງຂອບສີສົ້ມ = ຍັງບໍ່ໄດ້ກອກ · <b>ລາຄາຂາຍຍ່ອຍ</b> ໃຊ້ກັບລົດທີ່ສົ່ງລູກຄ້າທົ່ວໄປ · <b>ຂັ້ນລາຄາຕາມຈຳນວນ</b> ໃຊ້ກັບລັອດແຟຣນໄຊ (ນ້ຳຖັງ 18L ຄິດຕາມຜົນຕອບແທນຂອງແຕ່ລະສາຂາ ໃນໜ້າ ແຟຣນໄຊ) · ພິມລາຄາຕໍ່ຫົວໜ່ວຍ (ກີບ) ແລ້ວກົດ Enter ຫຼື ຄລິກອອກ ລະບົບຈະບັນທຶກໃຫ້ທັນທີ</p>
+    <p class="sub" id="prodHint" style="margin:0 0 10px">ຊ່ອງຂອບສີສົ້ມ = ຍັງບໍ່ໄດ້ກອກ · <b>ລາຄາຂາຍຍ່ອຍ</b> ໃຊ້ກັບລົດທີ່ສົ່ງລູກຄ້າທົ່ວໄປ · <b>ຂັ້ນລາຄາຕາມຈຳນວນ</b> ໃຊ້ກັບລັອດແຟຣນໄຊ (ນ້ຳຖັງ 18L ຄິດຕາມຜົນຕອບແທນຂອງແຕ່ລະສາຂາ ໃນໜ້າ ແຟຣນໄຊ) · ພິມລາຄາຕໍ່ຫົວໜ່ວຍ (ກີບ) ແລ້ວກົດ Enter ຫຼື ຄລິກອອກ ລະບົບຈະບັນທຶກໃຫ້ທັນທີ</p>
     <div class="tbl-wrap"><table class="tbl" id="prodTbl"></table></div>
     <form class="form" id="prodForm" style="margin:12px 0 0">
       <input id="prodName" placeholder="ຊື່ສິນຄ້າໃໝ່" required maxlength="80" aria-label="ຊື່ສິນຄ້າໃໝ່">
@@ -1673,7 +1690,7 @@ function sanitizeFin(o){
     pm:pmOk(x.pm),collect:vNum(x.collect,0,0,1e11),note:vStr(x.note,'',120),src:x.src==='tg'?'tg':'form',by:vStr(x.by,'',64),status:['new','ok','done','cancel'].includes(x.status)?x.status:'new',truck:vStr(x.truck,'',60),okAt:vStr(x.okAt,'',40),okBy:vStr(x.okBy,'',64),...(x.movedFrom?{movedFrom:vDate(x.movedFrom,'')}:{}),...(x.bill?{bill:vStr(x.bill,'',40),doneAt:vStr(x.doneAt,'',40),doneBy:vStr(x.doneBy,'',64)}:{})}));
   c.km=vArr(o.km,x=>({id:vInt(x.id,0,1),at:vStr(x.at,'',40),date:vDate(x.date,bd),truck:vStr(x.truck,'',60),km:vNum(x.km,0,0,1e8),by:vStr(x.by,'',64)}));
   c.fac=vArr(o.fac,x=>{const q={}; Object.entries(x.q||{}).slice(0,60).forEach(([k,v])=>{const n=vInt(v,0,0,1e7); if(n>0) q[vStr(k,'',12)]=n;}); return {id:vInt(x.id,0,1),at:vStr(x.at,'',40),date:vDate(x.date,bd),truck:vStr(x.truck,'',60),kind:x.kind==='recv_empty'?'recv_empty':'load_full',q,...(x.dest?{dest:vStr(x.dest==='ສາງເຮົາ'?FAC_WH:x.dest,'',60)}:{}),note:vStr(x.note,'',200),by:vStr(x.by,'',64),...(x.wh?{wh:1}:{}),...(x.bid?{bid:vStr(x.bid,'',12)}:{}),...(vCf(x.cf)?{cf:vCf(x.cf)}:{}),...(vRcv(x.rcv)?{rcv:vRcv(x.rcv)}:{}),...(Array.isArray(x.oids)&&x.oids.length?{oids:x.oids.slice(0,40).map(v=>vInt(v,0,1)).filter(Boolean)}:{}),...(x.ordDone?{ordDone:1}:{}),...(()=>{ const b={}; if(x.bad&&typeof x.bad==='object') Object.entries(x.bad).slice(0,60).forEach(([k,v])=>{ const n=vInt(v,0,0,1e7); if(n>0&&q[k]>=n) b[vStr(k,'',12)]=n; }); return Object.keys(b).length?{bad:b}:{}; })()};});
-  c.mv=vArr(o.mv,x=>({id:vInt(x.id,0,1),at:vStr(x.at,'',40),date:vDate(x.date,bd),pid:vStr(x.pid,'',12),qty:vNum(x.qty,0,-1e7,1e7),reason:MV_REASONS.some(r=>r[0]===x.reason)?x.reason:'count',ref:vStr(x.ref,'',80),truck:vStr(x.truck,'',60),dest:vStr(x.dest,'',80),bid:vStr(x.bid,'',12),note:vStr(x.note,'',200),by:vStr(x.by,'',64),cause:DMG_CAUSES.some(c=>c[0]===x.cause)?x.cause:undefined,onTruck:x.onTruck===true||undefined,stg:['factory_in','back','out','factory_out','in'].includes(x.stg)?x.stg:undefined,sigs:vSigs(x.sigs),cf:vCf(x.cf)||undefined}));
+  c.mv=vArr(o.mv,x=>({id:vInt(x.id,0,1),at:vStr(x.at,'',40),date:vDate(x.date,bd),pid:vStr(x.pid,'',12),qty:vNum(x.qty,0,-1e7,1e7),reason:MV_REASONS.some(r=>r[0]===x.reason)?x.reason:'count',ref:vStr(x.ref,'',80),truck:vStr(x.truck,'',60),dest:vStr(x.dest,'',80),...(x.plate?{plate:vStr(x.plate,'',30)}:{}),...(x.src?{src:vStr(x.src,'',80)}:{}),bid:vStr(x.bid,'',12),note:vStr(x.note,'',200),by:vStr(x.by,'',64),cause:DMG_CAUSES.some(c=>c[0]===x.cause)?x.cause:undefined,onTruck:x.onTruck===true||undefined,stg:['factory_in','back','out','factory_out','in'].includes(x.stg)?x.stg:undefined,sigs:vSigs(x.sigs),cf:vCf(x.cf)||undefined}));
   c.brd=vArr(o.brd,x=>({id:vInt(x.id,0,1),date:vDate(x.date,bd),bid:vStr(x.bid,'',12),orders:vNum(x.orders,0,0),sales:vNum(x.sales,0,0),at:vStr(x.at,'',40),by:vStr(x.by,'',64)}));
   c.log=vArr(o.log,x=>({id:vInt(x.id,0,1),at:vStr(x.at,'',40),date:vDate(x.date,bd),by:vStr(x.by,'',64),kind:LOG_KINDS.some(k=>k[0]===x.kind)?x.kind:'setting',text:vStr(x.text,'',200),amt:x.amt==null?null:vNum(x.amt,0)}));
   c.live=o.live===true; c.stockVer=vInt(o.stockVer,1,1);
@@ -3186,7 +3203,7 @@ function lotEditor(ri,ti){
     products.map((p,j)=>{ if(!p.active&&!l.q[p.id]) return ''; const pr=unitPrice(p,l.q[p.id]||0,c.ch,c.br);
       return `<label style="font-weight:500;font-size:13px">${esc(p.name)}${p.unit?' ('+esc(p.unit)+')':''}
         <input type="number" min="0" step="1" value="${l.q[p.id]||''}" placeholder="0" data-lq="${ri}:${ti}:${esc(p.id)}" aria-label="ຈຳນວນ ${esc(p.name)}">
-        <small>ເຕັມຄັນ ${fmt(f.cap[j]||0)} · ${pr==null?'<span style="color:var(--warn)">ຍັງບໍ່ມີລາຄາ</span>':fmt(pr)+' ກີບ'}</small></label>`;}).join('')+
+        <small>ເຕັມຄັນ ${fmt(f.cap[j]||0)}${!canPrice()?'':' · '+(pr==null?'<span style="color:var(--warn)">ຍັງບໍ່ມີລາຄາ</span>':fmt(pr)+' ກີບ')}</small></label>`;}).join('')+
     `</div>
     <p style="margin:10px 0 0">ໃຊ້ຄວາມຈຸລົດ <b style="color:${c.used>1?'var(--danger)':'inherit'}">${pct}</b>${c.used>1?' <span class="tag high">ເກີນຄວາມຈຸ</span>':''}
       · ລາຍໄດ້ຖ້ຽວນີ້ <b>${fmt(c.rev)} ກີບ</b>${c.missing.length?` <span class="tag wait">ຍັງບໍ່ມີລາຄາ: ${esc(c.missing.join(', '))}</span>`:''}</p>
@@ -3237,10 +3254,17 @@ $('#tripForm').addEventListener('submit',e=>{
 });
 
 /* ===== ຄັງ ແລະ ສະຕັອກ ===== */
+// ຮັບເຂົ້າ/ເບີກອອກ ທີ່ບໍ່ຜ່ານໃບເບີກລົດ ຕ້ອງມີທະບຽນລົດ ແລະ ມາຈາກ/ສົ່ງໄປ (ເຈົ້າຂອງສັ່ງ 26/11/2026)
+// ເກັບໃນ plate/src ບໍ່ແມ່ນ truck/dest ເພື່ອບໍ່ໃຫ້ປົນກັບຍອດກວດລົດ ແລະ ຖັງຄ້າງ
+function whoFill(){ $('#plateL').innerHTML=fleet.map(f=>`<option value="${esc(f.truck)}">`).join(''); $('#srcL').innerHTML=[...new Set(['ໂຮງງານ',...stockMoves.map(m=>m.src).filter(Boolean).reverse()])].slice(0,30).map(s=>`<option value="${esc(s)}">`).join(''); }
+function whoGet(p,s,out){ const plate=$(p).value.trim().slice(0,30), src=$(s).value.trim().slice(0,80);
+  [[p,plate],[s,src]].forEach(([q,v])=>{ const el=$(q); if(v) return; el.setAttribute('aria-invalid','true'); el.addEventListener('input',()=>el.removeAttribute('aria-invalid'),{once:true}); }); // ຂອບແດງຄ້າງໄວ້ຈົນກວ່າຈະພິມ
+  if(!plate||!src){ toast('ກະລຸນາໃສ່ ທະບຽນລົດ ແລະ '+(out?'ສົ່ງໄປໃສ':'ມາຈາກໃສ')+' (ຊ່ອງຂອບແດງ)'); (plate?$(s):$(p)).focus(); return null; } return {plate,src}; }
+const whoOut=m=>m.reason==='out'||m.stg==='out', whoTxt=m=>m.plate?'🚚 '+m.plate+(m.src?(whoOut(m)?' → ':' · ຈາກ ')+m.src:''):'';
 /* ===== ຮັບສິນຄ້າເຂົ້າສາງ (ຫຼາຍລາຍການພ້ອມກັນ) ===== */
 function renderReceive(){
   if(!$('#rvDate').value) $('#rvDate').value=bizDate;
-  const mode=$('#rvMode').value;
+  const mode=$('#rvMode').value; whoFill(); $('#rvWhoBox').hidden=mode!=='in';
   $('#rvDmgBox').hidden=mode!=='in'; if(mode!=='in') $('#rvDmg').checked=false; $('#rvForm').classList.toggle('withdmg',$('#rvDmg').checked); dmgCauseOpts('#rvDmgCause','in');
   $('#rvHint').textContent=mode==='in'?'ໃສ່ຈຳນວນທີ່ຮັບເຂົ້າ ລະບົບຈະບວກເພີ່ມຈາກຍອດໃນສາງ · ຊ່ອງວ່າງຈະຖືກຂ້າມ':'ໃສ່ຍອດທີ່ນັບໄດ້ຈິງ ລະບົບຈະປັບສ່ວນຕ່າງໃຫ້ (ໃຊ້ຕອນເລີ່ມໃຊ້ງານ ຫຼື ຫຼັງນັບສະຕັອກ) · ຊ່ອງວ່າງຈະບໍ່ປ່ຽນ';
   if($('#rvGrid').contains(document.activeElement)) return;
@@ -3266,14 +3290,16 @@ $('#rvClear').addEventListener('click',()=>{document.querySelectorAll('#rvGrid i
 $('#rvForm').addEventListener('submit',e=>{
   e.preventDefault(); const date=$('#rvDate').value, mode=$('#rvMode').value, noteTxt=$('#rvNote').value.trim().slice(0,200), {rows,bad}=rvRows();
   if(bad||!vDate(date,null)) return;
+  const who=mode==='in'?whoGet('#rvPlate','#rvSrc',false):{}; if(!who) return;
   const done=[], ref='rcv:'+newId();
   rows.forEach(r=>{const st=stockOf(r.pid); if(!st) return;
-    if(mode==='in'){ if(r.n>0){ moveStock(r.pid,r.n,'in',{date,ref,note:noteTxt}); done.push(st.name+' +'+fmt(r.n)); }
-      if(r.d>0){ moveStock(r.pid,-r.d,'damage',{date,ref,stg:'in',cause:$('#rvDmgCause').value||'other',note:('ພົບເສຍຫາຍຕອນຮັບເຂົ້າ'+(noteTxt?' · '+noteTxt:'')).slice(0,200)}); done.push('⚠ '+st.name+' ເສຍ '+fmt(r.d)); } }
+    if(mode==='in'){ if(r.n>0){ moveStock(r.pid,r.n,'in',{date,ref,note:noteTxt,...who}); done.push(st.name+' +'+fmt(r.n)); }
+      if(r.d>0){ moveStock(r.pid,-r.d,'damage',{date,ref,...who,stg:'in',cause:$('#rvDmgCause').value||'other',note:('ພົບເສຍຫາຍຕອນຮັບເຂົ້າ'+(noteTxt?' · '+noteTxt:'')).slice(0,200)}); done.push('⚠ '+st.name+' ເສຍ '+fmt(r.d)); } }
     else { const d=r.n-st.qty; if(d){ moveStock(r.pid,d,'count',{date,ref,note:noteTxt||('ນັບໄດ້ '+fmt(r.n))}); done.push(st.name+' = '+fmt(r.n)+' ('+(d>0?'+':'')+fmt(d)+')'); } }
   });
   if(!done.length){toast('ບໍ່ມີການປ່ຽນແປງ');return;}
-  document.querySelectorAll('#rvGrid input').forEach(i=>i.value=''); $('#rvNote').value=''; $('#rvDmg').checked=false; $('#rvForm').classList.remove('withdmg');
+  document.querySelectorAll('#rvGrid input').forEach(i=>i.value=''); $('#rvNote').value=$('#rvPlate').value=$('#rvSrc').value=''; $('#rvDmg').checked=false; $('#rvForm').classList.remove('withdmg');
+  if(who.plate) done.push(whoTxt({...who,qty:1}));
   document.activeElement&&document.activeElement.blur&&document.activeElement.blur();
   renderFin(); note('stock',(mode==='in'?'ຮັບສິນຄ້າເຂົ້າສາງ ':'ຕັ້ງຍອດຕາມນັບຈິງ ')+fmtKey(date)+': '+done.join(', '));
   if(uiPref('slipAuto',true)) openSlip(ref);
@@ -3302,7 +3328,7 @@ function slipHTML(ref,paper){
   const xd=m=>k!=='damage'&&m.reason==='damage', rcv=['factory_in','truck_back_full','truck_back_empty','in'].includes(k), D=M.filter(xd), dq=D.reduce((a,m)=>a-m.qty,0);
   const rows=M.map((m,i)=>{ const st=stockOf(m.pid)||{}; return `<tr><td class="r">${i+1}</td><td>${xd(m)?'⚠ ເສຍຫາຍ: ':''}${esc(pName(m.pid))}${m.cause?' <small>('+esc(causeLabel(m.cause))+')</small>':''}</td><td>${esc(st.unit||'')}</td><td class="r"><b>${fmt(Math.abs(m.qty))}</b></td><td style="width:22%">${xd(m)?(rcv?'<small>ລວມໃນຈຳນວນຮັບແລ້ວ</small>':'<small>ບໍ່ໄດ້ເບີກ · ຕັດຈາກສາງ</small>'):''}</td></tr>`; }).join('');
   const tot=M.filter(m=>!xd(m)).reduce((a,m)=>a+Math.abs(m.qty),0), names={'ຜູ້ຮັບ (ຄົນຂັບ)':f&&f.driver,'ຜູ້ສົ່ງຄືນ (ຄົນຂັບ)':f&&f.driver,'ຄົນຂັບ':f&&f.driver};
-  const meta=[['ວັນທີ',fmtKey(M[0].date)+(at?' · '+fmtTime(at):'')],M[0].truck?['ລົດ',M[0].truck+(f&&f.type?' ('+f.type+')':'')]:null,f?['ຄົນຂັບ / ຜູ້ຊ່ວຍ',(f.driver||'–')+(f.assistant?' / '+f.assistant:'')]:null,M[0].dest?['ປາຍທາງ / ສາຂາ',M[0].dest]:null,['ຜູ້ບັນທຶກ',who(M[0].by)]].filter(Boolean);
+  const meta=[['ວັນທີ',fmtKey(M[0].date)+(at?' · '+fmtTime(at):'')],M[0].truck?['ລົດ',M[0].truck+(f&&f.type?' ('+f.type+')':'')]:null,f?['ຄົນຂັບ / ຜູ້ຊ່ວຍ',(f.driver||'–')+(f.assistant?' / '+f.assistant:'')]:null,M[0].dest?['ປາຍທາງ / ສາຂາ',M[0].dest]:null,M[0].plate?['ທະບຽນລົດ',M[0].plate]:null,M[0].src?[whoOut(M[0])?'ສົ່ງໄປ':'ມາຈາກ',M[0].src]:null,['ຜູ້ບັນທຶກ',who(M[0].by)]].filter(Boolean);
   const one=copy=>`<div class="slp${paper==='r80'?' w80':''}">
     <div class="hd">${logo?`<img src="${logo}" alt="">`:''}<div class="co"><b>${CO.lo}</b><small>${CO.en}</small><small>${CO.addr}</small></div></div>
     <div class="ttl"><h2>${esc(K.t)}${copy?`<span class="copy">${copy}</span>`:''}</h2><div class="no">ເລກທີ <b>${no}</b></div></div>
@@ -4535,7 +4561,7 @@ function renderTanks(){
       +`<tr style="font-weight:700"><td>ລວມ</td><td class="r">${fmt(sum(x=>x.out))}</td><td class="r">${fmt(sum(x=>x.fullBack))}</td><td class="r">${fmt(sum(x=>x.emptyBack))}</td><td class="r">${fmt(owe)}</td><td class="r">${fmt(sum(x=>x.g.out))}</td><td class="r">${fmt(sum(x=>x.g.fullBack))}</td><td class="r">${fmt(sum(x=>x.g.emptyBack))}</td><td class="r">${fmt(oweG)}</td></tr>`
       :'<tr><td colspan="9" class="sub">ຍັງບໍ່ມີການເບີກ/ຄືນຜ່ານລົດ</td></tr>');
   // ຟອມ
-  const it=$('#mvItem'), ci=it.value, reason=$('#mvReason').value;
+  const it=$('#mvItem'), ci=it.value, reason=$('#mvReason').value; whoFill();
   const opts=reason==='fill'?products.filter(isRet).map(p=>[p.id,pName(p.id)]):stock.filter(x=>x.pid).map(x=>[x.pid,x.name]);
   it.innerHTML=opts.map(([v,l])=>`<option value="${esc(v)}">${esc(l)}</option>`).join(''); if(opts.some(o=>o[0]===ci)) it.value=ci;
   const st=stockOf(it.value);
@@ -4544,15 +4570,15 @@ function renderTanks(){
   if(!$('#mvDate').value) $('#mvDate').value=bizDate;
   const fs=$('#mvFilter'), cf=fs.value; fs.innerHTML='<option value="">ທຸກລາຍການ</option>'+stock.filter(x=>x.pid).map(x=>`<option value="${esc(x.pid)}">${esc(x.name)}</option>`).join(''); fs.value=cf;
   const tf=$('#mvTruckF'), ctf=tf.value; tf.innerHTML='<option value="">ທຸກລົດ</option>'+fleet.map(f=>`<option>${esc(f.truck)}</option>`).join(''); tf.value=ctf;
-  const day=$('#mvDate').value, list=stockMoves.filter(m=>m.date===day&&(!fs.value||m.pid===fs.value)&&(!tf.value||m.truck===tf.value)).sort((a,b)=>String(b.at).localeCompare(String(a.at)));
+  const day=$('#mvDate').value, list=stockMoves.filter(m=>m.date===day&&(!fs.value||m.pid===fs.value)&&(!tf.value||m.truck===tf.value||m.plate===tf.value)).sort((a,b)=>String(b.at).localeCompare(String(a.at)));
   const dayAll=stockMoves.filter(m=>m.date===day), sumR=(r,f)=>dayAll.filter(m=>m.reason===r&&f(m)).reduce((a,m)=>a+Math.abs(m.qty),0), isT=m=>tp.includes(m.pid);
   $('#mvDay').innerHTML=[['ເຕັມເບີກໃຫ້ລົດ',sumR('truck_out',isT)+sumR('trip_out',isT)],['ເຕັມຄືນ',sumR('truck_back_full',isT)+sumR('trip_full_back',isT)],['ເປົ່າຄືນ',sumR('truck_back_empty',()=>true)+sumR('trip_empty_back',()=>true)],['ບັນຈຸ',sumR('fill',isT)],['ຮັບຈາກໂຮງງານ',sumR('factory_in',()=>true)],['ສົ່ງເປົ່າໄປໂຮງງານ',sumR('factory_out',()=>true)],['ເສຍຫາຍ',sumR('damage',()=>true)],['ຮັບເຂົ້າສາງ (ທຸກລາຍການ)',sumR('in',()=>true)],['ເບີກອອກສາງ',sumR('out',()=>true)]]
     .map(([l,v])=>`<div class="kpi"><div class="label">${l}</div><div class="val" style="font-size:18px">${fmt(v)}</div><div class="hint">${fmtKey(day)}</div></div>`).join('');
   $('#mvTbl').innerHTML='<tr><th>ເວລາ</th><th>ລາຍການ</th><th>ປະເພດ</th><th class="r">ຈຳນວນ</th><th>ລົດ / ປາຍທາງ</th><th>ໝາຍເຫດ</th><th>ຜູ້ບັນທຶກ</th><th></th></tr>'+
-    (list.length?list.map((m,i)=>`<tr><td>${fmtTime(m.at)}</td><td>${esc(pName(m.pid))}</td><td><span class="tag">${esc(mvLabel(m.reason))}</span></td><td class="r" style="font-weight:700;color:${m.qty<0?'var(--danger)':'var(--ok)'}">${m.qty>0?'+':''}${fmt(m.qty)}</td><td>${esc([m.truck,m.dest].filter(Boolean).join(' → '))}</td><td>${m.cause?'<span class="tag wait">'+esc(causeLabel(m.cause))+'</span> ':''}${m.onTruck?'<small>(ຢູ່ລົດ)</small> ':''}${esc(m.note)}</td><td>${esc(who(m.by))}</td><td>${m.ref&&SLIP_KIND[m.reason]&&(i===0||list[i-1].ref!==m.ref)?`<button class="btn sm" type="button" data-slip="${esc(m.ref)}" title="ພິມເອກະສານເຊັນຮັບ">🖨 ພິມ</button>`:''}</td></tr>`).join('')
+    (list.length?list.map((m,i)=>`<tr><td>${fmtTime(m.at)}</td><td>${esc(pName(m.pid))}</td><td><span class="tag">${esc(mvLabel(m.reason))}</span></td><td class="r" style="font-weight:700;color:${m.qty<0?'var(--danger)':'var(--ok)'}">${m.qty>0?'+':''}${fmt(m.qty)}</td><td>${esc([m.truck,m.dest].filter(Boolean).join(' → ')||whoTxt(m))}</td><td>${m.cause?'<span class="tag wait">'+esc(causeLabel(m.cause))+'</span> ':''}${m.onTruck?'<small>(ຢູ່ລົດ)</small> ':''}${esc(m.note)}</td><td>${esc(who(m.by))}</td><td>${m.ref&&SLIP_KIND[m.reason]&&(i===0||list[i-1].ref!==m.ref)?`<button class="btn sm" type="button" data-slip="${esc(m.ref)}" title="ພິມເອກະສານເຊັນຮັບ">🖨 ພິມ</button>`:''}</td></tr>`).join('')
       :'<tr><td colspan="8" class="sub">ບໍ່ມີການເຄື່ອນໄຫວໃນວັນນີ້</td></tr>');
 }
-$('#mvReason').addEventListener('change',()=>{ const r=$('#mvReason').value, on=r==='in'||r==='out'; $('#mvDmg').hidden=!on; $('#mvDmgCause').hidden=!on; dmgCauseOpts('#mvDmgCause',r); renderTanks(); });
+$('#mvReason').addEventListener('change',()=>{ const r=$('#mvReason').value, on=r==='in'||r==='out'; $('#mvPlate').hidden=$('#mvSrc').hidden=!on; $('#mvSrc').placeholder=r==='out'?'ສົ່ງໄປໃສ *':'ມາຈາກໃສ *'; $('#mvSrc').setAttribute('aria-label',r==='out'?'ສົ່ງໄປໃສ (ຈຳເປັນ)':'ມາຈາກໃສ (ຈຳເປັນ)'); $('#mvDmg').hidden=!on; $('#mvDmgCause').hidden=!on; dmgCauseOpts('#mvDmgCause',r); renderTanks(); });
 dmgCauseOpts('#mvDmgCause','in'); $('#mvItem').addEventListener('change',renderTanks);
 $('#mvDate').addEventListener('change',renderTanks); $('#mvFilter').addEventListener('change',renderTanks); $('#mvTruckF').addEventListener('change',renderTanks);
 $('#mvForm').addEventListener('submit',e=>{
@@ -4561,13 +4587,15 @@ $('#mvForm').addEventListener('submit',e=>{
   let msg='';
   const dmg=(reason==='in'||reason==='out')&&$('#mvDmg').value!==''?Math.floor(+$('#mvDmg').value):0, dref='mv:'+newId(), dc=$('#mvDmgCause').value||DMG_DEF[reason]||'other';
   if(!(dmg>=0)||(reason==='in'&&dmg>n)){toast('ຈຳນວນເສຍຫາຍບໍ່ຖືກ (ຮັບເຂົ້າ: ຕ້ອງບໍ່ເກີນຈຳນວນຮັບ)');return;}
-  const dmgMv=why=>{ if(dmg>0) moveStock(pid,-dmg,'damage',{ref:dref,stg:reason==='in'?'in':'out',cause:dc,note:('ພົບເສຍຫາຍຕອນ'+why+(noteTxt?' · '+noteTxt:'')).slice(0,200)}); }, dmgTxt=dmg?' · ⚠ ເສຍຫາຍ '+fmt(dmg)+' ('+causeLabel(dc)+')':'';
-  if(reason==='in'){ moveStock(pid,n,'in',{note:noteTxt,ref:dref}); dmgMv('ຮັບເຂົ້າ'); msg='ຮັບເຂົ້າສາງ '+fmt(n)+' – '+st.name+dmgTxt; }
-  else if(reason==='out'){ if(n+dmg>st.qty){toast('ເບີກເກີນຈຳນວນທີ່ມີ (ເຫຼືອ '+fmt(st.qty)+')');return;} moveStock(pid,-n,'out',{note:noteTxt,ref:dref}); dmgMv('ເບີກ'); msg='ເບີກອອກສາງ '+fmt(n)+' – '+st.name+dmgTxt; }
+  if(reason==='out'&&n+dmg>st.qty){toast('ເບີກເກີນຈຳນວນທີ່ມີ (ເຫຼືອ '+fmt(st.qty)+')');return;}
+  const who=reason==='in'||reason==='out'?whoGet('#mvPlate','#mvSrc',reason==='out'):{}; if(!who) return;
+  const dmgMv=why=>{ if(dmg>0) moveStock(pid,-dmg,'damage',{ref:dref,...who,stg:reason==='in'?'in':'out',cause:dc,note:('ພົບເສຍຫາຍຕອນ'+why+(noteTxt?' · '+noteTxt:'')).slice(0,200)}); }, dmgTxt=dmg?' · ⚠ ເສຍຫາຍ '+fmt(dmg)+' ('+causeLabel(dc)+')':'';
+  if(reason==='in'){ moveStock(pid,n,'in',{note:noteTxt,ref:dref,...who}); dmgMv('ຮັບເຂົ້າ'); msg='ຮັບເຂົ້າສາງ '+fmt(n)+' – '+st.name+dmgTxt+' · '+whoTxt({...who,qty:1}); }
+  else if(reason==='out'){ moveStock(pid,-n,'out',{note:noteTxt,ref:dref,...who}); dmgMv('ເບີກ'); msg='ເບີກອອກສາງ '+fmt(n)+' – '+st.name+dmgTxt+' · '+whoTxt({...who,qty:-1}); }
   else if(reason==='fill'){ const em=stockOf('E:'+pid)||stockOf('EMPTY'); if(!em){toast('ບໍ່ມີລາຍການເປົ່າຂອງສິນຄ້ານີ້');return;} if(n>em.qty){toast(em.name+' ບໍ່ພໍ (ມີ '+fmt(em.qty)+')');return;} const ref='fill:'+newId();
     moveStock(em.pid,-n,'fill',{note:noteTxt,ref}); moveStock(pid,n,'fill',{note:noteTxt,ref}); msg='ບັນຈຸນ້ຳ '+fmt(n)+' '+(st.unit||'')+' → '+st.name; }
   else { const d=n-st.qty; if(!d){toast('ຍອດກົງກັບລະບົບແລ້ວ');return;} moveStock(pid,d,'count',{note:noteTxt||('ນັບໄດ້ '+fmt(n))}); msg='ປັບຍອດ '+st.name+' ຕາມນັບຈິງ '+fmt(n)+' ('+(d>0?'+':'')+fmt(d)+')'; }
-  $('#mvQty').value=''; $('#mvNote').value=''; $('#mvDmg').value=''; delete $('#mvDmgCause').dataset.touched; renderFin(); note('stock',msg);
+  $('#mvQty').value=''; $('#mvNote').value=$('#mvPlate').value=$('#mvSrc').value=''; $('#mvDmg').value=''; delete $('#mvDmgCause').dataset.touched; renderFin(); note('stock',msg);
 });
 $('#mvCopy').addEventListener('click',()=>{const day=$('#mvDate').value;
   copyText(csvOf([['ວັນທີ','ເວລາ','ລາຍການ','ປະເພດ','ຈຳນວນ','ລົດ','ປາຍທາງ','ໝາຍເຫດ'],...stockMoves.filter(m=>m.date===day).sort((a,b)=>String(a.at).localeCompare(String(b.at))).map(m=>[m.date,fmtTime(m.at),pName(m.pid),mvLabel(m.reason),m.qty,m.truck,m.dest,m.note])]),'ຄັດລອກປະຫວັດ '+fmtKey(day)+' ແລ້ວ');});
@@ -4655,7 +4683,10 @@ $('#stockTbl').addEventListener('click',e=>{
   const i=+(bi?bi.dataset.sin:bo.dataset.sout), n=Math.floor(+$('[data-sq="'+i+'"]').value);
   if(!(n>0)){toast('ກະລຸນາໃສ່ຈຳນວນໃຫ້ຖືກຕ້ອງ');return;}
   if(bo&&n>stock[i].qty){toast('ເບີກເກີນຈຳນວນທີ່ມີ (ເຫຼືອ '+fmt(stock[i].qty)+')');return;}
-  if(!stock[i].pid) stock[i].pid='X'+i; moveStock(stock[i].pid,bi?n:-n,bi?'in':'out'); renderFin(); note('stock',(bi?'ຮັບເຂົ້າ ':'ເບີກອອກ ')+fmt(n)+' '+stock[i].unit+' – '+stock[i].name);
+  // ຮັບເຂົ້າ/ເບີກອອກ ຕ້ອງມີທະບຽນລົດ → ສົ່ງໄປຟອມ "ທີລະລາຍການ" ທີ່ກອກໃຫ້ແລ້ວ ແທນການບັນທຶກທັນທີ
+  if(!stock[i].pid) stock[i].pid='X'+i; $('#mvReason').value=bi?'in':'out'; $('#mvReason').dispatchEvent(new Event('change'));
+  $('#mvItem').value=stock[i].pid; $('#mvItem').dispatchEvent(new Event('change')); $('#mvQty').value=n; applyStSecs.show('io'); $('#mvPlate').focus();
+  toast('ໃສ່ທະບຽນລົດ ແລະ '+(bi?'ມາຈາກໃສ':'ສົ່ງໄປໃສ')+' ແລ້ວກົດ ບັນທຶກ');
 });
 $('#stockTbl').addEventListener('change',e=>{
   const r=e.target.closest('[data-sr]'); if(!r) return;
@@ -4856,18 +4887,22 @@ function prodStats(p,j){
   return {st,trucks:trucks.length,perTrip:fleet.reduce((a,f)=>a+(f.cap[j]||0),0),perDay:fleet.reduce((a,f)=>a+(f.cap[j]||0)*f.rounds,0),
     best:trucks.sort((a,b)=>(b.cap[j]||0)-(a.cap[j]||0))[0]};
 }
+// ລາຄາສິນຄ້າ: ເຫັນສະເພາະເຈົ້າຂອງ ແອັດມິນການເງິນ ຜູ້ຈັດການຂົນສົ່ງ ຜູ້ອຳນວຍການ (ເຈົ້າຂອງເລືອກ 26/11/2026)
+// shortcut: ເຊື່ອງແຕ່ໃນໜ້າຈໍ — ຂໍ້ມູນລາຄາຍັງຢູ່ໃນຖານຂໍ້ມູນທີ່ຜູ້ໃຊ້ອ່ານໄດ້; ຖ້າຕ້ອງກັນແທ້ ໃຫ້ແຍກລາຄາອອກເປັນເອກະສານທີ່ມີສິດອ່ານສະເພາະ
+const canPrice=()=>{ const s=window.LGX&&window.LGX.scoped; return s?['finadmin','txmgr','director'].includes(s):isAdminUser; };
 function renderProducts(){
-  const noPrice=products.filter(p=>p.price==null).length, low=products.filter(p=>{const x=stock.find(s=>s.pid===p.id);return x&&x.qty<x.reorder;}).length;
-  $('#prodKpis').innerHTML=[['ສິນຄ້າທັງໝົດ',products.length,''],['ເປີດຂາຍ',products.filter(p=>p.active).length,'pos'],['ຍັງບໍ່ໃສ່ລາຄາ',noPrice,noPrice?'neg':'pos'],['ສະຕັອກຕ່ຳກວ່າຈຸດສັ່ງຊື້',low,low?'neg':'pos']]
+  const cp=canPrice(), noPrice=products.filter(p=>p.price==null).length, low=products.filter(p=>{const x=stock.find(s=>s.pid===p.id);return x&&x.qty<x.reorder;}).length;
+  $('#prodPrice').hidden=$('#prodHint').hidden=!cp; $('#prodSub').textContent=cp?'ສິນຄ້າທັງໝົດ ພ້ອມລາຄາຂາຍ ສະຕັອກ ແລະ ຄວາມຈຸຂອງລົດ · ແກ້ຊື່ ຫົວໜ່ວຍ ລາຄາ ໄດ້ໃນຕາຕະລາງ':'ສິນຄ້າທັງໝົດ ພ້ອມສະຕັອກ ແລະ ຄວາມຈຸຂອງລົດ';
+  $('#prodKpis').innerHTML=[['ສິນຄ້າທັງໝົດ',products.length,''],['ເປີດຂາຍ',products.filter(p=>p.active).length,'pos'],...(cp?[['ຍັງບໍ່ໃສ່ລາຄາ',noPrice,noPrice?'neg':'pos']]:[]),['ສະຕັອກຕ່ຳກວ່າຈຸດສັ່ງຊື້',low,low?'neg':'pos']]
     .map(([l,v,c])=>`<div class="kpi ${c}"><div class="label">${l}</div><div class="val">${v}</div></div>`).join('');
   if($('#prodTbl').contains(document.activeElement)) return;
-  $('#prodTbl').innerHTML='<tr><th>ລະຫັດ</th><th>ຊື່ສິນຄ້າ</th><th>ຫົວໜ່ວຍ</th><th class="r">ລາຄາຂາຍຍ່ອຍ (ກີບ)</th><th>ຂັ້ນລາຄາຕາມຈຳນວນ <small>(ຈຳນວນ:ລາຄາ)</small></th><th class="r">ສະຕັອກ</th><th class="r">ລົດທີ່ບັນທຸກໄດ້</th><th class="r">ຄວາມຈຸລວມ / ຖ້ຽວ</th><th class="r">ຄວາມຈຸລວມ / ວັນ</th><th>ສະຖານະ</th><th></th></tr>'+
+  $('#prodTbl').innerHTML='<tr><th>ລະຫັດ</th><th>ຊື່ສິນຄ້າ</th><th>ຫົວໜ່ວຍ</th>'+(cp?'<th class="r">ລາຄາຂາຍຍ່ອຍ (ກີບ)</th><th>ຂັ້ນລາຄາຕາມຈຳນວນ <small>(ຈຳນວນ:ລາຄາ)</small></th>':'')+'<th class="r">ສະຕັອກ</th><th class="r">ລົດທີ່ບັນທຸກໄດ້</th><th class="r">ຄວາມຈຸລວມ / ຖ້ຽວ</th><th class="r">ຄວາມຈຸລວມ / ວັນ</th><th>ສະຖານະ</th><th></th></tr>'+
     products.map((p,j)=>{const x=prodStats(p,j), lowSt=x.st.qty<x.st.reorder;
       return `<tr style="${p.active?'':'opacity:.6'}"><td><b>${esc(p.id)}</b></td>
         <td><input type="text" value="${esc(p.name)}" data-pe="${j}:name" maxlength="80" aria-label="ຊື່ສິນຄ້າ ${esc(p.id)}" style="width:160px"></td>
         <td><input type="text" value="${esc(p.unit)}" placeholder="ໃສ່ຫົວໜ່ວຍ" class="${p.unit?'':'need'}" data-pe="${j}:unit" maxlength="20" aria-label="ຫົວໜ່ວຍ ${esc(p.id)}" style="width:90px"></td>
-        <td class="r"><input type="number" min="0" step="100" value="${p.price==null?'':p.price}" placeholder="ໃສ່ລາຄາ" class="${p.price==null?'need':''}" data-pe="${j}:price" aria-label="ລາຄາຂາຍຍ່ອຍ ${esc(p.name)}" style="width:110px;text-align:right"></td>
-        <td><input type="text" value="${esc(tiersText(p))}" placeholder="ເຊັ່ນ 0:4000, 51:3500" data-pe="${j}:tiers" aria-label="ຂັ້ນລາຄາ ${esc(p.name)}" style="width:170px"><br><small>${(p.tiers||[]).length>1?esc(tiersHuman(p)):'ລາຄາດຽວ'}</small></td>
+        ${cp?`<td class="r"><input type="number" min="0" step="100" value="${p.price==null?'':p.price}" placeholder="ໃສ່ລາຄາ" class="${p.price==null?'need':''}" data-pe="${j}:price" aria-label="ລາຄາຂາຍຍ່ອຍ ${esc(p.name)}" style="width:110px;text-align:right"></td>
+        <td><input type="text" value="${esc(tiersText(p))}" placeholder="ເຊັ່ນ 0:4000, 51:3500" data-pe="${j}:tiers" aria-label="ຂັ້ນລາຄາ ${esc(p.name)}" style="width:170px"><br><small>${(p.tiers||[]).length>1?esc(tiersHuman(p)):'ລາຄາດຽວ'}</small></td>`:''}
         <td class="r">${fmt(x.st.qty)} ${lowSt?'<span class="tag high">ຕ່ຳ</span>':''}</td>
         <td class="r">${x.trucks} / ${fleet.length}${x.best?`<br><small>ຫຼາຍສຸດ ${esc(x.best.truck)} (${fmt(x.best.cap[j])})</small>`:''}</td>
         <td class="r">${fmt(x.perTrip)}</td><td class="r">${fmt(x.perDay)}</td>
@@ -4990,7 +5025,7 @@ const reportDefs={
   trips:()=>csvOf([['ລົດ','ສາຍ','ຖ້ຽວ','ຄົນຂັບ','ລາຍໄດ້','ສະຖານະ'],...TRIPS.flatMap(r=>r.rev.map((v,i)=>[r.truck,r.route,i+1,driverOf(r.truck),v,(TRIP_ST.find(s=>s[0]===r.st[i])||[])[1]]))]),
   brdaily:()=>csvOf([['ວັນທີ','ລຳດັບ','ສາຂາ','ຍອດສັ່ງ','ຍອດຂາຍ','ບັນທຶກເມື່ອ'],...brDaily.slice().sort((a,b)=>a.date.localeCompare(b.date)||a.id-b.id).map(x=>{const b=branchOf(x.bid)||{};return [x.date,b.no||'',b.name||x.bid,x.orders,x.sales,fmtStamp(x.at)];})]),
   branches:()=>csvOf([['ລຳດັບ','ສາຂາ','ຍອດສັ່ງນ້ຳ','ຍອດຂາຍ','ຜົນຕອບແທນ (ກີບ/ຖັງ)','ສົ່ງມື້ນີ້ (ຖັງ)','ລາຍໄດ້ມື້ນີ້ (ກີບ)'],...branches.map(b=>{const t=branchToday(b);return [b.no,b.name,b.orders,b.sales,b.rate,t.tanks,t.rev];})]),
-  products:()=>csvOf([['ລະຫັດ','ຊື່ສິນຄ້າ','ຫົວໜ່ວຍ','ລາຄາຂາຍຍ່ອຍ (ກີບ)','ຂັ້ນລາຄາ','ສະຕັອກ','ລົດທີ່ບັນທຸກໄດ້','ຄວາມຈຸລວມ/ຖ້ຽວ','ຄວາມຈຸລວມ/ວັນ','ສະຖານະ'],...products.map((p,j)=>{const x=prodStats(p,j);return [p.id,p.name,p.unit,p.price==null?'':p.price,tiersHuman(p),x.st.qty,x.trucks,x.perTrip,x.perDay,p.active?'ເປີດຂາຍ':'ປິດຂາຍ'];})]),
+  products:()=>{ const cp=canPrice(); return csvOf([['ລະຫັດ','ຊື່ສິນຄ້າ','ຫົວໜ່ວຍ',...(cp?['ລາຄາຂາຍຍ່ອຍ (ກີບ)','ຂັ້ນລາຄາ']:[]),'ສະຕັອກ','ລົດທີ່ບັນທຸກໄດ້','ຄວາມຈຸລວມ/ຖ້ຽວ','ຄວາມຈຸລວມ/ວັນ','ສະຖານະ'],...products.map((p,j)=>{const x=prodStats(p,j);return [p.id,p.name,p.unit,...(cp?[p.price==null?'':p.price,tiersHuman(p)]:[]),x.st.qty,x.trucks,x.perTrip,x.perDay,p.active?'ເປີດຂາຍ':'ປິດຂາຍ'];})]); },
   moves:()=>csvOf([['ວັນທີ','ເວລາ','ລາຍການ','ປະເພດ','ຈຳນວນ','ລົດ','ປາຍທາງ','ໝາຍເຫດ'],...stockMoves.slice().sort((a,b)=>String(a.at).localeCompare(String(b.at))).map(m=>[m.date,fmtTime(m.at),pName(m.pid),mvLabel(m.reason),m.qty,m.truck,m.dest,m.note])]),
   stock:()=>csvOf([['ສິນຄ້າ','ໜ່ວຍ','ຍັງເຫຼືອ','ຈຸດສັ່ງຊື້'],...stock.map(s=>[s.name,s.unit,s.qty,s.reorder])]),
   fleet:()=>csvOf([['ທະບຽນ','ປະເພດ','ໂຊເຟີປະຈຳ','ຜູ້ຊ່ວຍປະຈຳ',...prodPairs().map(([p,u])=>p+(u?' ('+u+')':'')),'ຮອບ/ວັນ','ເລກໄມລ໌','ຮອບບຳລຸງຕໍ່ໄປ','ອາກອນເຫຼືອ (ວັນ)'],...fleet.map(f=>[f.truck,f.type,f.driver,f.assistant,...products.map((_,j)=>f.cap[j]||0),f.rounds,f.km,f.nextKm,f.taxDays])])
@@ -5576,6 +5611,7 @@ body.lgx-m #page-mytruck > .form{order:3}
 .chip[aria-pressed=true]{background:color-mix(in srgb,var(--accent) 22%,transparent);border-color:var(--accent);color:var(--text);font-weight:600}
 .chip>span.lgx-zero,.lgx-zero{display:none}
 .lgx-fab{background:var(--surface)!important;color:var(--brand)!important;border:1.5px solid var(--brand)!important}
+body:has(.modal:not([hidden]),dialog[open]) .lgx-fab{display:none!important} /* ປຸ່ມເມນູລອຍ ບໍ່ທັບໜ້າຕ່າງປັອບອັບ */
 body.lgx-m table.lgx-cards,body.lgx-m table.lgx-cards tbody,body.lgx-m table.lgx-cards tr,body.lgx-m table.lgx-cards td{display:block;width:100%;box-sizing:border-box}
 body.lgx-m table.lgx-cards tr.lgx-head{display:none}
 body.lgx-m table.lgx-cards tr{border:1px solid var(--line);border-radius:12px;padding:10px;margin:0 0 10px;background:var(--surface)}
