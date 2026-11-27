@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-RsyVj9Ozn0SFW8N7iJ8P4qJOPaXfbS4auTU21oEg9O4=' 'sha256-zLWEU7BjJ5uQy6YqitQ0bxylJFvrEEgqQg9x2/AUzxo=' 'sha256-8/Z2AFVv3zRtcZQ0yJafnTwr2uxsqpiyC3PGh3t2kfE=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdn.sheetjs.com/xlsx-0.20.3/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="lgx-build" content="8ba9253fbab6"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-180.png"><link rel="icon" href="icon-192.png"><meta name="theme-color" content="#e8692e">
+<html lang="lo"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-RsyVj9Ozn0SFW8N7iJ8P4qJOPaXfbS4auTU21oEg9O4=' 'sha256-zLWEU7BjJ5uQy6YqitQ0bxylJFvrEEgqQg9x2/AUzxo=' 'sha256-maSJSVknR44TbIl9ekZCLB34K3QAwXXaZtUN3djbzG0=' 'sha256-HvBgznNIiGNupYbOEQ00fWY+Fzo4MRqTIGIS5MQ+yM4=' https://cdn.jsdelivr.net/npm/@supabase/ https://cdn.sheetjs.com/xlsx-0.20.3/; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; worker-src 'self'; manifest-src 'self'; connect-src 'self' https://sfwsedtxdlummiqblufq.supabase.co wss://sfwsedtxdlummiqblufq.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="lgx-build" content="badeabb81876"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-180.png"><link rel="icon" href="icon-192.png"><meta name="theme-color" content="#e8692e">
 <meta name="robots" content="noindex"><title>Nani Logistics</title>
 <style>#fuScanBox{display:none!important}</style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.js" integrity="sha384-rwykjmWNwVxboyFmvK9OXN0wj9hnMHA2aAHtits54DuACyCq0M2PrSNxhRb+hvXT" crossorigin="anonymous"></script>
@@ -2303,11 +2303,13 @@ const slPidBy=f=>(products.find(p=>f(p.name))||{}).id||null;
 function slProd0(raw){ const r=String(raw||'');
   if(/18\s*ລິດ|18\s*L/i.test(r)) return /ດຳ/.test(r)?slPidBy(n=>is18L({name:n})&&n.includes('ດຳ')):slPidBy(n=>is18L({name:n})&&n.includes('ຂາວ'));
   if(/2\s*ລິດ|2000/.test(r)) return slPidBy(n=>n.includes('2000'));
-  if(/ມິນິ/.test(r)) return slPidBy(n=>n.includes('ມິນິ'));
+  if(/ບົວ/.test(r)) return slPidBy(n=>n.includes('ບົວ'));
+  if(/ບູດ[໋ັ]?ອດ/.test(r)) return slPidBy(n=>n.includes('ບູດ'));
+  if(/ມິນິ/.test(r)) return slPidBy(n=>n.includes('ມິນິ')&&!n.includes('ບົວ'));
   if(/500/.test(r)) return slPidBy(n=>n.includes('ແກ້ວ')&&n.includes('500'));
   if(/300/.test(r)) return slPidBy(n=>n.includes('ແກ້ວ')&&n.includes('300'));
   if(/600/.test(r)) return slPidBy(n=>n.includes('600'));
-  if(/250/.test(r)) return slPidBy(n=>n.includes('ແພັກ')&&n.includes('250'));
+  if(/250/.test(r)) return slPidBy(n=>n.includes('ແພັກ')&&n.includes('250')&&!n.includes('ບູດ'));
   if(/ດ່າງ/.test(r)) return slPidBy(n=>n.includes('ດ່າງ'));
   return null; }
 let slSig='', slSigAt=0; const slTC=new Map(), slPC=new Map();
@@ -3767,6 +3769,7 @@ $('#plCopyY').onclick=()=>planCopyFrom(addDays(plDate,-1)); $('#plCopyW').onclic
 /* ===== ນຳເຂົ້າແຜນຈາກຂໍ້ຄວາມ + ເພີ່ມລົດ ===== */
 const PL_UNITS='ລັງ|ແພັກ|ຕຸກ|ຖັງ|ແກັດ|ກ່ອງ';
 function plProdOf(tok,unit){ const t=String(tok);
+  const nw=unit==='ຖັງ'||/18|ຖັງ/.test(t)?null:/ບົວ/.test(t)?slPidBy(n=>n.includes('ບົວ')):/ບູດ[໋ັ]?ອດ/.test(t)?slPidBy(n=>n.includes('ບູດ')):null; if(nw) return nw; // ມິນິບົວ / 250 ບູດ໋ອດ (OEM) ເພີ່ມ 27/11/2026
   if(/ດ່າງ/.test(t)) return 'P08'; if(/18|ຖັງ/.test(t)||unit==='ຖັງ') return /ດຳ/.test(t)?'P01':'P09';
   if(/2000/.test(t)) return 'P06'; if(/600/.test(t)) return 'P05'; if(/ມິນິ/.test(t)) return 'P07'; if(/2500|250/.test(t)) return 'P04';
   if(/300/.test(t)) return 'P03'; if(/500/.test(t)) return unit==='ລັງ'||!unit?'P02':'P08'; return ''; }
